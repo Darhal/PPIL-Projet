@@ -9,16 +9,11 @@ if ($_POST['login'] != '' AND $_POST['password'] != '' and  $exist == 1) { //Si 
 	$password = $_POST['password'];
 	$nom = $_POST['nom'];
 	$prenom  = $_POST['prenom'];
-	$sex = $_POST['sex'];
 	$mail = $_POST['mail'];
-	$daten = $_POST['daten'];
-	$adr = $_POST['adr'];
-	$codepost = $_POST['codepost'];  
-	$ville = $_POST['ville'];
-	$tel = $_POST['tel'];  
+
 	
-	$sql = "INSERT INTO utilisateur (login,password,prenom,nom,sexe,mail,dateNaissance,adresse,codePostal,ville,numTel) ";
-    $sql .= "VALUES ('".$login."','".$password."','".$prenom."','".$nom."','".$sex."','".$mail."','".$daten."','".$adr."','".$codepost."','".$ville."','".$tel."');";
+	$sql = "INSERT INTO utilisateur(login,password,prenom,nom,mail) ";
+    $sql .= "VALUES ('".$login."','".$password."','".$prenom."','".$nom."','".$mail."');";
 
 	mysqli_query($mysqli, $sql) or die('Echec insertion');  //Ajoute l'utilisateur à la table 'utilisateur' de la base de données
 
