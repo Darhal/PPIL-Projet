@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="22f696e9-5be3-4416-a467-b10f8bc8f1a3" name="ServeurUgo" url="http://ugocottin.fr">
+        <fileTransfer host="ugocottin.fr" port="22" rootFolder="/alimirmohammadi" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
