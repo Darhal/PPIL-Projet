@@ -1,8 +1,8 @@
 <?php
-$host = 'sql.free.fr'; /* L'adresse du serveur */
-$login = 'nicolas.bombarde'; /* Votre nom d'utilisateur */
-$password = 'barpau54'; /* Votre mot de passe */
-$base = 'nicolas.bombarde'; /* Le nom de la base */
+$host = ''; /* L'adresse du serveur */
+$login = ''; /* Votre nom d'utilisateur */
+$password = ''; /* Votre mot de passe */
+$base = ''; /* Le nom de la base */
 $mysqli="";
 	
 global $mysqli;  

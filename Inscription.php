@@ -104,17 +104,11 @@
     ?>
     </br>
     <sup>*</sup> Champ Obligatoire
-	
-	
-	
+
 	</form>
 	
 	
 </div>
 
-
-
-
 </body>
-
 </html>
