@@ -62,8 +62,6 @@
 
 <body>
 
-<?php include("index.html");?>
-
 <div id="conteneur">
 	<form name="formulaire" method="post" action="connect.php"> 
 	

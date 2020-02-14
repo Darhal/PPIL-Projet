@@ -62,7 +62,7 @@
 </head>
 
 <body>
-<?php include("index.html");?>
+
     
 
 
@@ -75,48 +75,21 @@
 	<label><b>Nom d'utilisateur<sup>*</sup></b></label>
 	<input type="text" placeholder = "Entrer un nom d'utilisateur" name="login" id="login">
 
-	
 	<label><b>Mot de passe<sup>*</sup></b></label>
 	<input type="password" placeholder = "Entrer un mot de passe" name="password" id="password">
 	
-	<label><b>Nom</b></label>
+	<label><b>Nom<sup>*</sup></b></label>
 	<input type="text" name="nom" id="nom">
-	
-	<label><b>Prenom</b></label>
+
+	<label><b>Prenom<sup>*</sup></b></label>
 	<input type="text" name="prenom" id="prenom">
+
 	
-	
-	<label><b>Sexe</b></label>
-    <input type="radio" id="sex" name="sex" value="M" checked> Masculin
-    <input type="radio" id="sex" name="sex" value="F"> Feminin
-	</br>
-	</br>
-	
-	
-	<label><b>Adresse mail</b></label>
+	<label><b>Adresse mail<sup>*</sup></b></label>
     <input type="text" id="mail" name="mail" value="">
 	
-	
-	<label><b>Date de Naissance</b></label>
-    <input type="date" id="daten" name="daten value="2018-07-22" "> 
-    </br>
-	</br>
-	
-	<label><b>Adresse</b></label>
-    <input type="text" id="adr" name="adr" value="">
-	
-	
-	<label><b>Code Postal</b></label>
-    <input type="text" id="codepost" name="codepost" size ="5" value="">
-	
-	
-	<label><b>Ville</b></label>
-    <input type="text" id="ville" name="ville" value="">
-	
-	
-	<label><b>Numero de Portable</b></label>	 
-    <input type="text"  id="tel" name="tel" value="">
-	
+
+
 	<input type="submit" name="Submit" value="Envoyer" />
 	<?php
         if(isset($_GET['erreur'])){
