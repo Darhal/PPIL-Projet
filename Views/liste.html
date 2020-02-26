@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../Styles/liste.css" media="screen" type="text/css" />
+
+    <title>liste</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+
+        //permet de d'altener les couleurs du tableau
+        $(document).ready(function()
+        {
+            $("tr:odd").css({
+                "background-color":"#BFBFBF" });
+        });
+    </script>
+</head>
+<body>
+    <table border="2">
+        <thead>
+        <tr>
+            <th colspan="2">The table header</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>The table body</td>
+            <td>with two columns</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
+
