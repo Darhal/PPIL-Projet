@@ -109,7 +109,7 @@ class Utilisateur
         //TODO
     }
 
-    function ajuoterNotification($notif){
+    function ajouterNotification($notif){
         //il suffit d'ajouter/mettre a jour la table de Notifie  dans la BDD
         //il faut verifier si le parametre est de type int ou une instancee de classe Notification
         //normalement on n'a pas besoin de supprimer les notifs
