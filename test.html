@@ -1,0 +1,89 @@
+ <!DOCTYPE html>
+
+<link rel="stylesheet" href="../Styles/liste.css" media="screen" type="text/css" />
+
+<html>
+    <body>
+        
+       <table border=2 id="TableA">
+            <tbody>
+                <tr>
+                    <td>Item</td>
+                    <td>Responsable</td>
+                    <td>Complété</td>
+                    <td>Editer</td>
+                    <td>Suppression</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button class="favorite styled" type="button" onclick="ajouteLigne('TableA')">Ajouter une tâche</button>
+    </body>
+    
+    <script type="text/javascript">
+
+        function ajouteLigne(tableID) {
+        // Récupération d'une référence à la table
+        var refTable = document.getElementById(tableID);
+
+        // Insère une ligne dans la table à l'indice de ligne 0
+        var nouvelleLigne = refTable.insertRow(1);
+        // Insère une cellule dans la ligne à l'indice 0
+        var nouvelleCellule = nouvelleLigne.insertCell(0);
+        // Ajoute le nom de la tache
+        var nomNouvelleTache = document.createTextNode('Task Name')
+        nouvelleCellule.appendChild(nomNouvelleTache);
+        
+        // Insère une cellule dans la ligne à l'indice 2
+        var nouvelleCellule = nouvelleLigne.insertCell(1);
+        // Ajoute le nom de lu responsable
+        var nomResponsable = document.createTextNode('Resp Name')
+        nouvelleCellule.appendChild(nomResponsable);
+        
+        // Insère une cellule dans la ligne à l'indice 2
+        var nouvelleCellule = nouvelleLigne.insertCell(2);
+        
+        // Créer la check box
+        var checkbox = document.createElement('input'); 
+            
+        // Assigning the attributes 
+        checkbox.type = "checkbox"; 
+        checkbox.name = "name"; 
+        checkbox.value = "value"; 
+        checkbox.id = "id"; 
+        // Ajoute la checkbox
+        nouvelleCellule.appendChild(checkbox);
+        
+        
+        // Insère une cellule dans la ligne à l'indice 3
+        var nouvelleCellule = nouvelleLigne.insertCell(3);
+        // Créer le bouton éditer
+        var editer = document.createElement('button'); 
+        editer.innerHTML = '<img src="images/edit.png"  style="width:20px;height:20px;" />';
+        nouvelleCellule.appendChild(editer);
+        
+        // Insère une cellule dans la ligne à l'indice 4
+        var nouvelleCellule = nouvelleLigne.insertCell(4);
+        // Créer le bouton éditer
+        var suppression = document.createElement('button'); 
+        suppression.innerHTML = '<img src="images/delete.png"  style="width:20px;height:20px;" />';
+        nouvelleCellule.appendChild(suppression);
+        
+        }
+
+
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+
+        //permet de d'altener les couleurs du tableau
+        $(document).ready(function()
+        {
+            $("tr:odd").css({
+                "background-color":"#BFBFBF" });
+        });
+    </script>
+    
+</html> 
