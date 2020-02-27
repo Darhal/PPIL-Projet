@@ -12,6 +12,10 @@
 
 class DAOUtilisateur extends DAO
 {
+    function __construct()
+    {
+
+    }
 
     function ajouterDansBDD($utilisateur)
     {

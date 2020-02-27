@@ -9,7 +9,17 @@
  *
  */
 
+include ('DAO.php');
+include ('DAOUtilisateur.php');
+include ('Utilisateur.php');
 class systeme
 {
+    private $DAOUtil;
+    public function __construct()
+    {
+        $this->DAOUtil = new DAOUtilisateur();
+
+
+    }
 
 }
