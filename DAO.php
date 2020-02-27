@@ -30,11 +30,7 @@ abstract class DAO
     private function __construct()
     {
         $this->BDD== new SQLite3("BD.sqlite");
-        /*if(){
 
-        }else{
-
-        }*/
     }
     //Singletons should not be cloneable.
     protected function __clone() { }
@@ -52,9 +48,9 @@ abstract class DAO
         return self::$_instance[$class];
     }
     //-----------------------------------functions abstraits
-    abstract function ajouterDansBDD($objet);
-    abstract function supprimerDeBDD($objet);
-    abstract function getByRequete($requete);
+    public abstract function ajouterDansBDD($objet);
+    public abstract function supprimerDeBDD($objet);
+    public abstract function getByRequete($requete);
     public abstract function getBDD();
 
 
