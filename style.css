@@ -75,3 +75,14 @@ form button{
     background-color: red;
     color: white;
 }
+form  a button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 5px;
+    color: white;
+    background-color: #555;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 20px;
+}

@@ -18,7 +18,7 @@
                     <input type="search" name="search" placeholder="Recherche personnes..">
                     <button type="submit"><i class="fa fa-search" aria-hidden="true">Ok</i></button>
                     <a href="#" class="notification">
-                        <span>Notification</span>
+                        <button>Notification</button>
                         <span class="badge">3</span>
                     </a>
 
