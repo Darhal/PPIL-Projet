@@ -30,7 +30,7 @@
         /*On récupère le nom de la tache avec une boite de dialogue*/
         var nomTache = prompt("Nom de tâche : ");
         /*Cas d'annulation : on sort de la fonction*/
-        if(nomTache == null){return 0;}
+        if(nomTache == null || nomTache == ""){return 0;}
 
         /*Récupération d'une référence à la table*/
         var refTable = document.getElementById(tableID);
@@ -49,6 +49,7 @@
         /*Créer le bouton éditer*/
         var nomResponsable = document.createElement('button');
         nomResponsable.innerHTML = 'Je suis volontaire';
+        nomResponsable.onclick = attribuerResponsable;
         nouvelleCellule.appendChild(nomResponsable);
         
         /*Insère une cellule dans la ligne à l'indice 2*/
@@ -89,6 +90,12 @@
         function editerTache() {
 
         }
+        function attribuerResponsable(){
+            var button = event.target
+            var td = button.parentNode;
+            td.innerHTML = "Christophe"
+        }
+
 
 
     </script>
