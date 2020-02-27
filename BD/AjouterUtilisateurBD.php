@@ -10,7 +10,6 @@ if ($_POST['login'] != '' AND $_POST['password'] != '' and  $exist == 1) { //Si 
 	$nom = $_POST['nom'];
 	$prenom  = $_POST['prenom'];
 	$mail = $_POST['mail'];
-
 	
 	$sql = "INSERT INTO utilisateur(login,password,prenom,nom,mail) ";
     $sql .= "VALUES ('".$login."','".$password."','".$prenom."','".$nom."','".$mail."');";
