@@ -24,12 +24,12 @@ abstract class DAO
     exemple d'utilisation:
     echo A::getInstance()->getName(), "\n";
     */
-    private $connexion;
+    protected $BDD;
     private static $_instance;
 
     private function __construct()
     {
-        $this->connexion== new SQLite3("BD.sqlite");
+        $this->BDD== new SQLite3("BD.sqlite");
         /*if(){
 
         }else{
@@ -43,6 +43,7 @@ abstract class DAO
     {
         throw new \Exception("Cannot unserialize a singleton.");
     }*/
+
     public static function getInstance(){
         $class = get_called_class();
         if(is_null(self::$_instance[$class])){
@@ -54,6 +55,7 @@ abstract class DAO
     abstract function ajouterDansBDD($objet);
     abstract function supprimerDeBDD($objet);
     abstract function getByRequete($requete);
+    public abstract function getBDD();
 
 
 }

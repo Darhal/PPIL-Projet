@@ -27,4 +27,9 @@ class DAOUtilisateur extends DAO
     {
         // TODO: Implement getByRequete() method.
     }
+
+    public function getBDD()
+    {
+        return $this->BDD;
+    }
 }
