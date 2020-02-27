@@ -1,16 +1,25 @@
 <?php
-    class BDD extends SQLie3
+/*
+ * Projet Procrast
+ * @class: BDD
+ * @brief: Class that abstract away the DB connections and make it easier to interact with
+ * the DB
+ * @author: Omar CHIDA
+ * @date:27/02/2020
+ * @version: 1.0
+ */
+
+    class BDD extends SQLite3
     {
         private $file_path;
         private $file_name;
-        private $table_name;
         private static $DB_PATH = "PPIL-Projet/Assets/BD/";
 
-        function __construct($filename, $tab_name) {
-            $file_path = $DB_PATH+$filename;
+        function __construct($filename) {
+            $file_path = self::$DB_PATH.$filename;
             $file_name = $filename;
-            $table_name = $tab_name;
-            $this->open($file_path);
+            parent::__construct($file_name);
+            // $this->open($file_path);
         }
 
         function __destruct() {
@@ -26,8 +35,13 @@
             return $file_name;
         }
 
-        function fetchResults($query)
+        function fetchResults($tab_name, $what = "*", $condition = "")
         {
+            if ($condition != ""){
+                $condition = "WHERE ".$condition;
+            }
+
+            $query = "SELECT $what from $tab_name $condition;";
             $ret = $this->query($query);
             $res_array = array();
 
@@ -45,7 +59,7 @@
             $this->handleErrors($ret);
         }
 
-        function insertRow($row_data)
+        function insertRow($tab_name, $row_data)
         {
             $attribs = "";
             $values = "";
@@ -58,14 +72,34 @@
             // Remove trimming ","
             $attribs = rtrim($attribs, ",");
             $values = rtrim($values, ",");
-            $ret = $db->exec("INSERT INTO $table_name ($attribs) VALUES($values);");
+            $ret = $this->exec("INSERT INTO $tab_name ($attribs) VALUES($values);");
             $this->handleErrors($ret);
+        }
+
+        function insertRows($tab_name, $rows)
+        {
+            foreach ($row as $value) {
+                $this->insertRow($tab_name, $row);
+            }
+        }
+
+        function createTable($tab_name, $attribs)
+        {
+            $attrib_str = "";
+
+            foreach ( $attribs as $key => $value ) {
+                $attrib_str = $attrib_str."$key $value,";
+            }
+
+            $attrib_str = rtrim($attrib_str, ",");
+            $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
         }
 
         function handleErrors($ret){
             if(!$ret) { // error managment
-                echo $this->lastErrorMsg();
-             }
+                die($this->lastErrorMsg());
+            }
         }
     }
 ?>
+
