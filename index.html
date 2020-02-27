@@ -1,14 +1,8 @@
-<?php
-    //On démarre une nouvelle session
-    session_start();
-
-?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>Recette.com</title>
+	<title>Procrast.com</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title> Bienvenue sur Procrast.com </title>
 	<style type="text/css">  
@@ -98,19 +92,14 @@
         <li><a href="Inscription.php">S'inscrire</a></li>
         <li><a href="Connexion.php">Se Connecter</a></li>
         <li><a href="deconnect.php">Se Deconnecter</a></li>
-		<li><a href="ConnexionBD.php">Profil</a></li>
+		<li><a href="profil.php">Profil</a></li>
       </ul>
     </nav>
     
     
-    <p id="nomSession"> <?php echo "Bonjour ".$_SESSION['login'];  ?> </p>
-    <p id="piedDePage">Réalisation du projet PPIL - Université des Sciences et Technologies </br> Les Brebis Galeuses </p>
+    <p id="nomSession"> <?php session_start(); echo "Bonjour ".$_SESSION['login'];  ?> </p>
+    <p id="piedDePage"> Réalisation du projet PPIL - Université des Sciences et Technologies </br> Les Brebis Galeuses </p>
 </div>
-	
-	
-
-	
-         
 
 </body>
 </html>

@@ -1,12 +1,5 @@
-<?php
-    //On démarre une nouvelle session
-    session_start();
-
-?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<style type="text/css">  
@@ -57,11 +50,9 @@
 	}
 	
 	</style>
-	
 </head>
 
 <body>
-
 <div id="conteneur">
 	<form name="formulaire" method="post" action="connect.php"> 
 	
@@ -85,16 +76,8 @@
         }
     ?>
 
-	
-
 	</form>
 </div>
-
-
-
-	
-
-
 
 </body>
 </html>

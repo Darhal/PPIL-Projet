@@ -32,8 +32,8 @@ else { // login et password incomplets
 	header('location: Connexion.php?erreur=2'); // champ login ou password vides
 }
 
-// Deconnexion
+//Fermeture bd
 $bd->close();
 
-?>
+
 

@@ -1,9 +1,3 @@
-<?php
-    //On démarre une nouvelle session
-    session_start();
-
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -68,7 +62,7 @@
 
 
 <div id="conteneur">
-	<form name="formulaire" method="post" action="BD/AjouterUtilisateurBD.php">
+	<form name="formulaire" method="post" action="AjouterUtilisateurBD.php">
 	
 	<h1>S'inscrire</h1>
 	
