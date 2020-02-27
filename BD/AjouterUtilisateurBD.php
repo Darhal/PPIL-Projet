@@ -1,5 +1,4 @@
 <?php
-include("ConnexionBD.php");
 include("VerificationBD.php");
 
 $exist = exist($_POST['login'],$_POST['password'],$mysqli);

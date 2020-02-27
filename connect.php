@@ -1,5 +1,4 @@
 <?php
-include("BD/ConnexionBD.php");
 
 //On démarre une nouvelle session
 session_start();
@@ -7,30 +6,34 @@ session_start();
 
 if($_POST['login'] !== '' AND $_POST['password'] !== '') {  // Si les champs ne sont pas vides
 
-    // fonctions mysqli_real_escape_string et htmlspecialchars pour éliminer toute attaque de type injection SQL et XSS
-    $login = mysqli_real_escape_string($mysqli,htmlspecialchars($_POST['login'])); 
-    $password = mysqli_real_escape_string($mysqli,htmlspecialchars($_POST['password']));
-	
-	
-	$sql = "SELECT count(*) FROM utilisateur
-			WHERE login = '".$login."' and password = '".$password."' ";
-	$req = mysqli_query($mysqli, $sql) or die("Erreur de connexion");
-	$data = mysqli_fetch_array($req);
-	
+	// Connexion
+	try {
+		$bd = new SQLite3('BD.sqlite');
+	} catch (SQLiteException $e) {
+		die("La création ou l'ouverture de la base a échouée ".
+			"pour la raison suivante: ".$e->getMessage());
+	}
+
+	$login = $_POST['login'];
+	$password = $_POST['password'];
+	$result = $bd->query("SELECT count(*) FROM utilisateur WHERE pseudo='".$login."' and mdp = '".$password."'");
+	$data = $result-> fetchArray();
 	$count = $data['count(*)'];
 	if($count != 0) { // login et password corrects
 		$_SESSION['login'] = $_POST['login'];
 		header('location: index.html');
-	} 
-	else {  
+	}
+	else {
 		header('location: Connexion.php?erreur=1'); // login et password incorrects
 	}
-	
+
 }
 else { // login et password incomplets
-	header('location: Connexion.php?erreur=1'); // champ login ou password vides
+	header('location: Connexion.php?erreur=2'); // champ login ou password vides
 }
 
-mysqli_close($mysqli);
+// Deconnexion
+$bd->close();
+
 ?>
 
