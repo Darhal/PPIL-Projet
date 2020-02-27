@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../Styles/mesListes.css" media="screen" type="text/css" />
+    <title>Mes Listes</title>
+    <h3>Mes listes</h3>
+</head>
+<body>
+    <table border=2 id="TableA">
+        <tbody>
+        <tr>
+            <td>Nom</td>
+            <td>Propriétaire</td>
+            <td>Date début</td>
+            <td>Date fin</td>
+            <td>Editer</td>
+            <td>Suppression</td>
+            <td>Membres</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <button class="favorite styled" type="button" onclick="ajouteLigne('TableA')">Ajouter une nouvelle liste</button>
+
+    <script type="text/javascript">
+
+        function ajouteLigne(tableID) {
+            // Récupération d'une référence à la table
+            var refTable = document.getElementById(tableID);
+
+            // Insère une ligne dans la table à l'indice de ligne 0
+            var nouvelleLigne = refTable.insertRow(1);
+
+            // Insère une cellule dans la ligne à l'indice 0
+            var nouvelleCellule = nouvelleLigne.insertCell(0);
+
+            // Ajoute le nom de la liste
+            var nouvelleListe = document.createTextNode('Title list')
+            nouvelleCellule.appendChild(nouvelleListe);
+
+            // Insère une cellule dans la ligne à l'indice 2
+            var nouvelleCellule = nouvelleLigne.insertCell(1);
+
+            // Ajoute le nom de lu responsable
+            var nomResponsable = document.createTextNode('Resp Name') ;
+
+
+            nouvelleCellule.appendChild(nomResponsable);
+
+            // Insère une cellule dans la ligne à l'indice 2
+            var nouvelleCellule = nouvelleLigne.insertCell(2);
+
+            // Ajoute la date du debut
+            var dateDebut = document.createTextNode('12/12/2012') ;
+            nouvelleCellule.appendChild(dateDebut);
+
+            // Insère une cellule dans la ligne à l'indice 3
+            var nouvelleCellule = nouvelleLigne.insertCell(3);
+
+            // Ajoute la date de fin
+            var dateFin = document.createTextNode('20/12/2012') ;
+            nouvelleCellule.appendChild(dateFin);
+
+            // Insère une cellule dans la ligne à l'indice 4
+            var editer = nouvelleLigne.insertCell(4);
+
+            // Créer le bouton éditer
+            editer.innerHTML = '<img src="../images/edit.png"  style="width:20px;height:20px;" />';
+            //mets un id
+            var id = document.getElementById("TableA").rows.length ;
+            editer.setAttribute("id", id) ;
+           // editer.onclick = modifierInformations(id) ;
+
+            // Insère une cellule dans la ligne à l'indice 5
+            var suppression = nouvelleLigne.insertCell(5);
+
+            // Créer le bouton delete
+            suppression.innerHTML = '<img src="../images/delete.png"  style="width:20px;height:20px;" />';
+            suppression.onclick = supprimerListe;
+
+            // Insère une cellule dans la ligne à l'indice 6
+            var membre = nouvelleLigne.insertCell(6);
+
+            // Créer le bouton membre
+            membre.innerHTML = '<img src="../images/member.png" style="width:20px;height:20px;"/>';
+            membre.onclick = consulterMembres;
+        }
+
+        function consulterMembres() {
+            //prendre plus tard element dans la table
+            var el=document.getElementById('TableA');
+            var i=0, r, t="";
+            while(r = el.rows[i++]) {
+                var c, n=0;
+                t += "\n";
+                while(c=r.cells[n++]){
+                    t += c.firstChild.data + "  ";
+                }
+            }
+            alert(t);
+        }
+
+
+        function supprimerListe() {
+            //recupere la colonne
+            var td = event.target.parentNode;
+            console.log(td.rowIndex)
+            //test qu'on clique bien sur l'image
+           if (td.innerHTML.startsWith("<img")){
+               //recupere la ligne ou se situe la colonne
+               var tr = td.parentNode; // the row to be removed
+               tr.parentNode.removeChild(tr);
+            }
+            else{
+               console.log('dans le esle') ;
+           }
+        }
+
+        function modifierInformations(i) {
+
+            let test = prompt("Test", ''); // <-- for IE
+            document.getElementById(i).innerHTML = test;
+        }
+
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+
+        //permet de d'altener les couleurs du tableau
+        $(document).ready(function()
+        {
+            $("tr:odd").css({
+                "background-color":"#BFBFBF" });
+        });
+    </script>
+</body>
+</html>
