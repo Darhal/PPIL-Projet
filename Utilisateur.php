@@ -23,12 +23,12 @@ class Utilisateur
     //on construit une instance d'Utilsiateur avec son identifiant et on verifie si l'Utilisateur connecté a une session ouverte
     //si la session est ouvert on vérifie la valeur d'element "id" dans la variable Globale session: si elle est même que l'identifiant donc l'utilisateur est le propriétaire de la session sinon il n'est pas connecté
     //une instance Untilisateur non-Connecté peut être crée
-    function __construct($identifiant,$sessID)
+    function __construct()
     {
-        //impossible de modifier la variable id et sessionID après sa création (pour raisons de sécurité)
+    /*    //impossible de modifier la variable id et sessionID après sa création (pour raisons de sécurité)
         $this->id = $identifiant;
         $this->sessionID = $sessID;
-        $this->estSessionOwner = ($identifiant==$sessID)? true:false;
+        $this->estSessionOwner = ($identifiant==$sessID)? true:false;*/
 
     }
     function __destruct()
@@ -46,6 +46,9 @@ class Utilisateur
         switch ($nomDAttribut){
             case "nom":
                 $this->nom = $value;
+                break;
+            case "id":
+                $this->id = $value;
                 break;
             case "prenom":
                 $this->prenom = $value;
