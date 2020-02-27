@@ -29,7 +29,7 @@ abstract class DAO
 
     private function __construct()
     {
-        $this->connexion== mysqli_connect("localhost","root","","phplessons",3306);
+        $this->connexion== new SQLite3("BD.sqlite");
         /*if(){
 
         }else{
