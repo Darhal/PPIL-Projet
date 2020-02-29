@@ -4,22 +4,36 @@
  * Classe DAOUtilisateur
  * L'implentation de "Design Pattern"s: Data access object, Singleton
  * Intermediare entre la base de données et php pour les donnees qui concernent la classe Utilisateur
- * @author: Ali MIRMOHAMMADI
+ * @author: Ali MIRMOHAMMADI & Louy MASSET
  * @date:16/02/2020
  * @version: 1.0
  *
  */
-include ('Utilisateur.php');
+
+include Utilisateur::class;
+include BDD::class;
 class DAOUtilisateur extends DAO
 {
+    private $tab_name = "Utilisateur";
+
     function __construct()
     {
+
     }
 
     function ajouterDansBDD($utilisateur)
     {
         // TODO: Implement ajouterDansBDD() method.
-        $ajout = 'INSERT INTO Utilisateur VALUES (NULL,"'.$utilisateur->pseudo.'","'.$utilisateur->nom.'","'.$utilisateur->prenom.'","'.$utilisateur->email.'","'.$utilisateur->mdp.'");';
+        $attribs = array(
+            "id" => "NULL",
+            "pseudo" => $utilisateur->pseudo,
+            "nom" => $utilisateur->nom,
+            "prenom" => $utilisateur->prenom,
+            "email" => $utilisateur->email,
+            "mdp" => $utilisateur->mdp
+        );
+        $bdd = new BDD();
+        $bdd::insertRow($this->tab_name,$attribs);
     }
 
     function supprimerDeBDD($utilisateur)
@@ -30,7 +44,10 @@ class DAOUtilisateur extends DAO
     function getByRequete($requete)
     {
         // TODO: Implement getByRequete() method.
+
     }
+
+
 
     public function getBDD()
     {
