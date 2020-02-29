@@ -36,7 +36,7 @@ class Utilisateur
         // TODO: Implement __destruct() method.
     }
 
-    public function __get($nomDAttribut)
+    function __get($nomDAttribut)
     {
         return $this->$nomDAttribut;
     }
