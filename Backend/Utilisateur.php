@@ -2,7 +2,7 @@
 /*
  * Projet Procrast
  * Class Utilisateur
- * @author: Ali MIRMOHAMMADI
+ * @author: Ali MIRMOHAMMADI & Jonathan Pierrel
  * @date:16/02/2020
  * @version: 1.0
  */
@@ -36,35 +36,6 @@ class Utilisateur
         // TODO: Implement __destruct() method.
     }
 
-    function __get($nomDAttribut)
-    {
-        return $this->$nomDAttribut;
-    }
-    function __set($nomDAttribut, $value)
-    {
-        //impossible de modifier la variable id et sessionID après sa création (pour raisons de sécurité)
-        switch ($nomDAttribut){
-            case "nom":
-                $this->nom = $value;
-                break;
-            case "prenom":
-                $this->prenom = $value;
-                break;
-            case "pseudo":
-                $this->pseudo = $value;
-                break;
-            case "email":
-                $this->email = $value;
-                break;
-            case "mdp_hash":
-                $this->mdp_hash = $value;
-                break;
-            default:
-                echo "<br> Erreur:<br>Utilisateur:setter:Le nom d'attribut".$nomDAttribut." n'est pas correct.<br/>";
-                break;
-        }
-
-    }
 
     function verifierMDPEtSeConnecter($input){
         //on verifie si la valeur de MDP_hash est bien defini sinon on affiche un msg d'erreur
@@ -115,5 +86,167 @@ class Utilisateur
         //normalement on n'a pas besoin de supprimer les notifs
         //TODO
     }
+
+    //------------------------------------- GETTERS
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSessionID()
+    {
+        return $this->sessionID;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEstSessionOwner(): bool
+    {
+        return $this->estSessionOwner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEstConnecte()
+    {
+        return $this->estConnecte;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMdpHash()
+    {
+        return $this->mdp_hash;
+    }
+
+
+    //------------------------------------- SETTERS
+    /**
+     * @param bool $estSessionOwner
+     */
+    public function setEstSessionOwner(bool $estSessionOwner): void
+    {
+        $this->estSessionOwner = $estSessionOwner;
+    }
+
+    /**
+     * @param mixed $estConnecte
+     */
+    public function setEstConnecte($estConnecte): void
+    {
+        $this->estConnecte = $estConnecte;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo): void
+    {
+        $this->pseudo = $pseudo;
+    }
+
+    /**
+     * @param mixed $prenom
+     */
+    public function setPrenom($prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param mixed $mdp_hash
+     */
+    public function setMdpHash($mdp_hash): void
+    {
+        $this->mdp_hash = $mdp_hash;
+    }
+
+
+    //Getters & setters - ancienne version
+//    function __get($nomDAttribut)
+//    {
+//        return $this->$nomDAttribut;
+//    }
+//    function __set($nomDAttribut, $value)
+//    {
+//        //impossible de modifier la variable id et sessionID après sa création (pour raisons de sécurité)
+//        switch ($nomDAttribut){
+//            case "nom":
+//                $this->nom = $value;
+//                break;
+//            case "prenom":
+//                $this->prenom = $value;
+//                break;
+//            case "pseudo":
+//                $this->pseudo = $value;
+//                break;
+//            case "email":
+//                $this->email = $value;
+//                break;
+//            case "mdp_hash":
+//                $this->mdp_hash = $value;
+//                break;
+//            default:
+//                echo "<br> Erreur:<br>Utilisateur:setter:Le nom d'attribut".$nomDAttribut." n'est pas correct.<br/>";
+//                break;
+//        }
+//    }
 
 }
