@@ -17,7 +17,10 @@ class Utilisateur
     private $prenom;
     private $nom;
     private $email;
-    private $mdp_hash;
+    private $mdp;
+
+    private $arrayListeTaches = array();
+
 
     //avoir multiple constructeur n'est pas authorisé en php
     //on construit une instance d'Utilsiateur avec son identifiant et on verifie si l'Utilisateur connecté a une session ouverte
@@ -36,51 +39,61 @@ class Utilisateur
         // TODO: Implement __destruct() method.
     }
 
+    function __toString()
+    {
+        return "Utilisateur. [Id = ". $this->id . " sessionID = " . $this->sessionID . " estConnecte = " . $this->estConnecte . " pseudo = " .  $this->pseudo . " prénom = " .  $this->prenom . " email = " .  $this->email. " mdp = " .  $this->mdp;
+    }
+
 
     function verifierMDPEtSeConnecter($input){
         //on verifie si la valeur de MDP_hash est bien defini sinon on affiche un msg d'erreur
         $res=false;
-        if(!isset($this->mdp_hash)){
+        if(!isset($this->mdp)){
             echo "<br> Erreur:<br>Utilisateur:verifierMDPEtSeConnecter:la variable mdp_hash est vide<br/>";
         }else{
-            $res=password_verify($input,$this->mdp_hash);
+            $res=password_verify($input,$this->mdp);
         }
         $this->estConnecte=$res;
         return $res;
     }
-    function ajouterListeDeTache($liste){
+
+    function ajouterListeDeTache(ListeTaches $liste){
+        //il suffit d'ajouter/mettre a jour la table de Membre dans la BDD
+        //il faut verifier si le parametre est de type int ou une instancee de classe ListTache
+
+//        array_push($this->arrayListeTaches, $liste);
+
+        //TODO --> ajouter à BDD à travers DAO ?
+
+    }
+
+    function supprimerListeDeTache(ListeTaches $liste){
         //il suffit d'ajouter/mettre a jour la table de Membre dans la BDD
         //il faut verifier si le parametre est de type int ou une instancee de classe ListTache
 
         //TODO
+
     }
 
-    function supprimerListeDeTache($liste){
-        //il suffit d'ajouter/mettre a jour la table de Membre dans la BDD
-        //il faut verifier si le parametre est de type int ou une instancee de classe ListTache
-
-        //TODO
-    }
-
-    function ajouterInvitation($invit){
+    function ajouterInvitation(Invitation $invit){
         //il suffit d'ajouter/mettre a jour la table d'Invite dans la BDD
         //il faut verifier si le parametre est de type int ou une instancee de classe Invitation
 
         //TODO
     }
 
-    function supprimmerInvitation($invit){
+    function supprimmerInvitation(Invitation $invit){
         //il suffit d'ajouter/mettre a jour la table d'Invite dans la BDD
         //il faut verifier si le parametre est de type int ou une instancee de classe Invitation
 
         //TODO
     }
 
-    function repondreInvitation($invit,$reponse){
+    function repondreInvitation(Invitation $invit, bool $reponse){
         //TODO
     }
 
-    function ajouterNotification($notif){
+    function ajouterNotification(Notification $notif){
         //il suffit d'ajouter/mettre a jour la table de Notifie  dans la BDD
         //il faut verifier si le parametre est de type int ou une instancee de classe Notification
         //normalement on n'a pas besoin de supprimer les notifs
@@ -155,9 +168,9 @@ class Utilisateur
     /**
      * @return mixed
      */
-    public function getMdpHash()
+    public function getMdp()
     {
-        return $this->mdp_hash;
+        return $this->mdp;
     }
 
 
@@ -173,7 +186,7 @@ class Utilisateur
     /**
      * @param mixed $estConnecte
      */
-    public function setEstConnecte($estConnecte): void
+    public function setEstConnecte(bool $estConnecte): void
     {
         $this->estConnecte = $estConnecte;
     }
@@ -181,7 +194,7 @@ class Utilisateur
     /**
      * @param mixed $pseudo
      */
-    public function setPseudo($pseudo): void
+    public function setPseudo(string $pseudo): void
     {
         $this->pseudo = $pseudo;
     }
@@ -189,7 +202,7 @@ class Utilisateur
     /**
      * @param mixed $prenom
      */
-    public function setPrenom($prenom): void
+    public function setPrenom(string $prenom): void
     {
         $this->prenom = $prenom;
     }
@@ -197,7 +210,7 @@ class Utilisateur
     /**
      * @param mixed $nom
      */
-    public function setNom($nom): void
+    public function setNom(string $nom): void
     {
         $this->nom = $nom;
     }
@@ -205,17 +218,17 @@ class Utilisateur
     /**
      * @param mixed $email
      */
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @param mixed $mdp_hash
+     * @param mixed $mdp
      */
-    public function setMdpHash($mdp_hash): void
+    public function setMdp($mdp): void
     {
-        $this->mdp_hash = $mdp_hash;
+        $this->mdp = $mdp;
     }
 
 
