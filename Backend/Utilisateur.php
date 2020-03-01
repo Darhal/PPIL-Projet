@@ -45,13 +45,13 @@ class Utilisateur
     }
 
 
-    function verifierMDPEtSeConnecter($input){
+    function verifierMDPEtSeConnecter(string $input){
         //on verifie si la valeur de MDP_hash est bien defini sinon on affiche un msg d'erreur
         $res=false;
         if(!isset($this->mdp)){
-            echo "<br> Erreur:<br>Utilisateur:verifierMDPEtSeConnecter:la variable mdp_hash est vide<br/>";
+            echo "<br> Erreur:<br>Utilisateur:verifierMDPEtSeConnecter:la variable mdp est vide<br/>";
         }else{
-            $res=password_verify($input,$this->mdp);
+            $res= ($input == $this->mdp);
         }
         $this->estConnecte=$res;
         return $res;
