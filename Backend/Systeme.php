@@ -39,4 +39,20 @@ class Systeme
     public function supprimerUtilisateur(int $utilisateurID) {
 
     }
+
+    public function seConnecter(string $email, string $mdp) : bool {
+        $res = false;
+
+        // a remplir
+        // chercher dans la BDD l'utilisateur
+
+        return $res;
+
+    }
+
+    public function seDeconnecter(int $idUtilisateur){
+        // a remplir
+    }
+
+
 }
