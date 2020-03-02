@@ -9,14 +9,14 @@
 <body>
     <table border=2 id="TableA">
         <tbody>
-        <tr>
-            <td>Nom</td>
-            <td>Propriétaire</td>
-            <td>Date début</td>
-            <td>Date fin</td>
-            <td>Editer</td>
-            <td>Suppression</td>
-            <td>Membres</td>
+        <tr id="row1">
+            <td id="nom_row0">Nom</td>
+            <td id="proprio_row0">Propriétaire</td>
+            <td id="debut_row0">Date début</td>
+            <td id="fin_row0">Date fin</td>
+            <td id="0">Editer</td>
+            <td id="supp_row0">Suppression</td>
+            <td id="membre_row0">Membres</td>
         </tr>
         </tbody>
     </table>
@@ -26,24 +26,35 @@
     <script type="text/javascript">
 
         function ajouteLigne(tableID) {
+            //recuperer le numero de la ligne
+            var rowid = document.getElementById("TableA").rows.length ;
+
             // Récupération d'une référence à la table
             var refTable = document.getElementById(tableID);
 
             // Insère une ligne dans la table à l'indice de ligne 0
             var nouvelleLigne = refTable.insertRow(1);
 
+            //donne un id unique a la ligne
+            nouvelleLigne.id = "row"+rowid ;
+
             // Insère une cellule dans la ligne à l'indice 0
             var nouvelleCellule = nouvelleLigne.insertCell(0);
 
             // Ajoute le nom de la liste
-            var nouvelleListe = document.createTextNode('Title list')
-            nouvelleCellule.appendChild(nouvelleListe);
+            var nomListe = document.createTextNode('Title list'+rowid)
+            nouvelleCellule.appendChild(nomListe);
 
+            //ajoute l'id a l'élément
+            nouvelleCellule.id="nom_row"+rowid ;
             // Insère une cellule dans la ligne à l'indice 2
             var nouvelleCellule = nouvelleLigne.insertCell(1);
 
             // Ajoute le nom de lu responsable
             var nomResponsable = document.createTextNode('Resp Name') ;
+
+            //ajoute l'id a l'élément
+            nouvelleCellule.id="proprio_row"+rowid ;
 
 
             nouvelleCellule.appendChild(nomResponsable);
@@ -53,6 +64,10 @@
 
             // Ajoute la date du debut
             var dateDebut = document.createTextNode('12/12/2012') ;
+
+            //ajoute l'id a l'élément
+            nouvelleCellule.id="debut_row"+rowid ;
+
             nouvelleCellule.appendChild(dateDebut);
 
             // Insère une cellule dans la ligne à l'indice 3
@@ -60,16 +75,21 @@
 
             // Ajoute la date de fin
             var dateFin = document.createTextNode('20/12/2012') ;
+
+            //ajoute l'id a l'élément
+            nouvelleCellule.id="fin_row"+rowid ;
+
             nouvelleCellule.appendChild(dateFin);
 
             // Insère une cellule dans la ligne à l'indice 4
             var editer = nouvelleLigne.insertCell(4);
+            //editer.id = document.getElementById("TableA").rows.length ;
 
             // Créer le bouton éditer
-            editer.innerHTML = '<img src="../images/edit.png"  style="width:20px;height:20px;" />';
+            editer.innerHTML = '<img src="../images/edit.png" onclick="edit_row(document.getElementById(\'TableA\').rows.length)" style="width:20px;height:20px;" />';
             //mets un id
-            var id = document.getElementById("TableA").rows.length ;
-            editer.setAttribute("id", id) ;
+           // var id = document.getElementById("TableA").rows.length ;
+           // editer.setAttribute("id", id) ;
            // editer.onclick = modifierInformations(id) ;
 
             // Insère une cellule dans la ligne à l'indice 5
@@ -121,6 +141,30 @@
 
             let test = prompt("Test", ''); // <-- for IE
             document.getElementById(i).innerHTML = test;
+        }
+
+        function edit_row(no)
+        {
+            var el=document.getElementById('TableA');
+            console.log(el.innerHTML)
+            console.log("dans edit!!!!!!!!!!!!! avec no ="+no);
+          //  document.getElementById("editer_row"+no).style.display="none";
+           // document.getElementById("save_button"+no).style.display="block";
+
+
+            var nom=document.getElementById("nom_row3");
+            console.log(nom);
+
+            var proprio=document.getElementById("proprio_row"+no);
+            var date_deb=document.getElementById("debut_row"+no);
+            var date_dfin=document.getElementById("fin_row"+no);
+            var membres=document.getElementById("membre_row"+no);
+
+
+
+            nom.innerText="nommodif";
+            proprio.innerText="proprio";
+            date_deb.innerText="deb";
         }
 
 
