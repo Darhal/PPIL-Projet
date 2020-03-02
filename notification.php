@@ -27,7 +27,7 @@
         <div class="col-md-2">
             Supprimer
             <div class="col-md-7">
-                <img src="Frontend/icons/trash.svg" alt="" width="32" height="32">
+                <img src="img/delete.png" alt="" width="32" height="32">
             </div>
         </div>
     </div>
