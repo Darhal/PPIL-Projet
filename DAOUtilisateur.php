@@ -23,7 +23,6 @@ class DAOUtilisateur extends DAO
 
     function ajouterDansBDD($utilisateur)
     {
-        // TODO: Implement ajouterDansBDD() method.
         $attribs = array(
             "id" => "NULL",
             "pseudo" => $utilisateur->pseudo,
@@ -33,7 +32,7 @@ class DAOUtilisateur extends DAO
             "mdp" => $utilisateur->mdp
         );
         $bdd = new BDD();
-        $bdd::insertRow($this->tab_name,$attribs);
+        $bdd->insertRow($this->tab_name,$attribs);
     }
 
     function supprimerDeBDD($utilisateur)
@@ -43,8 +42,9 @@ class DAOUtilisateur extends DAO
 
     function getByRequete($requete)
     {
-        // TODO: Implement getByRequete() method.
-
+        $bdd = new BDD();
+        $res = $bdd->fetchResults("Utilisateur","*",$requete);
+        return $res;
     }
 
 
