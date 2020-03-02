@@ -1,7 +1,7 @@
 <?php
 
 include_once "Utilisateur.php";
-
+include_once "Backend/DAO/DAOUtilisateur.php";
 class Systeme
 {
     private $arrayUtilisateurs = array();  // liste des Utilisateurs
@@ -42,6 +42,8 @@ class Systeme
         array_push($this->arrayUtilisateurs, $nouvelUtilisateur);
 
         //Ajouter l'utilisateur à la BDD
+        $dao = DAOUtilisateur::getInstance();
+        $dao->ajouterDansBDD($nouvelUtilisateur);
 
     }
 
