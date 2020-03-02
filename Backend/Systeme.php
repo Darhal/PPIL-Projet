@@ -5,21 +5,30 @@ include_once "Utilisateur.php";
 class Systeme
 {
     private $arrayUtilisateurs = array();  // liste des Utilisateurs
+    private static $instance = null;
 
 
-    function __construct()
+    private function __construct()
     {
 
     }
 
-    function __destruct()
+    private function __destruct()
     {
         // TODO: Implement __destruct() method.
+    }
+
+    public static function getInstance() {
+        if(is_null(self::$instance)) {
+            self::$instance = new Systeme();
+        }
+        return self::$instance;
     }
 
     public function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
 
     }
+    
     public function ajouterUtilisateur(string $pseudo, string $prenom, string $nom, string $email, string $mdp) {
 
         $nouvelUtilisateur = new Utilisateur();  // c'est quoi le SessionID?
