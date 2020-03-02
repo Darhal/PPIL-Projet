@@ -25,7 +25,7 @@ abstract class DAO
     echo A::getInstance()->getName(), "\n";
     */
     protected $BDD;
-    private static $_instance;
+    private static $_instance = array();
 
     private function __construct()
     {
@@ -41,7 +41,7 @@ abstract class DAO
         throw new \Exception("Cannot unserialize a singleton.");
     }*/
 
-    public static function getInstance(){
+    public static function getInstance(): DAO {
         $class = get_called_class();
         if(is_null(self::$_instance[$class])){
             self::$_instance[$class]=new $class();

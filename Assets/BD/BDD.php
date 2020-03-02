@@ -16,7 +16,7 @@
         private static $DB_PATH = "PPIL-Projet/Assets/BD/";
 
         function __construct($filename) {
-            $file_path = self::$DB_PATH.$filename;
+            $file_path = self::$DB_PATH . $filename;
             $file_name = $filename;
             parent::__construct($file_name);
             // $this->open($file_path);
