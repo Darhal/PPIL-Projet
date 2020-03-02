@@ -20,6 +20,18 @@ $unwanted_array = array(
 <html>
 <body>
 <?php include "./menubar.php" ?>
+<table border=2 id="TableA">
+    <tbody>
+    <tr>
+        <td>Item</td>
+        <td>Responsable</td>
+        <td>Complété</td>
+        <td>Editer</td>
+        <td >Suppression</td>
+    </tr>
+    </tbody>
+</table>
+
 <button class="favorite styled" type="button" onclick="ajouteLigne('TableA')">Ajouter une tâche</button>
 </body>
 
@@ -30,7 +42,7 @@ $unwanted_array = array(
         /*On récupère le nom de la tache avec une boite de dialogue*/
         var nomTache = prompt("Nom de tâche : ");
         /*Cas d'annulation : on sort de la fonction*/
-        if(nomTache == null){return 0;}
+        if(nomTache == null || nomTache == ""){return 0;}
 
         /*Récupération d'une référence à la table*/
         var refTable = document.getElementById(tableID);
@@ -49,6 +61,7 @@ $unwanted_array = array(
         /*Créer le bouton éditer*/
         var nomResponsable = document.createElement('button');
         nomResponsable.innerHTML = 'Je suis volontaire';
+        nomResponsable.onclick = attribuerResponsable;
         nouvelleCellule.appendChild(nomResponsable);
 
         /*Insère une cellule dans la ligne à l'indice 2*/
@@ -68,12 +81,12 @@ $unwanted_array = array(
 
         /*Insère une cellule dans la ligne à l'indice 3*/
         var editer = nouvelleLigne.insertCell(3);
-        editer.innerHTML = '<img src="../images/edit.png"  style="width:20px;height:20px;" />';
+        editer.innerHTML = '<img src="img/edit.png" style="width:20px;height:20px;" />';
         editer.onclick = editerTache;
 
         /*Insère une cellule dans la ligne à l'indice 4*/
         var suppression = nouvelleLigne.insertCell(4);
-        suppression.innerHTML = '<img src="../images/delete.png"  style="width:20px;height:20px;"  />';
+        suppression.innerHTML = '<img src="img/delete.png"  style="width:20px;height:20px;"  />';
         suppression.onclick = supprimerTache;
 
 
@@ -82,12 +95,22 @@ $unwanted_array = array(
     function supprimerTache() {
         // event.target will be the input element.
         var td = event.target.parentNode;
+        var tmp = document.createElement("td")
+        console.log(Object.is(td,tmp));
         var tr = td.parentNode; // the row to be removed
         tr.parentNode.removeChild(tr);
     }
 
-    function editerTache() {
 
+    /*Faire apparaitre le formule pour editer la tâche/item */
+    function editerTache() {
+        document.querySelector('.bg-modal').style.display = 'flex';
+    }
+
+    function attribuerResponsable(){
+        var button = event.target;
+        var td = button.parentNode;
+        td.innerHTML = "Christophe";
     }
 
 
@@ -102,6 +125,6 @@ $unwanted_array = array(
         $("tr:odd").css({
             "background-color":"#BFBFBF" });
     });
-</script>
 
+</script>
 </html>
