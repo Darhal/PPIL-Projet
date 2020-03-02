@@ -26,9 +26,10 @@
         </div>
         <div class="col-md-2">
             Supprimer
-            <div class="col-md-7">
-                <img src="/img/delete.png" alt="" width="32" height="32">
+            <div>
+                <img src="./img/delete.png" alt="" width="22" height="22">
             </div>
+
         </div>
     </div>
 </div>
