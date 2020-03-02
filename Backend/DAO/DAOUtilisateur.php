@@ -16,11 +16,6 @@ class DAOUtilisateur extends DAO
 {
     private $tab_name = "Utilisateur";
 
-    function __construct()
-    {
-
-    }
-
     function ajouterDansBDD($utilisateur)
     {
         $attribs = array(
@@ -31,7 +26,7 @@ class DAOUtilisateur extends DAO
             "email" => $utilisateur->email,
             "mdp" => $utilisateur->mdp
         );
-        $bdd = new BDD();
+        $bdd = new BDD("BD.sqlite");
         $bdd->insertRow($this->tab_name,$attribs);
     }
 
@@ -40,9 +35,9 @@ class DAOUtilisateur extends DAO
         // TODO: Implement supprimerDeBDD() method.
     }
 
-    function getByRequete($requete)
+    public function getByRequete($requete)
     {
-        $bdd = new BDD();
+        $bdd = new BDD("BD.sqlite");
         $res = $bdd->fetchResults("Utilisateur","*",$requete);
         return $res;
     }

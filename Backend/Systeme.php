@@ -52,6 +52,9 @@ class Systeme
     public function seConnecter(string $email, string $mdp) : bool {
         $res = false;
 
+        $dao = DAOUtilisateur::getInstance();
+        $req = $dao->getByRequete("email LIKE " . $email . "AND mdp LIKE " . $mdp);
+
         // a remplir
         // chercher dans la BDD l'utilisateur
 
