@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="39141381-bc10-4b99-b6c7-dd2dc9cf6c02" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Views/mesListes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/mesListes.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/mesListes.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +63,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Frontend" />
+    </key>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -77,7 +83,7 @@
       <workItem from="1582787404438" duration="12308000" />
       <workItem from="1583148744057" duration="4658000" />
       <workItem from="1583170402162" duration="1160000" />
-      <workItem from="1583171577802" duration="1299000" />
+      <workItem from="1583171577802" duration="1653000" />
     </task>
     <task id="LOCAL-00001" summary="css pour une liste fait">
       <created>1582741484232</created>
@@ -100,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583153383551</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="liste de listes faite (frontend)">
+      <created>1583172911121</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1583172911121</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,7 +124,8 @@
     <MESSAGE value="css pour une liste fait" />
     <MESSAGE value="liste de listes non fini" />
     <MESSAGE value="liste de liste quasiment fini (manque a mettre numero de ligne, ici mis en dur)" />
-    <option name="LAST_COMMIT_MESSAGE" value="liste de liste quasiment fini (manque a mettre numero de ligne, ici mis en dur)" />
+    <MESSAGE value="liste de listes faite (frontend)" />
+    <option name="LAST_COMMIT_MESSAGE" value="liste de listes faite (frontend)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="268" y="186" width="800" height="677" key="#Deployment" timestamp="1581674822485">
@@ -122,11 +136,16 @@
       <screen x="67" y="27" width="1213" height="997" />
     </state>
     <state x="131" y="182" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1213.997@67.27.1213.997" timestamp="1581675003789" />
-    <state x="318" y="59" width="860" height="807" key="CommitChangelistDialog2" timestamp="1583153383099">
-      <screen x="67" y="27" width="1373" height="873" />
+    <state x="701" y="357" width="609" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1583173215634">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="701" y="357" width="609" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1583173215634" />
+    <state x="406" y="66" width="860" height="807" key="CommitChangelistDialog2" timestamp="1583172910804">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="289" y="64" key="CommitChangelistDialog2/67.27.1213.997@67.27.1213.997" timestamp="1582801306903" />
     <state x="318" y="59" width="860" height="807" key="CommitChangelistDialog2/67.27.1373.873@67.27.1373.873" timestamp="1583153383099" />
+    <state x="406" y="66" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1583172910804" />
     <state x="238" y="113" width="1482" height="879" key="DiffContextDialog" timestamp="1583171661254">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -136,11 +155,12 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="698" y="268" width="580" height="568" key="MultipleFileMergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1583172793786" />
-    <state x="348" y="198" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1583153385172">
-      <screen x="67" y="27" width="1373" height="873" />
+    <state x="446" y="233" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1583172912615">
+      <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="315" y="222" key="Vcs.Push.Dialog.v2/67.27.1213.997@67.27.1213.997" timestamp="1582801312865" />
     <state x="348" y="198" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1373.873@67.27.1373.873" timestamp="1583153385172" />
+    <state x="446" y="233" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1583172912615" />
     <state x="468" y="371" key="com.intellij.ide.util.TipDialog" timestamp="1583171580094">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
