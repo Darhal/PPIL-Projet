@@ -21,6 +21,17 @@
         </table>
         
         <button class="favorite styled" type="button" onclick="ajouteLigne('TableA')">Ajouter une tâche</button>
+
+        <div class="bg-modal">
+            <div class="modal-content">
+                <div class="close">+</div>
+                <form action="">
+                    <input type="text" placeholder="Nouveau nom de l'item">
+                    <a href="" type="button">Modifier</a>
+                </form>
+            </div>
+        </div>
+
     </body>
     
     <script type="text/javascript">
@@ -83,18 +94,24 @@
         function supprimerTache() {
             // event.target will be the input element.
             var td = event.target.parentNode;
+            var tmp = document.createElement("td")
+            console.log(Object.is(td,tmp));
             var tr = td.parentNode; // the row to be removed
             tr.parentNode.removeChild(tr);
         }
 
-        function editerTache() {
 
+        /*Faire apparaitre le formule pour editer la tâche/item */
+        function editerTache() {
+            document.querySelector('.bg-modal').style.display = 'flex';
         }
+
         function attribuerResponsable(){
-            var button = event.target
+            var button = event.target;
             var td = button.parentNode;
-            td.innerHTML = "Christophe"
+            td.innerHTML = "Christophe";
         }
+
 
 
 
@@ -109,6 +126,7 @@
             $("tr:odd").css({
                 "background-color":"#BFBFBF" });
         });
+
     </script>
     
 </html> 
