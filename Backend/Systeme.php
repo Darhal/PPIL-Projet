@@ -1,7 +1,7 @@
 <?php
 
 include_once "Utilisateur.php";
-include_once "Backend/DAO/DAOUtilisateur.php";
+include_once "DAO/DAOUtilisateur.php";
 class Systeme
 {
     private $arrayUtilisateurs = array();  // liste des Utilisateurs

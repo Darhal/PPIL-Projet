@@ -25,12 +25,13 @@ abstract class DAO
     echo A::getInstance()->getName(), "\n";
     */
     protected $BDD;
-    private static $_instance = array();
+    private static $_instances = array();
 
     private function __construct()
     {
-        $this->BDD= new SQLite3("BD.sqlite");
-        $this->BDD.exec('create table if not exists Utilisateur (idutilisateur INTEGER PRIMARY KEY NOT NULL, pseudo VARCHAR(50) NOT NULL, prenom VARCHAR(50), nom VARCHAR(50),email VARCHAR(100) NOT NULL, mdp VARCHAR(50) NOT NULL)');
+        echo $_SERVER['DOCUMENT_ROOT'];
+        $BDD = new SQLite3("");
+        $BDD->exec('create table if not exists Utilisateur (idutilisateur INTEGER PRIMARY KEY NOT NULL, pseudo VARCHAR(50) NOT NULL, prenom VARCHAR(50), nom VARCHAR(50),email VARCHAR(100) NOT NULL, mdp VARCHAR(50) NOT NULL)');
 
     }
     //Singletons should not be cloneable.
@@ -41,12 +42,12 @@ abstract class DAO
         throw new \Exception("Cannot unserialize a singleton.");
     }*/
 
-    public static function getInstance(): DAO {
+    public static function getInstance() {
         $class = get_called_class();
-        if(is_null(self::$_instance[$class])){
-            self::$_instance[$class]=new $class();
+        if(!isset(self::$_instances[$class])){
+            self::$_instances[$class]=new $class();
         }
-        return self::$_instance[$class];
+        return self::$_instances[$class];
     }
     //-----------------------------------functions abstraits
     public abstract function ajouterDansBDD($objet);

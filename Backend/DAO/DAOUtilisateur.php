@@ -10,8 +10,10 @@
  *
  */
 
-include Utilisateur::class;
-include BDD::class;
+include_once "../Utilisateur.php";
+include_once "DAO.php";
+include_once "../../Assets/BD/BDD.php";
+
 class DAOUtilisateur extends DAO
 {
     private $tab_name = "Utilisateur";
