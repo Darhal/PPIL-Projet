@@ -1,7 +1,7 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
 <ul>
-    <li><a class="active" href="home.php">Acceuil</a></li>
+    <li><a class="active" href="home.php">Accueil</a></li>
     <li><a href="#">Profile</a></li>
     <li><a href="liste.php">Mes listes</a></li>
     <li><a href="contribution.php">Contribution</a></li>
