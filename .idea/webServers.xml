@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="22f20394-90d3-44a7-8147-b1885082f50d" name="Maela" url="http://ugocottin.fr">
-        <fileTransfer host="ugocottin.fr" port="22" rootFolder="/maelalaconi" accessType="SFTP">
+        <fileTransfer host="ugocottin.fr" port="22" rootFolder="/dev/maelalaconi" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
