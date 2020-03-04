@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id = $_SESSION["id"];
 //include("../database/database.php");
 $unwanted_array = array(
     'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
@@ -8,21 +9,30 @@ $unwanted_array = array(
     'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
     'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
 );
+
+try {
+	$db = new SQLite3("../BD.sqlite");
+} catch (SQLiteException $e) {
+	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
+}
+
+$sql = "SELECT * FROM Utilisateur WHERE idUtilisateur = " . $id;
+$req = $db->querySingle($sql, true);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
     <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../style.css">
 	<style type="text/css">
     .card {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         max-width: 300px;
         margin: auto;
         text-align: center;
-        font-family: arial;
+	    font-family: -apple-system, arial, serif;
     }
 
     .title {
@@ -48,7 +58,7 @@ $unwanted_array = array(
 <h2 style="text-align:center"></h2>
 <div class="card">
     <img src="img/index.png" style="width:100%">
-    <h1>Prenom Nom</h1>
+    <h1><?php echo $req['prenom'] . " " . $req['nom']?></h1>
     <p class="title">CEO & Founder, Example</p>
     <p >Departement name</p>
     <p>Email : </p>

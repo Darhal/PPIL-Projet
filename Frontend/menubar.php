@@ -1,12 +1,12 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
 <ul>
-    <li><a class="active" href="home.php">Acceuil</a></li>
-    <li><a href="#">Profile</a></li>
-    <li><a href="liste.php">Mes listes</a></li>
-    <li><a href="contribution.php">Contribution</a></li>
-    <li><a href="logout.php">Deconnexion</a></li>
-    <li><a href="about.php">About</a></li>
+    <li><a class="active" href="../index.php"> Accueil </a></li>
+    <li><a href="./profile.php">Profile</a></li>
+    <li><a href="liste.php" class="disabled">Mes listes</a></li>
+    <li><a href="contribution.php" class="disabled">Contribution</a></li>
+    <li><a href="../Login/logout.php">Deconnexion</a></li>
+    <li><a href="about.php" class="disabled">About</a></li>
 
 </ul>
 <!-- Search Wrapper -->
