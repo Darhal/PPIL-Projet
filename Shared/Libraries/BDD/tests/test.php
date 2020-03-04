@@ -1,5 +1,5 @@
 <?php
-    include ("../BDD.php");
+    include_once (getenv('PROJECT_PATH')."/Shared/Libraries/BDD/BDD.php");
 
     $db = new BDD("test.db");
     $db->createTable("test",  array("user" => "VARCHAR(16) PRIMARY KEY", "pass" => "VARCHAR(64)", "num" => "INTEGER"));

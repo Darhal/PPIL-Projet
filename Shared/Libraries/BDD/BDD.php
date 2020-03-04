@@ -13,13 +13,11 @@
     {
         private $file_path;
         private $file_name;
-        private static $DB_PATH = "PPIL-Projet/Assets/BD/";
 
         function __construct($filename) {
-            $file_path = self::$DB_PATH.$filename;
+            $file_path = getenv('PROJECT_PATH').$filename;
             $file_name = $filename;
-            parent::__construct($file_name);
-            // $this->open($file_path);
+            parent::__construct($file_path);
         }
 
         function __destruct() {
@@ -27,12 +25,12 @@
         }
 
         function getFilePath() {
-            return $file_path;
+            return $this->file_path;
         }
 
         function getFileName()
         {
-            return $file_name;
+            return $this->file_name;
         }
 
         function fetchResults($tab_name, $what = "*", $condition = "")
@@ -78,8 +76,8 @@
 
         function insertRows($tab_name, $rows)
         {
-            foreach ($row as $value) {
-                $this->insertRow($tab_name, $row);
+            foreach ($rows as $value) {
+                $this->insertRow($tab_name, $value);
             }
         }
 
