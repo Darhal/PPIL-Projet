@@ -23,7 +23,7 @@ $error = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
 	if (($email != "") && ($password != "")) { // Si l'email et le mot de passe sont définis
 		if (Systeme::seConnecter($email, $password)) {
-			header("location: /Frontend/Profil"); // Redirection vers la page d'accueil
+			header("location: ".getenv('BASE')."/Frontend/Profil"); // Redirection vers la page d'accueil
 		} else {
 			$error = "Une erreur est survenue lors de la connexion (no user returned)";
 		}
@@ -35,4 +35,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
 }
 
 echo $error;
-header("location: /Frontend/Login");
+header("location: ".getenv('BASE')."/Frontend/Login");

@@ -1,27 +1,14 @@
 <?php
 
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
 session_start();
 
 $text = "not connected";
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
+if(Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
-	$id = $_SESSION["id"];
-
-	try {
-		$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
-
-		$sql = /** @lang SQLite */
-			"SELECT * FROM Utilisateur WHERE idUtilisateur = " . $id;
-		// Execution de la requête
-		$req = $db->querySingle($sql, true);
-
-		$text = "connected as " . $req["pseudo"];
-
-		$db->close();
-	} catch (SQLiteException $e) {
-		$text = "connected ?";
-	}
-
+	$pseudo = $_SESSION["username"];
+	$text = "connected as ".$pseudo;
 }
 
 echo "<footer><small class='sticky-bottom'> " . $text . " </small></footer>";
