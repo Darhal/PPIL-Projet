@@ -26,7 +26,7 @@ $req = $db->querySingle($sql, true);
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="CSS/style.css">
+	<link rel="stylesheet" href="../CSS/style.css">
 	<title>Mon compte</title>
 </head>
 <body>

@@ -13,7 +13,16 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     Systeme::Init();
 
     $user = new Utilisateur($_POST['pseudo'], $_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['password']);
-    Systeme::ajouterUtilisateur($user);
+    $err_code = Systeme::ajouterUtilisateur($user);
+
+    if ($err_code) {
+        header('location: /Frontend/Login/index.php?erreur='.$err_code);
+    }
+
+    if (Systeme::seConnecter($user->email, $user->mdp)){
+        // Redirection vers la page d'accueil
+		header('location: /Frontend/Profil');   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
+    }
 }
 else{     //Si les informations ne sont pas remplies
 	header('location: /Frontend/Login/index.php?erreur=2');

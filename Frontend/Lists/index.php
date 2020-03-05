@@ -15,7 +15,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="CSS/style.css">
+	<link rel="stylesheet" type="text/css" href="../CSS/style.css">
 	<title>Procrast - Mes Listes</title>
 </head>
 <body>

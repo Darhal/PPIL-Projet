@@ -7,8 +7,10 @@ error_reporting(E_ALL);
 // Démarrage de la session
 session_start();
 
+Systeme::Init();
+
 // Vérification si l'utilisateur est déjà connecté
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+if(Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
 	header("location: /Frontend/Profil");
 	exit;
@@ -18,35 +20,10 @@ $email = "";
 $password = "";
 $error = "";
 
-// Si la requête est de type POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (isset($_POST['email'])) {
-		$email = SQLite3::escapeString($_POST['email']);
-		$email = trim($email);
-	}
-
-	if (isset($_POST['password'])) {
-		$password = SQLite3::escapeString($_POST['password']);
-		$password = trim($password);
-	}
-
-	// Si l'email et le mot de passe sont définis
-	if (($email != "") && ($password != "")) {
-		Systeme::Init();
-		
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
+	if (($email != "") && ($password != "")) { // Si l'email et le mot de passe sont définis
 		if (Systeme::seConnecter($email, $password)) {
-
-			if (session_status() == PHP_SESSION_DISABLED) {
-				session_start();
-			}
-
-			// On stocke les données dans la session
-			$_SESSION["logged_in"] = true;
-			$_SESSION["id"] = $req['idUtilisateur'];
-			$_SESSION["username"] = $req['pseudo'];
-
-			// Redirection vers la page d'accueil
-			header("location: /Frontend/Profil");
+			header("location: /Frontend/Profil"); // Redirection vers la page d'accueil
 		} else {
 			$error = "Une erreur est survenue lors de la connexion (no user returned)";
 		}
