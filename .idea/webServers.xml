@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="4b42df5e-d26a-4d01-aacc-bca64a3590a0" name="Ugo's STFP" url="http://ugocottin.fr">
-        <fileTransfer host="ugocottin.fr" port="22" accessType="SFTP">
+        <fileTransfer host="ugocottin.fr" port="22" rootFolder="/ppil.ugocottin.fr/dev/lyndabattikh" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

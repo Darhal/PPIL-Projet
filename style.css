@@ -1,22 +1,90 @@
-.row {
-    margin-bottom: 15px;
-}
-
-.row [class^="col-"] {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #eee;
-    border: 1px solid #ddd;
-    background-color: rgba(86,61,124,.15);
-    border: 1px solid rgba(86,61,124,.2);
+body{
+    background: #F0FFFF;
 }
 
 
-.bi::before {
+/*Partie MenuBar*/
+ul {
+    background-color: #555;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+li {
+    float: left;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+/*Partie Recherche et notification*/
+
+form {
+    padding: 3px;
+    border: 1px solid #f1f1f1;
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    color: #008B8B ;
+    border-radius: 20px;
+}
+form button{
+    border: none;
+    outline: 0;
     display: inline-block;
-    content: "";
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/></svg>");
-    background-repeat: no-repeat;
-    background-size: 1rem 1rem;
+    padding: 5px;
+    color: white;
+    background-color: #555;
+    width: 5%;
+    font-size: 15px;
+    border-radius: 20px;
+}
+.notification {
+    background-color: #555;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    display: inline-block;
+
+    border-radius: 2px;
+}
+.notification:hover {
+    background: red;
+}
+.notification .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+form  a button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 5px;
+    color: white;
+    background-color: #555;
+    width: 100%;
+    font-size: 15px;
+    border-radius: 20px;
 }
 
