@@ -76,8 +76,13 @@ class Systeme
         return isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true;
     }
 
-    public static function seDeconnecter(int $idUtilisateur){
-        // a remplir
+    public static function seDeconnecter(){
+        if (session_status() == PHP_SESSION_ACTIVE) {
+            $_SESSION["logged_in"] = false;
+            unset($_SESSION["id"]);
+            unset($_SESSION["username"]);
+            unset($_SESSION["email"]);
+        }
     }
 
     public static function getUserByEmail($email)
