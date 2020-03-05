@@ -15,7 +15,15 @@ class Utilisateur
     public $nom;
     public $email;
     public $mdp;
-    public $arrayListeTaches = array();
+
+    function __construct($pseudo, $prenom, $nom, $email, $mdp)
+    {
+        $this->pseudo = $pseudo;
+        $this->prenom = $prenom;
+        $this->nom = $nom;
+        $this->email = $email;
+        $this->mdp = $mdp;
+    }
 }
 
 ?>
