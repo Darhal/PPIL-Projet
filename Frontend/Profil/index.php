@@ -1,8 +1,11 @@
 <?php
-set_include_path("/var/www/ppil.ugocottin.fr/");
+// set_include_path("/var/www/ppil.ugocottin.fr/");
+
+include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 session_start();
-$id = $_SESSION["id"];
+$email = $_SESSION["email"];
 
 $unwanted_array = array(
 	'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
@@ -12,14 +15,13 @@ $unwanted_array = array(
 	'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
 );
 
-try {
-	$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
-} catch (SQLiteException $e) {
-	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
-}
+Systeme::Init();
 
-$sql = "SELECT * FROM Utilisateur WHERE idUtilisateur = " . $id;
-$req = $db->querySingle($sql, true);
+$user = Systeme::getUserByEmail($email);
+
+if ($user == null){
+	die("ERROR: Unable to find user by email");
+}
 
 ?>
 <!DOCTYPE html>
@@ -35,9 +37,9 @@ $req = $db->querySingle($sql, true);
 <div class="container align-center">
 	<div class="text-center">
 		<img src="/Assets/img/SVG/Fichier%201.svg" class="w-30">
-		<h1><?php echo ucfirst($req['prenom']) . " " . ucfirst($req['nom'])?></h1>
-		<h4><?php echo ucfirst($req["pseudo"]) ?></h4>
-		<p><?php echo ucfirst($req["email"]) ?></p>
+		<h1><?php echo ucfirst($user->prenom) . " " . ucfirst($user->nom)?></h1>
+		<h4><?php echo ucfirst($user->pseudo) ?></h4>
+		<p><?php echo ucfirst($user->email) ?></p>
 		<div class="container">
 			<button onclick="window.location.href='edit.php'"> Modifier le profil </button>
 			<div>
@@ -46,5 +48,5 @@ $req = $db->querySingle($sql, true);
 	</div>
 </div>
 </body>
-<?php include_once "Assets/footer.php" ?>
+<?php include_once getenv('BASE')."/Shared/footer.php" ?>
 </html>

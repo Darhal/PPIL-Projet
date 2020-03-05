@@ -16,7 +16,7 @@ class Systeme
         self::$dao_user = new DAOUtilisateur($bdd);
     }
 
-    public function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
+    public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
 
     }
     
@@ -31,7 +31,7 @@ class Systeme
         return 0;
     }
 
-    public function supprimerUtilisateur(int $utilisateurID) {
+    public static function supprimerUtilisateur(int $utilisateurID) {
 
     }
 
@@ -50,11 +50,13 @@ class Systeme
             return false;
         }
 
-        $req = self::$dao_user->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'")[0];
+        $req = self::$dao_user->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
 
         if (sizeof($req) != 1){
             return false;
         }
+
+        $req = $req[0];
 
         if (session_status() == PHP_SESSION_DISABLED) {
             session_start();
@@ -64,6 +66,7 @@ class Systeme
         $_SESSION["logged_in"] = true;
         $_SESSION["id"] = $req['email'];
         $_SESSION["username"] = $req['pseudo'];
+        $_SESSION["email"] = $req['email'];
 
         return true;
     }
@@ -73,8 +76,29 @@ class Systeme
         return isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true;
     }
 
-    public function seDeconnecter(int $idUtilisateur){
+    public static function seDeconnecter(int $idUtilisateur){
         // a remplir
+    }
+
+    public static function getUserByEmail($email)
+    {
+        if (isset($email)) {
+            $email = SQLite3::escapeString($email);
+            $email = trim($email);
+        }else{
+            return null;
+        }
+    
+        $req = self::$dao_user->getByRequete("email LIKE '".$email."'");
+
+        if (sizeof($req) != 1){
+            return null;
+        }
+
+        $req = $req[0];
+
+        $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
+        return $user;
     }
 }
 

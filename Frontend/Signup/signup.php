@@ -14,22 +14,19 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
 
     $user = new Utilisateur($_POST['pseudo'], $_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['password']);
     $err_code = Systeme::ajouterUtilisateur($user);
-    echo "FIRST: ".$err_code;
 
     if ($err_code) {
-        echo $err_code;
-        header("location: ".getenv('BASE')."/Frontend/Login/index.php?erreur=".$err_code);
+        header("location: ../Login/index.php?erreur=".$err_code);
     }
 
     if (Systeme::seConnecter($user->email, $user->mdp)){
-        echo "CONNECT: ".$err_code;
         // Redirection vers la page d'accueil
-		header("location: ".getenv('BASE')."/Frontend/Profil");   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
+		header("location: ../Profil");   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
     }
 }
 else{     //Si les informations ne sont pas remplies
     echo "REDIR: ";
-	header("location: ".getenv('BASE')."/Frontend/Login/index.php?erreur=2");
+	header("location: ../Login/index.php?erreur=2");
 }
 
 ?>
