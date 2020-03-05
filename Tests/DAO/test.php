@@ -2,9 +2,14 @@
     include_once (getenv('PROJECT_PATH')."/Backend/Utilisateur/Utilisateur.php");
     include_once (getenv('PROJECT_PATH')."/Backend/Utilisateur/Systeme.php");
 
-    // string $pseudo, string $prenom, string $nom, string $email, string $mdp
-    $user = Systeme::getInstance()->ajouterUtilisateur(
-        "pseudo", "prenom", "nom", "email", "mdp"
-    );
-    echo Systeme::getInstance()->seConnecter("email", "mdp");
+    Systeme::Init();
+
+    $user = new Utilisateur();
+    $user->pseudo = "pseudo1";
+    $user->prenom = "prenom1";
+    $user->nom = "nom1";
+    $user->email = "email1";
+    $user->mdp = "mdp1";
+    Systeme::ajouterUtilisateur($user);
+    echo Systeme::seConnecter("email1", "mdp1");
 ?>

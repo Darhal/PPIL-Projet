@@ -6,53 +6,27 @@ include_once getenv('PROJECT_PATH')."/Backend/DAO/DAOUtilisateur.php";
 class Systeme
 {
     private $arrayUtilisateurs = array();  // liste des Utilisateurs
-    private $dao = null;
-    private static $instance = null;
+    private static $dao = null;
 
-
-    private function __construct()
+    public static function Init()
     {
-        $this->dao = DAOUtilisateur::getInstance();
-    }
-
-    private function __destruct()
-    {
-        // TODO: Implement __destruct() method.
-    }
-
-    public static function getInstance() {
-        if(is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-        
-        return self::$instance;
+        self::$dao = new DAOUtilisateur();
     }
 
     public function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
 
     }
     
-    public function ajouterUtilisateur(string $pseudo, string $prenom, string $nom, string $email, string $mdp) {
-        $nouvelUtilisateur = new Utilisateur();  // c'est quoi le SessionID?
-        $nouvelUtilisateur->setPseudo($pseudo);
-        $nouvelUtilisateur->setPrenom($prenom);
-        $nouvelUtilisateur->setNom($nom);
-        $nouvelUtilisateur->setEmail($email);
-        $nouvelUtilisateur->setMdp($mdp);
-
-        array_push($this->arrayUtilisateurs, $nouvelUtilisateur);
-
-        //Ajouter l'utilisateur à la BDD
-        $this->dao->ajouterDansBDD($nouvelUtilisateur);
-        return $nouvelUtilisateur;
+    public static function ajouterUtilisateur($utilisateur) {
+        self::$dao->ajouterDansBDD($utilisateur);
     }
 
     public function supprimerUtilisateur(int $utilisateurID) {
 
     }
 
-    public function seConnecter(string $email, string $mdp) : bool {
-        $req = $this->dao->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
+    public static function seConnecter(string $email, string $mdp) : bool {
+        $req = self::$dao->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
 
         if (sizeof($req) == 0){
             return false;

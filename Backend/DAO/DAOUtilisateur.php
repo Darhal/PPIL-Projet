@@ -16,12 +16,12 @@ include_once getenv('PROJECT_PATH')."/Backend/DAO/DAO.php";
 
 class DAOUtilisateur extends DAO
 {
-    private $tab_name = "Utilisateur";
+    private static $tab_name = "Utilisateur";
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("users.db");
-        $this->BDD->createTable($this->tab_name,
+        $this->BDD->createTable(self::$tab_name,
             array(
                 "email" => "TEXT PRIMARY KEY NOT NULL",
                 "pseudo" => "TEXT NOT NULL", 
@@ -35,13 +35,13 @@ class DAOUtilisateur extends DAO
     function ajouterDansBDD($utilisateur)
     {
         $attribs = array(
-            "pseudo" => $utilisateur->getPseudo(),
-            "nom" => $utilisateur->getNom(),
-            "prenom" => $utilisateur->getPrenom(),
-            "email" => $utilisateur->getEmail(),
-            "mdp" => $utilisateur->getMdp()
+            "pseudo" => $utilisateur->pseudo,
+            "nom" => $utilisateur->nom,
+            "prenom" => $utilisateur->prenom,
+            "email" => $utilisateur->email,
+            "mdp" => $utilisateur->mdp
         );
-        $this->BDD->insertRow($this->tab_name, $attribs);
+        $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
     function supprimerDeBDD($utilisateur)
