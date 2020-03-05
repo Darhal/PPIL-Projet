@@ -1,4 +1,4 @@
-<?php set_include_path("/var/www/live.ugocottin.fr/"); ?>
+<?php set_include_path("/var/www/ppil.ugocottin.fr/"); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

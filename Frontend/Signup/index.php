@@ -1,17 +1,17 @@
-<?php set_include_path("/var/www/live.ugocottin.fr/"); ?>
+<?php set_include_path("/var/www/ppil.ugocottin.fr/"); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
 	<title>S'inscrire</title>
-	<link rel="stylesheet" href="../style.css">
+	<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <?php include_once "Assets/navbar.php"; ?>
 <div class="container">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
-	<div class="container-30 center-div">
+	<div class="container w-30 center-div">
 		<form method="post" action="signup.php">
 
 			<div class="form-group">
@@ -46,6 +46,19 @@
 
 			<input type="submit" value="S'inscrire">
 		</form>
+
+		<?php
+		if(isset($_GET['erreur'])){
+			$err = $_GET['erreur'];
+			if($err==1) {
+				echo "<p style='color:red'>email déjà utilisé, veuillez changer </p>";
+			}
+			if($err==2) {
+				echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
+			}
+		}
+		?>
+
 		<button onclick="window.location.href='/'"> Retour </button>
 	</div>
 </div>

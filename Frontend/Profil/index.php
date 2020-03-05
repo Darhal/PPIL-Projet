@@ -1,5 +1,5 @@
 <?php
-set_include_path("/var/www/live.ugocottin.fr/");
+set_include_path("/var/www/ppil.ugocottin.fr/");
 
 session_start();
 $id = $_SESSION["id"];
@@ -13,13 +13,14 @@ $unwanted_array = array(
 );
 
 try {
-	$db = new SQLite3(getenv("ROOT") . "Assets/BD.sqlite");
+	$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
 } catch (SQLiteException $e) {
 	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
 }
 
 $sql = "SELECT * FROM Utilisateur WHERE idUtilisateur = " . $id;
 $req = $db->querySingle($sql, true);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

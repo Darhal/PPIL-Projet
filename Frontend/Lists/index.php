@@ -1,4 +1,4 @@
-<?php set_include_path("/var/www/live.ugocottin.fr/");
+<?php set_include_path("/var/www/ppil.ugocottin.fr/");
 
 session_start();
 
@@ -42,7 +42,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 		<tbody>
 		<?php
 
-		$db = new SQLite3(getenv("ROOT") . "Assets/BD.sqlite");
+		$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
 
 		$sql = "SELECT * FROM Liste WHERE idUtilisateur = " . $uid;
 		$req = $db->query($sql);
