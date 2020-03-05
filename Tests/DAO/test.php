@@ -4,13 +4,8 @@
 
     Systeme::Init();
 
-    $user = new Utilisateur();
-    $user->pseudo = "pseudo1";
-    $user->prenom = "prenom1";
-    $user->nom = "nom1";
-    $user->email = "email1";
-    $user->mdp = "mdp1";
+    $user = new Utilisateur("pseudo2", "prenom2", "nom2", "email2", "mdp2");
     Systeme::ajouterUtilisateur($user);
-    echo Systeme::seConnecter("email1", "mdp1");
+    echo Systeme::seConnecter("email2", "mdp2");
     echo "test";
 ?>
