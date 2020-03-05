@@ -12,4 +12,5 @@
     $user->mdp = "mdp1";
     Systeme::ajouterUtilisateur($user);
     echo Systeme::seConnecter("email1", "mdp1");
+    echo "test";
 ?>
