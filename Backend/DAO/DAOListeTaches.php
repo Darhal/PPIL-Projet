@@ -46,7 +46,7 @@ class DAOListeTaches extends DAO
 
 
     public function supprimerDeBDD($objet){
-
+        //TODO
     }
 
     public function getByRequete($requete){
