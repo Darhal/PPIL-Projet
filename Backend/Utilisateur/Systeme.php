@@ -31,7 +31,7 @@ class Systeme
     public static function seConnecter(string $email, string $mdp) : bool {
         $req = self::$dao_user->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
 
-        if (sizeof($req) == 0){
+        if (sizeof($req) != 1){
             return false;
         }
 

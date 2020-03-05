@@ -14,13 +14,6 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	exit;
 }
 
-$db = null;
-try {
-	$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
-} catch (SQLiteException $e) {
-	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
-}
-
 $email = "";
 $password = "";
 $error = "";
@@ -39,13 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	// Si l'email et le mot de passe sont définis
 	if (($email != "") && ($password != "")) {
-		// Requête SQL
-		$sql = "SELECT * FROM Utilisateur WHERE email = '" . $email . "' AND mdp = '" . $password . "'";
-		// Execution de la requête
-		$req = $db->querySingle($sql, true);
-
-		// Si un seul résultat
-		if (count($req) > 0) {
+		Systeme::Init();
+		
+		if (Systeme::seConnecter($email, $password)) {
 
 			if (session_status() == PHP_SESSION_DISABLED) {
 				session_start();

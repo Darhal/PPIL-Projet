@@ -1,5 +1,5 @@
 <?php
-set_include_path("/var/www/ppil.ugocottin.fr/");
+// set_include_path("/var/www/ppil.ugocottin.fr/");
 
 session_start();
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
@@ -13,7 +13,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="/style.css">
+	<link rel="stylesheet" type="text/css" href="CSS/style.css">
 	<title>Procrast - Se connecter</title>
 </head>
 <body>
