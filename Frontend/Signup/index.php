@@ -1,3 +1,4 @@
+<?php set_include_path("/var/www/live.ugocottin.fr/"); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,7 +7,7 @@
 	<link rel="stylesheet" href="../style.css">
 </head>
 <body>
-
+<?php include_once "Assets/navbar.php"; ?>
 <div class="container">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
@@ -48,6 +49,6 @@
 		<button onclick="window.location.href='/'"> Retour </button>
 	</div>
 </div>
-
+<?php include_once "Assets/footer.php"; ?>
 </body>
 </html>
