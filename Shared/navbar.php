@@ -1,5 +1,8 @@
 <?php
 
+
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
 session_start();
 
 $text = "Connexion";
@@ -7,7 +10,7 @@ $target = "/Frontend/Login/";
 $account = $target;
 $tasks = $target;
 $lists = $target;
-if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true) {
+if (Systeme::estConnecte()) {
 	$text = "Déconnexion";
 	$target = "/Frontend/Login/logout.php";
 	$account = "/Frontend/Profil";
