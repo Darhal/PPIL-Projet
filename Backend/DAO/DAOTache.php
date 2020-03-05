@@ -24,8 +24,8 @@ class DAOTache extends DAO
         $this->BDD->createTable(self::$tab_name,
             array(
                 "idTache" => "INTEGER PRIMARY KEY NOT NULL",
-                "nom" => "TEXT NOT NULL",
-                "statut" => "INTEGER",
+                "nom" => "VARCHAR NOT NULL",
+                "statut" => "VARCHAR",
 //               "INTEGER FOREIGN KEY(Liste) NOT NULL"
 //            A ADAPTER en fonction de https://www.sqlite.org/foreignkeys.html pour la foregin key
             )
@@ -45,7 +45,7 @@ class DAOTache extends DAO
         //TODO:
         // Vérifier que c'est bien les bon noms utilisés par la BDD
         $attribs = array(
-            "id" => $tache->id,
+            "idTache" => $tache->id,
             "nom" => $tache->nom,
             "statut" => $tache->finie,
             "idListe" => $tache->idListe,
