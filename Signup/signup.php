@@ -25,30 +25,31 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     else {      //On peut créer le compte
 
         $sql = "INSERT INTO utilisateur VALUES(NULL,'".$login."','".$prenom."','".$nom."','".$email."','".$password."') ";
-        echo $sql;
-        $valeu = $db->exec($sql);
-        echo "  bool :  ";
-        echo $valeu;
+
+        $db->exec($sql);
+
+
+
+        $sql = "SELECT * FROM Utilisateur WHERE email = '" . $email . "' AND mdp = '" . $password . "'";
+        // Execution de la requête
+        $req = $db->querySingle($sql, true);
+        // Si un seul résultat
+        if (count($req) > 0) {
+            if (session_status() == PHP_SESSION_DISABLED) {
+                session_start();
+            }
+            // On stocke les données dans la session
+            $_SESSION["logged_in"] = true;
+            $_SESSION["id"] = $req['idUtilisateur'];
+            $_SESSION["username"] = $req['pseudo'];
+
+            // Redirection vers la page d'accueil
+            header('location: ../index.php');   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
+
+        }
     }
 
 
-    $sql = "SELECT * FROM Utilisateur WHERE email = '" . $email . "' AND mdp = '" . $password . "'";
-		// Execution de la requête
-		$req = $db->querySingle($sql, true);
-		// Si un seul résultat
-		if (count($req) > 0) {
-			if (session_status() == PHP_SESSION_DISABLED) {
-				session_start();
-			}
-			// On stocke les données dans la session
-			$_SESSION["logged_in"] = true;
-			$_SESSION["id"] = $req['idUtilisateur'];
-			$_SESSION["username"] = $req['pseudo'];
-
-			// Redirection vers la page d'accueil
-			 header('location: ../index.php');   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
-
-		}
 
 }
 else{     //Si les informations ne sont pas remplies
