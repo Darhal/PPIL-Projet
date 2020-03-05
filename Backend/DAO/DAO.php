@@ -10,7 +10,11 @@
  *
  */
 
+<<<<<<< HEAD
 include_once getenv('BASE')."/Shared/Libraries/BDD.php";
+=======
+include_once getenv('BASE')."Shared/Libraries/BDD.php";
+>>>>>>> Dev_Omar_Chida
 
 abstract class DAO
 {
