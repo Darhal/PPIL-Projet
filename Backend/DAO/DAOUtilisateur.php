@@ -10,15 +10,9 @@
  *
  */
 
-<<<<<<< HEAD
-include_once getenv('BASE')."/Shared/Libraries/BDD.php";
-include_once getenv('BASE')."/Backend/Utilisateur/Utilisateur.php";
-include_once getenv('BASE')."/Backend/DAO/DAO.php";
-=======
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAO.php";
->>>>>>> Dev_Omar_Chida
 
 class DAOUtilisateur extends DAO
 {
