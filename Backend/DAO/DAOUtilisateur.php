@@ -18,9 +18,9 @@ class DAOUtilisateur extends DAO
 {
     private static $tab_name = "Utilisateur";
 
-    public function __construct($bdd)
+    public function __construct($bdd = null)
     {
-        parent::__construct();
+        parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
                 "email" => "TEXT PRIMARY KEY NOT NULL",

@@ -2,15 +2,17 @@
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
 include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
+include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
 {
     private static $bdd = null;
     private static $dao_user = null;
+    private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
     {
-        $bdd = new BDD();
+        $bdd = new BDD(self::$DEFAULT_DB_FILE);
         self::$dao_user = new DAOUtilisateur($bdd);
     }
 
