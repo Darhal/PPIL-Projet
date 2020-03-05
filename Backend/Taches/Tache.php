@@ -8,13 +8,16 @@ class Tache
     private $nom;
     private $finie;
     private $responsable;
+    private $idListe;
 
-    function __construct(Utilisateur $u, int $i, string $n)
+    function __construct(Utilisateur $u, int $i, string $n, int $idListe)
     {
         $this->responsable = $u;
         $this->id = $i;
         $this->nom = $n;
         $this->finie = false;
+        $this->idListe = $idListe;
+
     }
 
 

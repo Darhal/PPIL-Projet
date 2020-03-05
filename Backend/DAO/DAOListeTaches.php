@@ -3,7 +3,7 @@
  * Projet Procrast
  * Classe DAOListeTaches
  * L'implentation de "Design Pattern"s: Data access object, Singleton
- * Intermediare entre la base de données et php pour les donnees qui concernent la classe Utilisateur
+ * Intermediare entre la base de données et php pour les donnees qui concernent la classe ListeTaches
  * @author: Jonathan Pierrel
  * @date:05/03/2020
  * @version: 1.0
