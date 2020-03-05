@@ -15,5 +15,25 @@ include_once getenv('BASE')."Backend/DAO/DAO.php";
 
 class DAONotif
 {
+    private static $tab_name = "Notification";
+
+    public function __construct($bdd = null)
+    {
+        parent::__construct($bdd);
+        $this->BDD->createTable(self::$tab_name,
+            array(
+                "idNotif" => "INTEGER PRIMARY KEY NOT NULL",
+                "msg" => "VARCHAR NOT NULL",
+                "statut" => "VARCHAR",
+                "nature" => "VARCHAR",
+                "idListe" => "INTEGER",
+                "idTache" => "INTEGER"
+            )
+        );
+        //TODO: OMARR :il faut ajouter les contraintes pour clés étrangers (id Liste et idTache)en precisant ON DELETE <mode>
+        //FOREIGN KEY(idListe) REFERENCES Liste(idListe) ON DELETE CASCADE,
+        //FOREIGN KEY(idTache) REFERENCES Tache(idTache) ON DELETE CASCADE
+    }
+
 
 }
