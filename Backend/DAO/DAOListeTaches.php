@@ -24,7 +24,7 @@ class DAOListeTaches extends DAO
         $this->BDD->createTable(self::$tab_name,
             array(
                 "idListe" => "INTEGER PRIMARY KEY NOT NULL",
-                "nom" => "TEXT NOT NULL",
+                "nom" => "VARCHAR NOT NULL",
                 "dateDebut" => "DATE",
                 "dateFin" => "DATE",
 //                "idUtilisateur" => "INTEGER FOREIGN KEY(Utilisateur) NOT NULL"
