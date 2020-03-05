@@ -10,26 +10,38 @@
  *
  */
 
-include_once getenv('PROJECT_PATH')."/Utilisateur.php";
-include_once "DAO.php";
-include_once "../../Assets/BD/BDD.php";
+include_once getenv('PROJECT_PATH')."/Shared/Libraries/BDD.php";
+include_once getenv('PROJECT_PATH')."/Backend/Utilisateur/Utilisateur.php";
+include_once getenv('PROJECT_PATH')."/Backend/DAO/DAO.php";
 
 class DAOUtilisateur extends DAO
 {
     private $tab_name = "Utilisateur";
 
+    function __construct()
+    {
+        parent::__construct("users.db");
+        $this->BDD->createTable($this->tab_name,
+            array(
+                "email" => "TEXT PRIMARY KEY NOT NULL",
+                "pseudo" => "TEXT NOT NULL", 
+                "prenom" => "TEXT",
+                "nom" => "TEXT",
+                "mdp" => "TEXT NOT NULL"
+            )
+        );
+    }
+
     function ajouterDansBDD($utilisateur)
     {
         $attribs = array(
-            "id" => "NULL",
-            "pseudo" => $utilisateur->pseudo,
-            "nom" => $utilisateur->nom,
-            "prenom" => $utilisateur->prenom,
-            "email" => $utilisateur->email,
-            "mdp" => $utilisateur->mdp
+            "pseudo" => $utilisateur->getPseudo(),
+            "nom" => $utilisateur->getNom(),
+            "prenom" => $utilisateur->getPrenom(),
+            "email" => $utilisateur->getEmail(),
+            "mdp" => $utilisateur->getMdp()
         );
-        $bdd = new BDD("BD.sqlite");
-        $bdd->insertRow($this->tab_name,$attribs);
+        $this->BDD->insertRow($this->tab_name, $attribs);
     }
 
     function supprimerDeBDD($utilisateur)
@@ -37,17 +49,17 @@ class DAOUtilisateur extends DAO
         // TODO: Implement supprimerDeBDD() method.
     }
 
-    public function getByRequete($requete)
+    function getUserByEmail($email)
     {
-        $bdd = new BDD("BD.sqlite");
-        $res = $bdd->fetchResults("Utilisateur","*",$requete);
+        $res = $this->BDD->fetchResults("Utilisateur", "*", "email = '$email'");
         return $res;
     }
 
-
-
-    public function getBDD()
+    function getByRequete($requete = "")
     {
-        return $this->BDD;
+        $res = $this->BDD->fetchResults("Utilisateur", "*", $requete);
+        return $res;
     }
 }
+
+?>

@@ -10,59 +10,41 @@
  *
  */
 
-include_once getenv('PROJECT_PATH')."/Shared/Libraries/BDD/BDD.php";
+include_once getenv('PROJECT_PATH')."/Shared/Libraries/BDD.php";
 
 abstract class DAO
 {
-    /*cette classe est de type abstrait et singleton
-    exemple d'implentation:
-    class A extends Base
-    {
-    public function getName()
-    {
-        return 'A';
-    }
-    }
-    exemple d'utilisation:
-    echo A::getInstance()->getName(), "\n";
-    */
-    protected $BDD;
     private static $_instances = array();
+    private static $DEFAULT_DB_FILE = "db.sql";
+    protected $BDD;
 
-    private function __construct()
+    protected function __construct($db_name)
     {
-        $BDD = new BDD("db.sql");
-        $BDD->createTable("Utilisateur",
-            array(
-                "idutilisateur" => "INTEGER PRIMARY KEY NOT NULL", 
-                "pseudo" => "VARCHAR(50) NOT NULL", 
-                "prenom" => "VARCHAR(50)",
-                "nom" => "VARCHAR(50)",
-                "email" => "VARCHAR(100) NOT NULL",
-                "mdp" => "VARCHAR(50) NOT NULL",
-            )
-        );
+        $this->BDD = new BDD($db_name == "" ? self::$DEFAULT_DB_FILE : $db_name);
     }
-    //Singletons should not be cloneable.
+
+    // Singletons should not be cloneable.
     protected function __clone() { }
-    /*//Singletons should not be restorable from strings.
-    public function __wakeup()
-    {
-        throw new \Exception("Cannot unserialize a singleton.");
-    }*/
 
     public static function getInstance() {
         $class = get_called_class();
+
         if(!isset(self::$_instances[$class])){
-            self::$_instances[$class]=new $class();
+            self::$_instances[$class] = new $class();
         }
+
         return self::$_instances[$class];
     }
+
+    public function getBDD()
+    {
+        return $BDD;
+    }
+
     //-----------------------------------functions abstraits
     public abstract function ajouterDansBDD($objet);
     public abstract function supprimerDeBDD($objet);
     public abstract function getByRequete($requete);
-    public abstract function getBDD();
-
-
 }
+
+?>
