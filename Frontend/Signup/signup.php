@@ -11,13 +11,13 @@ session_start();
 // Vérification si l'utilisateur est déjà connecté
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 	// Redirection vers la page d'accueil
-	header("location: ../Frontend/profile.php");
+	header("location: /Frontend/Profil/index.php");
 	exit;
 }
 
 $db = null;
 try {
-	$db = new SQLite3("../BD.sqlite");
+	$db = new SQLite3(getenv("ROOT") . "Assets/BD.sqlite");
 } catch (SQLiteException $e) {
 	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
 }

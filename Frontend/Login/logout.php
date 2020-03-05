@@ -8,4 +8,4 @@ if (session_status() == PHP_SESSION_ACTIVE) {
 	unset($_SESSION["username"]);
 }
 
-header("location: ../index.php");
+header("location: /index.php");

@@ -1,8 +1,10 @@
 <?php
+set_include_path("/var/www/live.ugocottin.fr/");
+
 session_start();
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 	// Redirection vers la page d'accueil
-	header("location: ../Frontend/profile.php");
+	header("location: /Frontend/Profil");
 	exit;
 }
 ?>
@@ -15,12 +17,12 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 	<title>Procrast - Se connecter</title>
 </head>
 <body>
-
+<?php include_once "Assets/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Connexion </h1>
 <div class="spacer"></div>
 
-<form class="container auto" method="post" action="./login.php">
+<form class="container auto" method="post" action="login.php">
 	<div class="container-30 auto">
 		<div class="form-group">
 			<h2> Email </h2>
@@ -35,5 +37,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 		<input type="submit" value="Se connecter">
 	</div>
 </form>
+
+<?php include_once "Assets/footer.php"; ?>
 </body>
 </html>

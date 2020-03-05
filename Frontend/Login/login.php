@@ -8,15 +8,15 @@ error_reporting(E_ALL);
 session_start();
 
 // Vérification si l'utilisateur est déjà connecté
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	// Redirection vers la page d'accueil
-	header("location: ../Frontend/profile.php");
+	header("location: /Frontend/Profil");
 	exit;
 }
 
 $db = null;
 try {
-	$db = new SQLite3("../BD.sqlite");
+	$db = new SQLite3(getenv("ROOT") . "Assets/BD.sqlite");
 } catch (SQLiteException $e) {
 	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
 }
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$_SESSION["username"] = $req['pseudo'];
 
 			// Redirection vers la page d'accueil
-			header("location: ../Frontend/profile.php");
+			header("location: /Frontend/Profil");
 		} else {
 			$error = "Une erreur est survenue lors de la connexion (no user returned)";
 		}
@@ -69,4 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 echo $error;
-header("location: index.php");
+header("location: /Frontend/Login");
