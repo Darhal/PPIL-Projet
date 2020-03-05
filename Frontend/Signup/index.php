@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>S'inscrire</title>
-	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
 <?php 
