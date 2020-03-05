@@ -8,17 +8,6 @@
     <title>Mes Listes</title>
     <h3>Mes listes</h3>
 
-    <?php
-    session_start();
-    // Connexion
-	try {
-		$bd = new SQLite3('BD.sqlite');
-	} catch (SQLiteException $e) {
-		die("La création ou l'ouverture de la base a échouée ".
-			"pour la raison suivante: ".$e->getMessage());
-    }
-    ?>
-
 </head>
 <body>
     <table border=2 id="TableA">
@@ -28,7 +17,7 @@
             <td id="proprio_row0">Propriétaire</td>
             <td id="debut_row0">Date début</td>
             <td id="fin_row0">Date fin</td>
-            <td id="0">Editer</td>
+            <td id="editer_row0">Editer</td>
             <td id="supp_row0">Suppression</td>
             <td id="membre_row0">Membres</td>
         </tr>
@@ -101,8 +90,11 @@
             // Insère une cellule dans la ligne à l'indice 4
             var editer = nouvelleLigne.insertCell(4);
 
-            editer.innerHTML = "<img src='../images/edit.png' onclick='edit_row("+rowid+")' style='width:20px;height:20px;' />";
 
+            editer.innerHTML = "<img src='../images/edit.png' style='width:20px;height:20px;' />";
+
+            editer.innerHTML = "<img src='../images/edit.png' onclick='edit_row("+rowid+")' style='width:20px;height:20px;' />";
+            editer.id = "editer_row"+rowid ;
 
             // Insère une cellule dans la ligne à l'indice 5
             var suppression = nouvelleLigne.insertCell(5);
@@ -116,7 +108,7 @@
 
             // Créer le bouton membre
             membre.innerHTML = '<img src="../images/member.png" style="width:20px;height:20px;"/>';
-            membre.onclick = consulterMembres;
+            membre.onclick = showUser;
         }
 
         function consulterMembres() {
@@ -172,6 +164,33 @@
             proprio.innerText="proprio";
             date_deb.innerText="deb";
         }
+
+        function showUser(){
+           /* if (str == "") {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {*/
+            console.log("debut dans show user") ;
+
+            if (window.XMLHttpRequest) {
+                    // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else {
+                    // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function () {
+
+                   // if (this.readyState == 4 && this.status == 200) {
+                    console.log("la reponse = "+this.responseText)
+                        document.getElementById("proprio_row0").innerHTML = this.responseText;
+                    //}
+                };
+                xmlhttp.open("GET", "ajax_modifier.php?q=1", true);
+                xmlhttp.send();
+           // }
+        }
+
 
 
     </script>
