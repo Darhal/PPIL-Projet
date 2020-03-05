@@ -36,7 +36,7 @@ if ($user == null){
 <div class="spacer"></div>
 <div class="container align-center">
 	<div class="text-center">
-		<img src="/Assets/img/SVG/Fichier%201.svg" class="w-30">
+		<img src="../../Assets/Images/SVG/Fichier%201.svg" class="w-30">
 		<h1><?php echo ucfirst($user->prenom) . " " . ucfirst($user->nom)?></h1>
 		<h4><?php echo ucfirst($user->pseudo) ?></h4>
 		<p><?php echo ucfirst($user->email) ?></p>
