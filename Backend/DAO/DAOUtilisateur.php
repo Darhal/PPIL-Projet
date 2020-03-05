@@ -10,9 +10,9 @@
  *
  */
 
-include_once getenv('PROJECT_PATH')."/Shared/Libraries/BDD.php";
-include_once getenv('PROJECT_PATH')."/Backend/Utilisateur/Utilisateur.php";
-include_once getenv('PROJECT_PATH')."/Backend/DAO/DAO.php";
+include_once getenv('BASE')."Shared/Libraries/BDD.php";
+include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
+include_once getenv('BASE')."Backend/DAO/DAO.php";
 
 class DAOUtilisateur extends DAO
 {

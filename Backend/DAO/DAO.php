@@ -10,7 +10,7 @@
  *
  */
 
-include_once getenv('PROJECT_PATH')."/Shared/Libraries/BDD.php";
+include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 abstract class DAO
 {
