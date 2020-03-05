@@ -5,12 +5,13 @@ include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 
 class Systeme
 {
-    private $arrayUtilisateurs = array();  // liste des Utilisateurs
-    private static $dao = null;
+    private static $bdd = null;
+    private static $dao_user = null;
 
     public static function Init()
     {
-        self::$dao = new DAOUtilisateur();
+        $bdd = new BDD();
+        self::$dao_user = new DAOUtilisateur($bdd);
     }
 
     public function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
@@ -18,7 +19,7 @@ class Systeme
     }
     
     public static function ajouterUtilisateur($utilisateur) {
-        self::$dao->ajouterDansBDD($utilisateur);
+        self::$dao_user->ajouterDansBDD($utilisateur);
     }
 
     public function supprimerUtilisateur(int $utilisateurID) {
@@ -26,7 +27,7 @@ class Systeme
     }
 
     public static function seConnecter(string $email, string $mdp) : bool {
-        $req = self::$dao->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
+        $req = self::$dao_user->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
 
         if (sizeof($req) == 0){
             return false;

@@ -18,9 +18,13 @@ abstract class DAO
     private static $DEFAULT_DB_FILE = "db.sql";
     protected $BDD;
 
-    protected function __construct($db_name)
+    protected function __construct($bdd = null)
     {
-        $this->BDD = new BDD($db_name == "" ? self::$DEFAULT_DB_FILE : $db_name);
+        if ($bdd == null) {
+            $bdd = new BDD(self::$DEFAULT_DB_FILE);
+        }
+
+        $this->BDD = $bdd;
     }
 
     // Singletons should not be cloneable.
