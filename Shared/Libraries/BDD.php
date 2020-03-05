@@ -15,7 +15,7 @@
         private $file_name;
 
         function __construct($filename) {
-            $file_path = getenv('PROJECT_PATH')."/Assets/BD/".$filename;
+            $file_path = getenv('BASE')."/Assets/BD/".$filename;
             $file_name = $filename;
             parent::__construct($file_path);
         }

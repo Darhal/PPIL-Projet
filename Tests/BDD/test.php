@@ -1,5 +1,5 @@
 <?php
-    include_once (getenv('PROJECT_PATH')."/Shared/Libraries/BDD.php");
+    include_once (getenv('BASE')."/Shared/Libraries/BDD.php");
 
     // USAGE OF THE LIBRARY BDD:
     $db = new BDD("test.db"); // Create the file if it doesnt exist open it otherwise
