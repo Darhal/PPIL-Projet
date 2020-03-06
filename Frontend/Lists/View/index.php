@@ -94,6 +94,6 @@ if ($liste == null) {
 
 </div>
 
-<?php include_once "Assets/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>
