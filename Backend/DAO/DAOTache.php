@@ -17,26 +17,17 @@ include_once getenv('BASE')."Backend/Taches/Tache.php";
 class DAOTache extends DAO
 {
     private static $tab_name = "Tache";
-    private static $tab_name2 = "Affecte";
+
     public function __construct($bdd)
     {
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
-                "idTache" => "INTEGER PRIMARY KEY NOT NULL",
-                "nom" => "VARCHAR NOT NULL",
-                "statut" => "VARCHAR",
-//               "INTEGER FOREIGN KEY(Liste) NOT NULL"
-//            A ADAPTER en fonction de https://www.sqlite.org/foreignkeys.html pour la foregin key
-            )
-        );
-
-
-        $this->BDD->createTable(self::$tab_name2,
-            array(
-                // TODO:
-                // a faire. Verifier comment faire lorsque c'est des clés etrangères
-
+                "idTache" => "INTEGER constraint Tache_pk primary key autoincrement",
+                "nom" => "varchar not null",
+                "statut" => "varchar not null",
+                "idListe" => "INTEGER not null references Liste",
+	            "idResponsable" => "INTEGER references Utilisateur"
             )
         );
     }
@@ -48,8 +39,7 @@ class DAOTache extends DAO
             "idTache" => $tache->id,
             "nom" => $tache->nom,
             "statut" => $tache->finie,
-            "idListe" => $tache->idListe,
-
+            "idListe" => $tache->liste,
         );
         $this->BDD->insertRow(self::$tab_name, $attribs);
     }

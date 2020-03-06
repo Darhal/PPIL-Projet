@@ -23,12 +23,11 @@ class DAOListeTaches extends DAO
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
-                "idListe" => "INTEGER PRIMARY KEY NOT NULL",
-                "nom" => "VARCHAR NOT NULL",
-                "dateDebut" => "DATE",
-                "dateFin" => "DATE",
-//                "idUtilisateur" => "INTEGER FOREIGN KEY(Utilisateur) NOT NULL"
-//            A ADAPTER en fonction de https://www.sqlite.org/foreignkeys.html pour la foregin key
+                "idListe" => "INTEGER constraint Liste_pk primary key autoincrement",
+                "nom" => "nom varchar not null",
+                "dateDebut" => "date not null",
+                "dateFin" => "date",
+                "idUtilisateur" => "int constraint fk_idu references Utilisateur"
             )
         );
     }
@@ -53,7 +52,7 @@ class DAOListeTaches extends DAO
         return $this->BDD->fetchResults("Liste", "*", $requete);;
     }
 
-    public function getListeTachesByID(int $id)
+    function getListeTachesByID(int $id)
     {
         return $this->BDD->fetchResults(self::$tab_name, "*", "idListe = $id");
     }
