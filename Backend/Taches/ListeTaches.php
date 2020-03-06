@@ -3,10 +3,10 @@
 
 class ListeTaches
 {
-    private $id;
-    private $nom;
-    private $dateDebut;
-    private $dateFin;
+    public $id;
+    public $nom;
+    public $dateDebut;
+    public $dateFin;
 
     public function __construct()
     {
