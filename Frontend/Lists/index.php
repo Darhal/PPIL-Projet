@@ -58,7 +58,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 					<td>" . $req_pseudo . "</td>
 					<td>" . date("d/m/y", intval($row["dateDebut"])) . "</td>
 					<td>" . date("d/m/y", intval($row["dateFin"])) . "</td>
-					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $row["idListe"] . "'> Go </td>
+					<td><a class='disabled' href='/Frontend/Lists/view.php?id=" . $row["idListe"] . "'> Go </td>
 				</tr>";
 		}
 
