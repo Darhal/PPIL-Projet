@@ -81,15 +81,27 @@
             }
         }
 
-        function createTable($tab_name, $attribs)
+        function createTable($tab_name, $attribs, $foreign_keys = array())
         {
             $attrib_str = "";
 
-            foreach ( $attribs as $key => $value ) {
+            foreach ($attribs as $key => $value) {
                 $attrib_str = $attrib_str."$key $value,";
             }
 
+            foreach ($foreign_keys as $key => $value){
+                $f_str = "";
+                if (count($value) >= 3){
+                    $f_str = "FOREIGN KEY($key) REFERENCES $value[0]($value[1]) $value[2]";
+                }else{
+                    $f_str = "FOREIGN KEY($key) REFERENCES $value[0]($value[1])";
+                }
+                
+                $attrib_str = $attrib_str."$f_str,";
+            }
+
             $attrib_str = rtrim($attrib_str, ",");
+            echo $attrib_str;
             $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
         }
 
