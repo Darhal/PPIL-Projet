@@ -146,7 +146,7 @@ class Systeme
 
         // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
         $listeTache = null;
-        if($req['dateFin'] !=null){
+        if($req['dateFin'] != null){
             $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
         }else{
             $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
