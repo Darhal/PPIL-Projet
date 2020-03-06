@@ -6,6 +6,9 @@ include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
 
+include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
+include_once getenv('BASE')."Backend/Taches/Tache.php";
+
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
