@@ -33,9 +33,24 @@ class DAONotif extends DAO
     }
 
 
-    public function ajouterDansBDD($objet)
+    public function ajouterDansBDD($notif)
     {
-        // TODO: Implement ajouterDansBDD() method.
+        $attribs = array(
+            "idNotif" => $notif->id,
+            "msg" => $notif->msg,
+            "statut" => $notif->statut,
+            "nature" => $notif->nature
+        );
+
+        if($notif->liste != null){
+            $attribs["idListe"] = $notif->liste->id;
+        }
+
+        if($notif->tache != null){
+            $attribs["idTache"] = $notif->tache->id;
+        }
+
+        $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
     public function supprimerDeBDD($objet)

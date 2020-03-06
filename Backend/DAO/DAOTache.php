@@ -33,14 +33,18 @@ class DAOTache extends DAO
     }
 
     public function ajouterDansBDD($tache){
-        //TODO:
-        // Vérifier que c'est bien les bon noms utilisés par la BDD
+
         $attribs = array(
             "idTache" => $tache->id,
             "nom" => $tache->nom,
             "statut" => $tache->finie,
-            "idListe" => $tache->liste,
+            "idListe" => $tache->liste
         );
+
+        if($tache->responsable != null){
+            $attribs["idResponsable"] = $tache->responsable->id;
+        }
+
         $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
