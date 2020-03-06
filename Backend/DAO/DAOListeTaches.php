@@ -32,14 +32,22 @@ class DAOListeTaches extends DAO
         );
     }
 
-    public function ajouterDansBDD($listeTache){
+    public function ajouterDansBDD($liste){
         $attribs = array(
-            "idListe" => $listeTache->id,
-            "nom" => $listeTache->nom,
-            "dateDebut" => $listeTache->dateDebut,
-            "dateFin" => $listeTache->dateFin,
-            "idUtilisateur" => $listeTache->responsable
+            "idListe" => $liste->id,
+            "nom" => $liste->nom,
+            "dateDebut" => $liste->dateDebut,
+            "dateFin" => $liste->dateFin
         );
+
+        if($liste->dateFin != null){
+            $attribs["dateFin"] = $liste->dateFin;
+        }
+
+        if($liste->utilisateur != null){
+            $attribs["idUtilisateur"] = $liste->proprietaire->id;
+        }
+
         $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
@@ -56,5 +64,7 @@ class DAOListeTaches extends DAO
     {
         return $this->BDD->fetchResults(self::$tab_name, "*", "idListe = $id");
     }
+
+
 
 }

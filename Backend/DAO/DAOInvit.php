@@ -21,9 +21,23 @@ class DAOInvit extends DAO
         );
     }
 
-    public function ajouterDansBDD($objet)
+    public function ajouterDansBDD($invitation)
     {
-        // TODO: Implement ajouterDansBDD() method.
+        $attribs = array(
+            "idInvit" => $invitation->id,
+            "msg" => $invitation->msg,
+            "nature" => $invitation->nature,
+        );
+
+        if($invitation->liste != null){
+            $attribs["idListe"] = $invitation->liste->id;
+        }
+
+        if($invitation->inviteur != null){
+            $attribs["idInviteur"] = $invitation->inviteur->id;
+        }
+
+        $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
     public function supprimerDeBDD($objet)
