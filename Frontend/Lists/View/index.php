@@ -94,6 +94,6 @@ if ($liste == null) {
 
 </div>
 
-<?php include_once "Shared/footer.php"; ?>
+<?php include_once getenv("BASE") . "Shared/footer.php"; ?>
 </body>
 </html>
