@@ -24,6 +24,10 @@ $password = "";
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
+
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+
 	if (($email != "") && ($password != "")) { // Si l'email et le mot de passe sont définis
 		if (Systeme::seConnecter($email, $password)) {
 			header("location: ../Profil"); // Redirection vers la page d'accueil
@@ -38,4 +42,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
 }
 
 echo $error;
-header("location: ../Login");
+//header("location: ../Login?erreur");

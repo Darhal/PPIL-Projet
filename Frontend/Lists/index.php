@@ -1,5 +1,4 @@
-<?php set_include_path("/var/www/ppil.ugocottin.fr/");
-
+<?php
 session_start();
 
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
@@ -10,6 +9,13 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	exit;
 }
 
+include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
+Systeme::Init();
+
+$user = Systeme::getUserByEmail($_SESSION['email']);
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -19,7 +25,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	<title>Procrast - Mes Listes</title>
 </head>
 <body>
-<?php include_once "Assets/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Mes listes </h1>
 <div class="spacer"></div>
@@ -41,28 +47,19 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 		</thead>
 		<tbody>
 		<?php
+		$lists = Systeme::getOwnedLists($user);
 
-		$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite");
-
-		$sql = "SELECT * FROM Liste WHERE idUtilisateur = " . $uid;
-		$req = $db->query($sql);
-		while($row = $req->fetchArray(SQLITE3_ASSOC)) {
-
-			$sql = /** @lang SQLite */
-				"SELECT pseudo FROM Utilisateur WHERE idUtilisateur = " . $uid;
-			$req_pseudo = $db->querySingle($sql);
+		foreach ($lists as $list) {
 			echo "
 				<tr>
-					<th scope='row'>" . $row["idListe"] . "</th>
-					<td>" . $row["nom"] . "</td>
-					<td>" . $req_pseudo . "</td>
-					<td>" . date("d/m/y", intval($row["dateDebut"])) . "</td>
-					<td>" . date("d/m/y", intval($row["dateFin"])) . "</td>
-					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $row["idListe"] . "'> Go </td>
+					<th scope='row'>" . $list . "</th>
+					<td>" . $list . "</td>
+					<td>" . $list . "</td>
+					<td>" . date("d/m/y", intval($list["dateDebut"])) . "</td>
+					<td>" . date("d/m/y", intval($list["dateFin"])) . "</td>
+					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list["idListe"] . "'> Go </td>
 				</tr>";
 		}
-
-		$db->close();
 		?>
 		</tbody>
 	</table>
@@ -73,6 +70,6 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 
 </div>
 
-<?php include_once "Assets/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>

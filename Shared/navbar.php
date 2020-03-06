@@ -1,21 +1,20 @@
 <?php
 
-
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 session_start();
 
 $text = "Connexion";
-$target = "../Frontend/Login/";
+$target = "/Frontend/Login/";
 $account = $target;
 $tasks = $target;
 $lists = $target;
 if (Systeme::estConnecte()) {
 	$text = "Déconnexion";
-	$target = "../Frontend/Login/logout.php";
-	$account = "../Frontend/Profil";
-	$tasks = "../Frontend/Tasks";
-	$lists = "../Frontend/Lists";
+	$target = "/Frontend/Login/logout.php";
+	$account = "/Frontend/Profil";
+	$tasks = "/Frontend/Tasks";
+	$lists = "/Frontend/Lists";
 }
 
 echo '
