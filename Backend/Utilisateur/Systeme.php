@@ -17,7 +17,7 @@ class Systeme
     }
 
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
-
+        Systeme::ajouterUtilisateur($utilisateur);
     }
     
     public static function ajouterUtilisateur($utilisateur) {
