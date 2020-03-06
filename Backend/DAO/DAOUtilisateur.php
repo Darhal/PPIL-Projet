@@ -47,7 +47,7 @@ class DAOUtilisateur extends DAO
 
     function supprimerDeBDD($utilisateur)
     {
-        // TODO: Implement supprimerDeBDD() method.
+        $this->BDD->deleteRow($this->tab_name, "idUtilisateur", $utilisateur->id);
     }
 
     function getUserByEmail($email)

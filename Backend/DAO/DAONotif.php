@@ -13,7 +13,7 @@ include_once getenv('BASE')."Shared/Libraries/BDD.php";
 include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAO.php";
 
-class DAONotif
+class DAONotif extends DAO
 {
     private static $tab_name = "Notification";
 
@@ -22,20 +22,44 @@ class DAONotif
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
-                "idNotif" => "INTEGER PRIMARY KEY NOT NULL",
-                "msg" => "VARCHAR NOT NULL",
-                "statut" => "VARCHAR",
-                "nature" => "VARCHAR",
-                "idListe" => "INTEGER",
-                "idTache" => "INTEGER"
-            ), 
-            array(
-                "idListe" => array("Liste", "idListe", "ON DELETE CASCADE"),
-                "idTache" => array("Tache", "idTache", "ON DELETE CASCADE"),
+                "idNotif" => "INTEGER constraint Notification_pk primary key autoincrement",
+                "msg" => "varchar not null",
+                "statut" => "varchar not null",
+                "nature" => "varchar not null",
+                "idListe" => "INTEGER constraint Notification_Liste_idListe_fk references Liste",
+                "idTache" => "INTEGER constraint Notification_Tache_idTache_fk references Tache"
             )
         );
-        //DONE: OMARR :il faut ajouter les contraintes pour clés étrangers (id Liste et idTache)en precisant ON DELETE <mode>
-        //FOREIGN KEY(idListe) REFERENCES Liste(idListe) ON DELETE CASCADE,
-        //FOREIGN KEY(idTache) REFERENCES Tache(idTache) ON DELETE CASCADE
+    }
+
+
+    public function ajouterDansBDD($notif)
+    {
+        $attribs = array(
+            "idNotif" => $notif->id,
+            "msg" => $notif->msg,
+            "statut" => $notif->statut,
+            "nature" => $notif->nature
+        );
+
+        if($notif->liste != null){
+            $attribs["idListe"] = $notif->liste->id;
+        }
+
+        if($notif->tache != null){
+            $attribs["idTache"] = $notif->tache->id;
+        }
+
+        $this->BDD->insertRow(self::$tab_name, $attribs);
+    }
+
+    public function supprimerDeBDD($notif)
+    {
+        $this->BDD->deleteRow($this->tab_name, "idNotif", $notif->id);
+    }
+
+    public function getByRequete($requete)
+    {
+        // TODO: Implement getByRequete() method.
     }
 }
