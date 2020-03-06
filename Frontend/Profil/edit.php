@@ -23,7 +23,7 @@ if ($user == null){
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>S'inscrire</title>
+	<title>Modifier ses informations</title>
 	<link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
@@ -60,9 +60,19 @@ if ($user == null){
 				<h3> Confirmer votre mot de passe </h3>
 				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password">
 			</div>
-
-			<input type="submit" value="Modifier ses informations">
+			<div class="d-flex container-fluid">
+				<button onclick="window.location.href='./'"> Retour </button>
+				<input type="submit" value="Modifier ses informations">
+			</div>
 		</form>
+
+		<div class="spacer"></div>
+
+		<form method="post" action="change_password.php">
+			<input class="container" type="submit" value="Modifier son mot de passe" style="color: red">
+		</form>
+
+		<!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
 
 		<?php
 		if(isset($_GET['erreur'])){
@@ -76,7 +86,7 @@ if ($user == null){
 		}
 		?>
 
-		<button onclick="window.location.href='./'"> Retour </button>
+
 	</div>
 </div>
 <?php 

@@ -49,12 +49,10 @@ if ($user == null){
 		<div class="d-flex container-fluid">
 			<form method="post" action="edit.php">
 				<input type="submit" value="Modifier mon profil">
-				<input type="hidden" value="<?php echo $user->id; ?>">
 			</form>
 
 			<form method="post" action="delete.php">
 				<input type="submit" value="Supprimer mon compte" style="color: red">
-				<input type="hidden" value="<?php echo $user->id; ?>">
 			</form>
 		</div>
 	</div>
