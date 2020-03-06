@@ -13,9 +13,17 @@ $unwanted_array = array(
 	'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
 );
 
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+	$uid = $_SESSION["id"];
+} else {
+	// Redirection vers la page d'accueil
+	header("location: /Frontend/Login");
+	exit;
+}
+
 Systeme::Init();
 
-$user = Systeme::getUserByEmail($email);
+$user = Systeme::getUserByID($uid);
 
 if ($user == null){
 	die("ERROR: Unable to find user by email");

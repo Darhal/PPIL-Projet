@@ -1,4 +1,8 @@
-<?php //set_include_path("/var/www/ppil.ugocottin.fr/"); ?>
+<?php
+
+$listeID = $_POST['lid'];
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,7 +13,6 @@
 <body>
 <?php 
 	include_once getenv('BASE')."Shared/navbar.php";
-	echo "lid: " . $_POST['lid'];
 ?>
 <div class="container align-center">
 	<div class="spacer"></div>

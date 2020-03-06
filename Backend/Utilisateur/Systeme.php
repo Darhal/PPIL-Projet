@@ -13,10 +13,26 @@ include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
 {
+	/**
+	 * @var BDD
+	 */
     private static $bdd = null;
+
+	/**
+	 * @var DAOUtilisateur
+	 */
     private static $dao_user = null;
+
+	/**
+	 * @var DAOListeTaches
+	 */
     private static $dao_listeTaches = null;
+
+	/**
+	 * @var DAOTache
+	 */
     private static $dao_tache = null;
+
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
