@@ -2,6 +2,7 @@
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
 include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
+include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
