@@ -52,12 +52,12 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		foreach ($lists as $list) {
 			echo "
 				<tr>
-					<th scope='row'>" . $list . "</th>
-					<td>" . $list . "</td>
-					<td>" . $list . "</td>
-					<td>" . date("d/m/y", intval($list["dateDebut"])) . "</td>
-					<td>" . date("d/m/y", intval($list["dateFin"])) . "</td>
-					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list["idListe"] . "'> Go </td>
+					<th scope='row'>" . $list->id . "</th>
+					<td>" . $list->nom . "</td>
+					<td>" . $list->proprietaire . "</td>
+					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
+					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
+					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list->id . "'> Go </td>
 				</tr>";
 		}
 		?>
