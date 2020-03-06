@@ -88,8 +88,7 @@ class Systeme
         }
 
         $req = $req[0];
-
-        if (session_status() == PHP_SESSION_DISABLED) {
+        if (session_status() != PHP_SESSION_ACTIVE) {
             session_start();
         }
 
@@ -98,7 +97,7 @@ class Systeme
         $_SESSION["id"] = $req['idutilisateur'];
         $_SESSION["username"] = $req['pseudo'];
         $_SESSION["email"] = $req['email'];
-
+		var_dump($_SESSION);
         return true;
     }
 

@@ -8,7 +8,9 @@ include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 // Démarrage de la session
-session_start();
+if (session_status() != PHP_SESSION_ACTIVE) {
+	session_start();
+}
 
 Systeme::Init();
 
