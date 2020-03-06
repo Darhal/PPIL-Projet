@@ -10,7 +10,7 @@
 <?php 
 	include_once getenv('BASE')."Shared/navbar.php";
 ?>
-<div class="container">
+<div class="container align-center">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
 	<div class="container align-center">

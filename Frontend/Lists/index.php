@@ -25,7 +25,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<title>Procrast - Mes Listes</title>
 </head>
 <body>
-<?php include_once "Shared/navbar.php"; ?>
+<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Mes listes </h1>
 <div class="spacer"></div>
@@ -70,6 +70,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 </div>
 
-<?php include_once "Shared/footer.php"; ?>
+<?php include_once getenv('BASE') . "Shared/footer.php"; ?>
 </body>
 </html>

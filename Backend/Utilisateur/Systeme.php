@@ -173,7 +173,7 @@ class Systeme
      */
     public static function getOwnedLists(Utilisateur $user){
         //TODO: testing
-        if(!isset($id)) return null;
+        if(!isset($user->id)) return null;
         $resSQL = self::$dao_listeTaches->getListesTachesByUserID($user->id);
 
         $res_array = array();
