@@ -1,6 +1,4 @@
 <?php
-// set_include_path("/var/www/ppil.ugocottin.fr/");
-
 include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
@@ -32,7 +30,7 @@ if ($user == null){
 	<title>Mon compte</title>
 </head>
 <body>
-<?php include_once "Assets/navbar.php" ?>
+<?php include_once getenv('BASE') . "Shared/navbar.php" ?>
 <div class="spacer"></div>
 <div class="container align-center">
 	<div class="text-center">
@@ -48,5 +46,5 @@ if ($user == null){
 	</div>
 </div>
 </body>
-<?php include_once getenv('BASE')."/Shared/footer.php" ?>
+<?php include_once getenv('BASE') . "Shared/footer.php" ?>
 </html>
