@@ -9,8 +9,9 @@ class ListeTaches
     public $dateFin;
     public $proprietaire;
 
-    public function __construct($nom, $proprietaire, $dateDebut, $dateFin="vide")
+    public function __construct($id, $nom, $proprietaire, $dateDebut, $dateFin="vide")
     {
+    	$this->id = $id;
         $this->nom = $nom;
         $this->proprietaire = $proprietaire;
         $this->dateDebut = $dateDebut;

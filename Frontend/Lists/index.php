@@ -15,7 +15,6 @@ include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 Systeme::Init();
 
 $user = Systeme::getUserByEmail($_SESSION['email']);
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -57,7 +56,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td>" . $list->proprietaire . "</td>
 					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
 					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
-					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list->id . "'> Go </td>
+					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
 				</tr>";
 		}
 		?>
