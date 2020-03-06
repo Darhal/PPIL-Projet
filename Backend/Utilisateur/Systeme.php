@@ -116,12 +116,25 @@ class Systeme
     //---------------------------- ListeTaches---------------------------------
     public static function getListeTachesByID(int $id){
         if(!isset($id) || $id<0) return null;
+
+        // On récupère le retour de la requete sql
         $resSQL = self::$dao_listeTaches->getListeTachesByID($id);
 
-//        $req
+        if (sizeof($resSQL) != 1){
+            return null;
+        }
 
+        $req = $resSQL[0];
 
+        // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
+        $listeTache = null;
+        if($req['dateFin'] !=null){
+            $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+        }else{
+            $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+        }
 
+        return $listeTache;
 
     }
 }
