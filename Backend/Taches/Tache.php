@@ -20,7 +20,6 @@ class Tache
 
     }
 
-
     //Setters
     function setFait(bool $f) {
         $this->finie = $f;

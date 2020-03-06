@@ -23,6 +23,7 @@ class DAOUtilisateur extends DAO
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
+                "idutilisateur" => "INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT",
                 "email" => "TEXT PRIMARY KEY NOT NULL",
                 "pseudo" => "TEXT NOT NULL", 
                 "prenom" => "TEXT",
@@ -51,7 +52,13 @@ class DAOUtilisateur extends DAO
 
     function getUserByEmail($email)
     {
-        $res = $this->BDD->fetchResults("Utilisateur", "*", "email = '$email'");
+        $res = $this->BDD->getByRequete("email = '$email'");
+        return $res;
+    }
+
+    function getUserByID($id)
+    {
+        $res = $this->BDD->getByRequete("idutilisateur = '$id'");
         return $res;
     }
 

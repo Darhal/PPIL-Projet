@@ -28,12 +28,14 @@ class DAONotif
                 "nature" => "VARCHAR",
                 "idListe" => "INTEGER",
                 "idTache" => "INTEGER"
+            ), 
+            array(
+                "idListe" => array("Liste", "idListe", "ON DELETE CASCADE"),
+                "idTache" => array("Tache", "idTache", "ON DELETE CASCADE"),
             )
         );
-        //TODO: OMARR :il faut ajouter les contraintes pour clés étrangers (id Liste et idTache)en precisant ON DELETE <mode>
+        //DONE: OMARR :il faut ajouter les contraintes pour clés étrangers (id Liste et idTache)en precisant ON DELETE <mode>
         //FOREIGN KEY(idListe) REFERENCES Liste(idListe) ON DELETE CASCADE,
         //FOREIGN KEY(idTache) REFERENCES Tache(idTache) ON DELETE CASCADE
     }
-
-
 }
