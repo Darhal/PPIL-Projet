@@ -37,9 +37,9 @@ $unwanted_array = array(
             <th style="width: 70%" bgcolor="#ffe4c4" > vous avez recu une demande pour rejoidre la liste x<FONT face="Times New Roman"></FONT></th>
             <th style="background:bisque" > <img src="./img/delete.png" width="20px"></th>
         </tr>
-        <tr>
-            <th style="width: 70%" bgcolor="#ffe4c4" > vous avez recu une demande pour rejoidre la liste y<FONT face="Times New Roman"></FONT></th>
-            <th style="background:bisque" > <img src="./img/delete.png" width="20px" onclick="supprimerligne(this.rowIndex)"></th>
+        <tr id="3">
+            <th style="width: 70%" bgcolor="#ffe4c4"  > vous avez recu une demande pour rejoidre la liste y<FONT face="Times New Roman"></FONT></th>
+            <th style="background:bisque" > <img src="./img/delete.png" width="20px" onclick="document.getElementById('tableauNotif').deleteRow(document.getElementById('3'))"></th>
         </tr>
         <tr>
             <th style="width: 70%" bgcolor="#ffe4c4" > vous avez recu une demande pour rejoidre la liste z<FONT face="Times New Roman"></FONT></th>
@@ -89,4 +89,5 @@ $unwanted_array = array(
     {
         document.getElementById("tableauNotif").deleteRow(0);
     }
+</script>
     </html>
