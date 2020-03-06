@@ -23,7 +23,7 @@ class Systeme
 
 
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
-
+        Systeme::ajouterUtilisateur($utilisateur);
     }
     
     public static function ajouterUtilisateur($utilisateur) {
@@ -70,7 +70,7 @@ class Systeme
 
         // On stocke les données dans la session
         $_SESSION["logged_in"] = true;
-        $_SESSION["id"] = $req['email'];
+        $_SESSION["id"] = $req['idutilisateur'];
         $_SESSION["username"] = $req['pseudo'];
         $_SESSION["email"] = $req['email'];
 
@@ -100,15 +100,33 @@ class Systeme
             return null;
         }
     
-        $req = self::$dao_user->getByRequete("email LIKE '".$email."'");
+        $req = self::$dao_user->getUserByEmail($email);
 
         if (sizeof($req) != 1){
             return null;
         }
 
         $req = $req[0];
-
         $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
+        $user->id = $req['idutilisateur'];
+        return $user;
+    }
+
+    public static function getUserByID($id)
+    {
+        if (!isset($id)) {
+            return null;
+        }
+    
+        $req = self::$dao_user->getUserByID($id);
+
+        if (sizeof($req) != 1){
+            return null;
+        }
+
+        $req = $req[0];
+        $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
+        $user->id = $req['idutilisateur'];
         return $user;
     }
 

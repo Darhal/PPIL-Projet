@@ -55,13 +55,4 @@ class DAOTache extends DAO
     public function getByRequete($requete){
         return $this->BDD->fetchResults("Tache", "*", $requete);;
     }
-
-
-
-
-
-
-
-
-
 }
