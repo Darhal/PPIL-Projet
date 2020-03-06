@@ -4,11 +4,11 @@
 class Tache
 {
 
-    private $id;
-    private $nom;
-    private $finie;
-    private $responsable;
-    private $idListe;
+    public $id;
+    public $nom;
+    public $finie;
+    public $responsable;
+    public $idListe;
 
     function __construct(Utilisateur $u, int $i, string $n, int $idListe)
     {

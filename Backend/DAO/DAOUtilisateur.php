@@ -23,13 +23,16 @@ class DAOUtilisateur extends DAO
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
-                "email" => "TEXT PRIMARY KEY NOT NULL",
-                "pseudo" => "TEXT NOT NULL", 
-                "prenom" => "TEXT",
-                "nom" => "TEXT",
-                "mdp" => "TEXT NOT NULL"
+                "idUtilisateur" => "INTEGER constraint Utilisateur_pk primary key autoincrement",
+                "pseudo" => "varchar not null",
+                "nom" => "varchar not null",
+                "prenom" => "varchar not null",
+                "email" => "varchar not nullL",
+                "mdp" => "varchar not null"
             )
         );
+        
+
     }
 
     function ajouterDansBDD($utilisateur)

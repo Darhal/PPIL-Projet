@@ -8,13 +8,19 @@ class Systeme
 {
     private static $bdd = null;
     private static $dao_user = null;
+    private static $dao_listeTaches = null;
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
     {
         $bdd = new BDD(self::$DEFAULT_DB_FILE);
         self::$dao_user = new DAOUtilisateur($bdd);
+        self::$dao_listeTaches = new DAOListeTaches($bdd);
+
     }
+
+    //---------------------------- Utilisateur ---------------------------------
+
 
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
 
@@ -104,6 +110,19 @@ class Systeme
 
         $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
         return $user;
+    }
+
+
+    //---------------------------- ListeTaches---------------------------------
+    public static function getListeTachesByID(int $id){
+        if(!isset($id) || $id<0) return null;
+        $resSQL = self::$dao_listeTaches->getListeTachesByID($id);
+
+//        $req
+
+
+
+
     }
 }
 
