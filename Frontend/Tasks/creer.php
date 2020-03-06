@@ -1,13 +1,48 @@
 <?php
 
-$listeID = $_POST['lid'];
+session_start();
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+	$uid = $_SESSION["id"];
+} else {
+	// Redirection vers la page d'accueil
+	header("location: /Frontend/Login");
+	exit;
+}
+
+include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
+Systeme::Init();
+
+$user = Systeme::getUserByID($uid);
+
+if ($user == null){
+	die("ERROR: Unable to find user by email");
+}
+
+if (!isset($_POST['lid'])) {
+	die("ID de liste non défini");
+}
+
+$lid = intval($_POST['lid']);
+
+if (!is_int($lid)) {
+
+	die("L'ID de liste n'est pas valide");
+}
+
+$liste = Systeme::getListeTachesByID($lid);
+
+if ($liste == null) {
+	die("Liste d'ID " . $lid . " inexistante");
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>S'inscrire</title>
+	<title><?php echo $liste->nom; ?></title>
 	<link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
@@ -16,41 +51,22 @@ $listeID = $_POST['lid'];
 ?>
 <div class="container align-center">
 	<div class="spacer"></div>
-	<h1 class="text-center"> Inscription </h1>
+	<h1 class="text-center"><?php echo $liste->nom; ?></h1>
+	<h3 class="text-center"> Ajouter une tâche </h3>
+	<div class="spacer"></div>
 	<div class="container align-center">
-		<form method="post" action="signup.php">
+		<form method="post" action="create.php">
 
 			<div class="form-group">
-				<h3> Pseudo </h3>
-				<label for="pseudo"></label><input class="form-control" type="text" id="pseudo" name="pseudo">
+				<h3> Nom de la tâche </h3>
+				<label for="tname"></label><input class="form-control" type="text" id="tname" name="tname">
 			</div>
 
-			<div class="form-group">
-				<h3> Prénom </h3>
-				<label for="prenom"></label><input class="form-control" type="text" id="prenom" name="prenom">
+			<div class="d-flex justify-content-between">
+				<button onclick="window.location.href='../Profil'"> Retour </button>
+				<input type="submit" value="Ajouter">
 			</div>
-
-			<div class="form-group">
-				<h3> Nom </h3>
-				<label for="nom"></label><input class="form-control" type="text" id="nom" name="nom">
-			</div>
-
-			<div class="form-group">
-				<h3> Email </h3>
-				<label for="email"></label><input class="form-control" type="email" id="email" name="email">
-			</div>
-
-			<div class="form-group">
-				<h3> Mot de passe </h3>
-				<label for="password"></label><input class="form-control" type="password" id="password" name="password">
-			</div>
-
-			<div class="form-group">
-				<h3> Confirmer le mot de passe </h3>
-				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password">
-			</div>
-
-			<input type="submit" value="S'inscrire">
+			<input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
 		</form>
 
 		<?php
@@ -64,8 +80,6 @@ $listeID = $_POST['lid'];
 			}
 		}
 		?>
-
-		<button onclick="window.location.href='/'"> Retour </button>
 	</div>
 </div>
 <?php 

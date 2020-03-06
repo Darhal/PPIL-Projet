@@ -39,7 +39,7 @@ class DAOTache extends DAO
 //            "idTache" => $tache->id,   // l'id est généré par la BDD
             "nom" => $tache->nom,
             "statut" => $tache->finie,
-            "idListe" => $tache->liste
+            "idListe" => $tache->idListe
         );
 
         if($tache->responsable != null){

@@ -224,11 +224,11 @@ class Systeme
      * @param ListeTaches $listeTaches
      * @return bool
      */
-    public static function createTask(string $nom, ListeTaches $listeTaches) : boolean {
+    public static function createTask(string $nom, ListeTaches $listeTaches) : bool {
         //  TODO: en fait ici il faudrait déclencher une erreur plutôt qu'un return false;
         if(!isset($listeTaches) || !isset($nom)) return false;
 
-        $tache = new Tache($nom, $listeTaches);
+        $tache = new Tache($nom, $listeTaches->id);
 
         //TODO: retour valeur booléenne
         self::$dao_tache->ajouterDansBDD($tache);
