@@ -52,8 +52,8 @@ class DAOListeTaches extends DAO
     }
 
 
-    public function supprimerDeBDD($objet){
-        //TODO
+    public function supprimerDeBDD($liste){
+        $this->BDD->deleteRow($this->tab_name, "idListe = ".$liste->id);
     }
 
     public function getByRequete($requete){
