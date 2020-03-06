@@ -57,6 +57,7 @@
             $this->handleErrors($ret);
         }
 
+        //TODO: il faut retourner un booléen: True si tout ok
         function insertRow($tab_name, $row_data)
         {
             $attribs = "";

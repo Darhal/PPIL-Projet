@@ -1,8 +1,14 @@
 <?php
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
+
 include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
+include_once getenv('BASE')."Backend/DAO/DAOTache.php";
+
+include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
+include_once getenv('BASE')."Backend/Taches/Tache.php";
+
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
@@ -10,6 +16,7 @@ class Systeme
     private static $bdd = null;
     private static $dao_user = null;
     private static $dao_listeTaches = null;
+    private static $dao_tache = null;
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
@@ -17,11 +24,11 @@ class Systeme
         $bdd = new BDD(self::$DEFAULT_DB_FILE);
         self::$dao_user = new DAOUtilisateur($bdd);
         self::$dao_listeTaches = new DAOListeTaches($bdd);
+        self::$dao_tache = new DAOTache($bdd);
 
     }
 
     //---------------------------- Utilisateur ---------------------------------
-
 
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
         Systeme::ajouterUtilisateur($utilisateur);
@@ -133,6 +140,12 @@ class Systeme
 
 
     //---------------------------- ListeTaches---------------------------------
+
+    /**
+     *
+     * @param int $id
+     * @return ListeTaches|null
+     */
     public static function getListeTachesByID(int $id){
         if(!isset($id) || $id<0) return null;
 
@@ -154,7 +167,24 @@ class Systeme
         }
 
         return $listeTache;
+    }
 
+
+    /**
+     * Crée une tache dans une liste de tâche et l'ajoute à la BDD
+     * @param string $nom
+     * @param ListeTaches $listeTaches
+     * @return bool
+     */
+    public static function createTask(string $nom, ListeTaches $listeTaches) : boolean {
+        //  TODO: en fait ici il faudrait déclencher une erreur plutôt qu'un return false;
+        if(!isset($listeTaches) || !isset($nom)) return false;
+
+        $tache = new Tache($nom, $listeTaches);
+
+        //TODO: retour valeur booléenne
+        self::$dao_tache->ajouterDansBDD($tache);
+        return false;
     }
 }
 
