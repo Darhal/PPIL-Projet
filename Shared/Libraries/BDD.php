@@ -82,6 +82,11 @@
             }
         }
 
+        function deleteRow($tab_name, $condition){
+            $query = "DELETE FROM ".$tab_name." WHERE ".$condition;
+            $this->execQuery($query);
+        }
+
         function createTable($tab_name, $attribs, $foreign_keys = array())
         {
             $attrib_str = "";

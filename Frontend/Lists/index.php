@@ -25,7 +25,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<title>Procrast - Mes Listes</title>
 </head>
 <body>
-<?php include_once "Shared/navbar.php"; ?>
+<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Mes listes </h1>
 <div class="spacer"></div>
@@ -52,12 +52,12 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		foreach ($lists as $list) {
 			echo "
 				<tr>
-					<th scope='row'>" . $list . "</th>
-					<td>" . $list . "</td>
-					<td>" . $list . "</td>
-					<td>" . date("d/m/y", intval($list["dateDebut"])) . "</td>
-					<td>" . date("d/m/y", intval($list["dateFin"])) . "</td>
-					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list["idListe"] . "'> Go </td>
+					<th scope='row'>" . $list->id . "</th>
+					<td>" . $list->nom . "</td>
+					<td>" . $list->proprietaire . "</td>
+					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
+					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
+					<td><a class='disabled' href='/Frontend/Tasks/List?id=" . $list->id . "'> Go </td>
 				</tr>";
 		}
 		?>
@@ -70,6 +70,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 </div>
 
-<?php include_once "Shared/footer.php"; ?>
+<?php include_once getenv('BASE') . "Shared/footer.php"; ?>
 </body>
 </html>

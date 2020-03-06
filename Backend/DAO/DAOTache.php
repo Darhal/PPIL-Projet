@@ -50,8 +50,8 @@ class DAOTache extends DAO
 
     }
 
-    public function supprimerDeBDD($objet){
-        //TODO
+    public function supprimerDeBDD($tache){
+        $this->BDD->deleteRow($this->tab_name, "idTache = ".$tache->id);
     }
 
     public function getByRequete($requete){

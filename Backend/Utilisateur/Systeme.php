@@ -6,9 +6,6 @@ include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
 
-include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
-include_once getenv('BASE')."Backend/Taches/Tache.php";
-
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
 class Systeme
@@ -29,6 +26,7 @@ class Systeme
     }
 
     //---------------------------- Utilisateur ---------------------------------
+
 
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
         Systeme::ajouterUtilisateur($utilisateur);
@@ -142,7 +140,8 @@ class Systeme
     //---------------------------- ListeTaches---------------------------------
 
     /**
-     *
+     * On donne un numero d'identifiant d'une listeDeTaches et cette fonction retourne l'obj de la ListeTaches
+     * Retourne null s'il n'existe pas de liste de tache
      * @param int $id
      * @return ListeTaches|null
      */
@@ -160,15 +159,45 @@ class Systeme
 
         // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
         $listeTache = null;
-        if($req['dateFin'] != null){
+        if($req['dateFin'] !=null){
             $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
         }else{
             $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
         }
 
         return $listeTache;
+
     }
 
+
+    /**
+     * Retourne un Array de toutes les Listes de Taches d'un Utilisateur
+     * @param Utilisateur $user
+     * @return array|null
+     */
+    public static function getOwnedLists(Utilisateur $user)
+    {
+	    //TODO: testing
+	    if (!isset($user->id)) return null;
+	    $resSQL = self::$dao_listeTaches->getListesTachesByUserID($user->id);
+
+	    $res_array = array();
+
+	    foreach ($res_array as $key => $req) {
+		    // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
+		    $listeTache = null;
+		    if ($req['dateFin'] != null) {
+			    $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+		    } else {
+			    $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+		    }
+
+		    array_push($res_array, $listeTache);
+	    }
+
+	    return $res_array;
+
+    }
 
     /**
      * Crée une tache dans une liste de tâche et l'ajoute à la BDD

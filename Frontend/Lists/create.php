@@ -15,7 +15,7 @@ if(!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] != true) {
 }
 
 try {
-	$db = new SQLite3(getenv("BASE") . "Assets/BD.sqlite", SQLITE3_OPEN_READWRITE);
+	$db = new SQLite3(getenv("BASE") . "Assets/BD/db.sql", SQLITE3_OPEN_READWRITE);
 } catch (SQLiteException $e) {
 	die("Impossible d'ouvrir la base de données: " . $e->getMessage());
 }
