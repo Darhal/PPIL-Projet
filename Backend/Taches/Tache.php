@@ -22,39 +22,39 @@ class Tache
 
 
     //Setters
-    function setFait(bool $f) {
+    public function setFait(bool $f) {
         $this->finie = $f;
     }
 
 
     //Getters
-    function getId() : int {
+    public function getId() : int {
         return $this->id;
     }
 
-    function getNom() : string {
+    public function getNom() : string {
         return $this->nom;
     }
 
-    function getResponsable() : Utilisateur {
+    public function getResponsable() : Utilisateur {
         return $this->responsable;
     }
 
-    function estFinie() : bool {
+    public function estFinie() : bool {
         return $this->finie;
     }
 
-    function aUnResponsable() : bool {
+    public function aUnResponsable() : bool {
         return isset($this->responsable);
     }
 
 
     //Fonctions
-    function ajouterResponsable(int $i) {
+    public function ajouterResponsable(int $i) {
         $this->responsable = DAOUtilisateur::getUserById($i);
     }
 
-    function supprimerResponsable() {
+    public function supprimerResponsable() {
         $this->responsable = null;
     }
 
