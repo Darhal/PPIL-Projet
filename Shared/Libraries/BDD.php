@@ -101,7 +101,6 @@
             }
 
             $attrib_str = rtrim($attrib_str, ",");
-            echo $attrib_str;
             $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
         }
 
