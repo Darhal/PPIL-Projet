@@ -4,7 +4,19 @@
     // USAGE OF THE LIBRARY BDD:
     $db = new BDD("test.db"); // Create the file if it doesnt exist open it otherwise
     // Create table test:
-    $db->createTable("test",  array("user" => "VARCHAR(16) PRIMARY KEY", "pass" => "VARCHAR(64)", "num" => "INTEGER"));
+    $db->createTable("test",  
+        array(
+            "user" => "VARCHAR(16) PRIMARY KEY", 
+            "pass" => "VARCHAR(64)", 
+            "num" => "INTEGER"
+        )
+        //, 
+        // Clé étrangere:
+        /*array(
+            // Clé local => array (cle_foreign, nom_table)
+            "user" => array("userf", "task")
+        )*/
+    );
     // insert into the table test: the following info
     $db->insertRow("test", array("user" => "test", "pass" => "XD", "num" => 666));
 
