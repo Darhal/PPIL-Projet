@@ -42,7 +42,7 @@ class DAOInvit extends DAO
 
     public function supprimerDeBDD($invitation)
     {
-        $this->BDD->deleteRow($this->tab_name, "idInvit", $invitation->id);
+        $this->BDD->deleteRow($this->tab_name, "idInvit = ".$invitation->id);
     }
 
     public function getByRequete($requete)

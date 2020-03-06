@@ -55,7 +55,7 @@ class DAONotif extends DAO
 
     public function supprimerDeBDD($notif)
     {
-        $this->BDD->deleteRow($this->tab_name, "idNotif", $notif->id);
+        $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
     }
 
     public function getByRequete($requete)
