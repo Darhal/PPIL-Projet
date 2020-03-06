@@ -46,10 +46,16 @@ if ($user == null){
 		<h1><?php echo ucfirst($user->prenom) . " " . ucfirst($user->nom)?></h1>
 		<h4><?php echo ucfirst($user->pseudo) ?></h4>
 		<p><?php echo ucfirst($user->email) ?></p>
-		<div class="container">
-			<button onclick="window.location.href='edit.php'"> Modifier le profil </button>
-			<div>
-			</div>
+		<div class="d-flex container-fluid">
+			<form method="post" action="edit.php">
+				<input type="submit" value="Modifier mon profil">
+				<input type="hidden" value="<?php echo $user->id; ?>">
+			</form>
+
+			<form method="post" action="delete.php">
+				<input type="submit" value="Supprimer mon compte" style="color: red">
+				<input type="hidden" value="<?php echo $user->id; ?>">
+			</form>
 		</div>
 	</div>
 </div>
