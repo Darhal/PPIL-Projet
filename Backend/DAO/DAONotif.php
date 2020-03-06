@@ -13,7 +13,7 @@ include_once getenv('BASE')."Shared/Libraries/BDD.php";
 include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAO.php";
 
-class DAONotif
+class DAONotif extends DAO
 {
     private static $tab_name = "Notification";
 
@@ -22,18 +22,29 @@ class DAONotif
         parent::__construct($bdd);
         $this->BDD->createTable(self::$tab_name,
             array(
-                "idNotif" => "INTEGER PRIMARY KEY NOT NULL",
-                "msg" => "VARCHAR NOT NULL",
-                "statut" => "VARCHAR",
-                "nature" => "VARCHAR",
-                "idListe" => "INTEGER",
-                "idTache" => "INTEGER"
+                "idNotif" => "INTEGER constraint Notification_pk primary key autoincrement",
+                "msg" => "varchar not null",
+                "statut" => "varchar not null",
+                "nature" => "varchar not null",
+                "idListe" => "INTEGER constraint Notification_Liste_idListe_fk references Liste",
+                "idTache" => "INTEGER constraint Notification_Tache_idTache_fk references Tache"
             )
         );
-        //TODO: OMARR :il faut ajouter les contraintes pour clés étrangers (id Liste et idTache)en precisant ON DELETE <mode>
-        //FOREIGN KEY(idListe) REFERENCES Liste(idListe) ON DELETE CASCADE,
-        //FOREIGN KEY(idTache) REFERENCES Tache(idTache) ON DELETE CASCADE
     }
 
 
+    public function ajouterDansBDD($objet)
+    {
+        // TODO: Implement ajouterDansBDD() method.
+    }
+
+    public function supprimerDeBDD($objet)
+    {
+        // TODO: Implement supprimerDeBDD() method.
+    }
+
+    public function getByRequete($requete)
+    {
+        // TODO: Implement getByRequete() method.
+    }
 }
