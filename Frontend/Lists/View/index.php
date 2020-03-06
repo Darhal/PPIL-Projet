@@ -85,10 +85,11 @@ if ($liste == null) {
 		</tbody>
 	</table>
 
-    <a class="favorite styled" type="button">Ajouter une tâche</a>
-
     <div class="float-right">
-        <button onclick="window.location.href='creer.php'"> Ajouter une liste </button>
+	    <form action="../../Tasks/creer.php" method="post">
+		    <input type="submit" value="Ajouter une tâche">
+		    <input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
+	    </form>
     </div>
 
 </div>

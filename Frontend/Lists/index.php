@@ -49,11 +49,19 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		$lists = Systeme::getOwnedLists($user);
 
 		foreach ($lists as $list) {
+
+			$proprietaire = Systeme::getUserByID($list->proprietaire);
+			if ($proprietaire != null) {
+				$np = $proprietaire->nom;
+			} else {
+				$np = "Inconnu?";
+			}
+
 			echo "
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
 					<td>" . $list->nom . "</td>
-					<td>" . $list->proprietaire . "</td>
+					<td>" . $np . "</td>
 					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
 					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
 					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
