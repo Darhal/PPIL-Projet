@@ -13,7 +13,7 @@
 <div class="container">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
-	<div class="container w-30 center-div">
+	<div class="container center-div">
 		<form method="post" action="signup.php">
 
 			<div class="form-group">
