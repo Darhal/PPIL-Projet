@@ -28,7 +28,7 @@ $unwanted_array = array(
 
 <body>
     <?php include "./menubar.php" ?>
-    <table style="width: 90%" border="1">
+    <table style="width: 90%" border="1" id="tableauNotif">
         <tr>
             <th style="width: 70%" bgcolor="#ffe4c4" > Notifications<FONT face="Times New Roman"></FONT></th>
             <th style="background:bisque" > Supprimer</th>
@@ -39,7 +39,7 @@ $unwanted_array = array(
         </tr>
         <tr>
             <th style="width: 70%" bgcolor="#ffe4c4" > vous avez recu une demande pour rejoidre la liste y<FONT face="Times New Roman"></FONT></th>
-            <th style="background:bisque" > <img src="./img/delete.png" width="20px"></th>
+            <th style="background:bisque" > <img src="./img/delete.png" width="20px" onclick="supprimerligne(this.rowIndex)"></th>
         </tr>
         <tr>
             <th style="width: 70%" bgcolor="#ffe4c4" > vous avez recu une demande pour rejoidre la liste z<FONT face="Times New Roman"></FONT></th>
@@ -83,6 +83,10 @@ $unwanted_array = array(
         ?>
     </table>
 
-
 </body>
-</html>
+<script language="javascript">
+    function supprimerligne(numL)
+    {
+        document.getElementById("tableauNotif").deleteRow(0);
+    }
+    </html>
