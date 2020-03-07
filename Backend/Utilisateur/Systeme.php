@@ -1,3 +1,13 @@
+/*
+* Projet Procrast
+* Classe Systeme
+* L'implentation du Design Pattern Facade. Systeme sert de facade entre l'utilisateur et le reste du back-end
+* Intermediare entre la base de données et php pour les donnees qui concernent les extensions de la classe Notification
+* @authors: Omar C, Jonathan P,
+* @date:05/03/2020
+* @version: 1.0
+*
+*/
 <?php
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
@@ -63,6 +73,7 @@ class Systeme
     }
 
     public static function supprimerUtilisateur(int $utilisateurID) {
+        //TODO
 
     }
 
@@ -115,7 +126,12 @@ class Systeme
         }
     }
 
-    public static function getUserByEmail($email)
+    /**
+     * Retourne une instance de l'utilisateur qui a l'email donné en argument, ou NULL s'il n'y a pas d'Utilisateur avec cet email
+     * @param $email
+     * @return Utilisateur|null
+     */
+    public static function getUserByEmail($email) : Utilisateur
     {
         if (isset($email)) {
             $email = SQLite3::escapeString($email);
@@ -136,7 +152,12 @@ class Systeme
         return $user;
     }
 
-    public static function getUserByID($id)
+    /**
+     * Retourne une instance de l'utilisateur qui a l'ID donné en argument, ou NULL s'il n'y a pas d'Utilisateur avec cet ID
+     * @param $id
+     * @return Utilisateur|null
+     */
+    public static function getUserByID($id) : Utilisateur
     {
         if (!isset($id)) {
             return null;
@@ -233,6 +254,8 @@ class Systeme
         self::$dao_tache->ajouterDansBDD($tache);
         return false;
     }
+
+
 }
 
 ?>
