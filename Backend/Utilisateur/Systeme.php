@@ -218,6 +218,7 @@ class Systeme
     {
 	    //TODO: testing
 	    if (!isset($user->id)) return null;
+
 	    $resSQL = self::$dao_listeTaches->getListesTachesByUserID($user->id);
 
 	    $res_array = array();
@@ -253,6 +254,29 @@ class Systeme
         //TODO: retour valeur booléenne
         self::$dao_tache->ajouterDansBDD($tache);
         return false;
+    }
+
+    /**
+     * Retourne un tableau qui contient toutes les tâches qui appartiennent à la liste de tâche passée en paramettre
+     * @param ListeTaches $liste
+     * @return array
+     */
+    public static function getTasks(ListeTaches $liste) : array {
+        if(!isset($liste)) return null;
+
+        $resSQL = self::$dao_tache->getByRequete("idListe = $liste->id");
+        $res_array = array();
+
+        foreach ($resSQL as $key => $req) {
+            $tache = new Tache($req['nom'], $req['idListe']);
+            $tache->finie = req['statut'];
+            $tache->id= req['idTache'];
+            $tache->responsable = req['idResponsable'];
+
+            array_push($res_array, $tache);
+        }
+
+        return $res_array;
     }
 
 
