@@ -70,7 +70,7 @@ $unwanted_array = array(
 </head>
 <body>
 <?php include_once "Shared/navbar.php"; ?>
-<a href="#" class="notification">
+<a href="notification.php" class="notification">
     <span>Notification</span>
     <span class="badge">3</span>
 </a>
