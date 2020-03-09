@@ -111,7 +111,7 @@ $unwanted_array = array(
     <p >Departement name</p>
     <p>Email : </p>
     <div style="margin: 24px 0;">
-        <p><input type="button" onclick="location.href='editprofile.php';" value="Modifier profile" /></p>
+        <p><input type="button" onclick="location.href='modifierprofile.php';" value="Modifier profile" /></p>
 
 </div>
 </body>
