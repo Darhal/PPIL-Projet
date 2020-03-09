@@ -43,8 +43,8 @@ class DAOListeTaches extends DAO
             $attribs["dateFin"] = $liste->dateFin;
         }
 
-        if($liste->utilisateur != null){
-            $attribs["idUtilisateur"] = $liste->proprietaire->id;
+        if($liste->proprietaire != null){
+            $attribs["idUtilisateur"] = $liste->proprietaire;
         }
 
         return $this->BDD->insertRow(self::$tab_name, $attribs);

@@ -9,8 +9,14 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
+Systeme::Init();
+
+
+
 // Vérification si un utilisateur est connecté
-if(!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] != true) {
+if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
 	header("location: /Frontend/Login");
 	exit;
@@ -55,7 +61,10 @@ if (isset($_POST['endingDate'])) {
 }
 
 // Requête SQL
-$sql = "INSERT INTO Liste (nom, dateDebut, dateFin, idUtilisateur) VALUES ('" . $nom . "', '" . $dateDebut . "', '" . $dateFin . "', '" . $uid . "')";
-$res = $db->exec($sql);
+if (Systeme::createList($nom, $dateDebut, $dateFin, $uid)) {
+	header("location: /Frontend/Lists");
+} else {
+	// TODO: - Erreur
+	echo "erreur";
+}
 
-header("location: /Frontend/Lists");

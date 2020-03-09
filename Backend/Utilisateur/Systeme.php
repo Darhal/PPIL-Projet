@@ -166,7 +166,7 @@ class Systeme
      * @param $id
      * @return Utilisateur|null
      */
-    public static function getUserByID($id) : Utilisateur
+    public static function getUserByID($id)
     {
         if (!isset($id)) {
             return null;
