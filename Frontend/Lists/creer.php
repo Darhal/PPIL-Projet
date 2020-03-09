@@ -81,7 +81,7 @@
 
 	    return true;
 
-	    $('#form').submit();
+	    //$('#form').submit();
 	}
 
 </script>

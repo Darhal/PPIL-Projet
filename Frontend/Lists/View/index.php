@@ -56,7 +56,10 @@ if ($liste == null) {
 
 	<div class="d-flex container-fluid">
         <h2><?php echo $liste->nom; ?></h2>
-		<button> Ajouter une personne </button>
+		<form action="membres.php" method="post">
+			<input type="submit" value="Voir les membres">
+			<label for="lid"></label><input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
+		</form>
 	</div>
 
 	<table class="table">
@@ -106,7 +109,7 @@ if ($liste == null) {
     <div class="float-right">
 	    <form action="../../Tasks/creer.php" method="post">
 		    <input type="submit" value="Ajouter une tâche">
-		    <input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
+		    <label for="lid"></label><input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
 	    </form>
     </div>
 

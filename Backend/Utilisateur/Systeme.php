@@ -275,6 +275,19 @@ class Systeme
 	    return $res_array;
     }
 
+	/**
+	 * @param ListeTaches $listeTaches
+	 * @return null | array
+	 */
+    public static function getMembres(ListeTaches $listeTaches) {
+
+	    if (!isset($listeTaches->id)) {
+		    return null;
+	    }
+
+	    return self::$dao_membre->getUsers($listeTaches->id);
+    }
+
     /**
      * Crée une tache dans une liste de tâche et l'ajoute à la BDD
      * @param string $nom

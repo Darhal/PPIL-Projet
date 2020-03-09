@@ -63,7 +63,20 @@ class DAOMembre extends DAO
 	 */
     public function getUsers(int $id)
     {
-        return $this->getByRequete("idListe = $id");
+        $resSQL =  $this->getByRequete("idListe = $id");
+
+        $res_array = array();
+
+        foreach ($resSQL as $res) {
+        	$uid = $res['idUtilisateur'];
+        	$user = Systeme::getUserByID($uid);
+
+        	if ($user != null) {
+        		array_push($res_array, $user);
+	        }
+        }
+
+	    return $res_array;
     }
 
     public function add(Utilisateur $user, ListeTaches $liste) {
