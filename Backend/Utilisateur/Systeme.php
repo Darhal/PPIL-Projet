@@ -184,15 +184,6 @@ class Systeme
         return $user;
     }
 
-    public static function updateUserByEmail(Utilisateur $usr, String $email)
-    {
-        return $dao_user->updateBDD($usr, "email = '$email'");
-    }
-
-    public static function updateUserByID(Utilisateur $usr, int $id)
-    {
-        return $dao_user->updateBDD($usr, "idutilisateur = '$id'");
-    }
 
     //---------------------------- ListeTaches---------------------------------
 
@@ -342,7 +333,7 @@ class Systeme
 
 
     public static function createList($nom, $dateDebut, $dateFin, $idUtilisateur){
-        if($dateFin == ''){
+        if($dateFin == null){
             $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut);
         } else {
             $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut, $dateFin);
