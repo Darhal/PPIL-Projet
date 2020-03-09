@@ -48,7 +48,7 @@ $unwanted_array = array(
         <th  > <img src="/Assets/Images/delete.png" width="20px"></th>
     </tr>
     <?php
-    try {
+    /*try {
         $bd = new SQLite3('BD.sqlite');
     } catch (SQLiteException $e) {
         die("La création ou l'ouverture de la base a échouée ".
@@ -61,7 +61,7 @@ $unwanted_array = array(
     while ($val=sqlite_fetch_array($notifications)){
         $tab[$i]=$val['msg'];
         $i++;
-    }
+    }*/
     ?>
 </table>
 

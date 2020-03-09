@@ -32,8 +32,8 @@ class DAOMembre extends DAO
 
     public function ajouterDansBDD($membre){
         $attribs = array(
-            "idListe" => $membre->liste,
-            "idUtilisateur" => $membre->utilisateur
+            "idListe" => $membre->idListe,
+            "idUtilisateur" => $membre->idUtilisateur
         );
 
         return $this->BDD->insertRow(self::$tab_name, $attribs);
@@ -81,14 +81,13 @@ class DAOMembre extends DAO
 
     public function add(Utilisateur $user, ListeTaches $liste) {
 		$membre = new Membre($liste->id, $user->id);
-
 		return $this->ajouterDansBDD($membre);
     }
 
     public function updateBDD($membre, $condition = "")
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
 }

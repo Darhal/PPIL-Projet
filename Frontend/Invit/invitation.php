@@ -57,7 +57,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 				<th scope='row'> " . $invitation->message . "</th>
 				<th scope='row'> " . $emetteur->pseudo . "</th>
 				<th scope='row'><img src='/Assets/Images/add.png' width='2%' title='Accepter' style='box-sizing: border-box;width: 5%;'></th>
-				<th scope='row' class='container w-30'><img src='/Assets/Images/refus.png' title='Refuser' style='box-sizing: border-box;width: 5%;'></th>
+				<th scope='row' class='container w-30'><a href='decline.php?id=$invitation->id'><img src='/Assets/Images/refus.png' title='Refuser' style='box-sizing: border-box;width: 5%;'></th>
 			</tr>
 			";
 		}
