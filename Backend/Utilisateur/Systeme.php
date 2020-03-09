@@ -5,9 +5,13 @@ include_once "Utilisateur.php"; // This is okay they share the same folder
 include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
+include_once getenv('BASE')."Backend/DAO/DAOMembre.php";
 
 include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
 include_once getenv('BASE')."Backend/Taches/Tache.php";
+include_once getenv('BASE')."Backend/Membre.php";
+
+
 
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
@@ -43,6 +47,11 @@ class Systeme
 	 */
     private static $dao_tache = null;
 
+	/**
+	 * @var DAOMembre
+	 */
+    private static $dao_membre = null;
+
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
@@ -51,6 +60,7 @@ class Systeme
         self::$dao_user = new DAOUtilisateur($bdd);
         self::$dao_listeTaches = new DAOListeTaches($bdd);
         self::$dao_tache = new DAOTache($bdd);
+        self::$dao_membre = new DAOMembre($bdd);
 
     }
 
@@ -237,6 +247,32 @@ class Systeme
 
 	    return $res_array;
 
+    }
+
+	/**
+	 * Liste de toutes les liste dont l'utilisateur est membre
+	 * @param Utilisateur $user
+	 * @return array | null
+	 */
+    public static function getLists(Utilisateur $user) {
+
+    	if (!isset($user->id)) {
+    		return null;
+	    }
+
+    	$resSQL = self::$dao_membre->getLists($user->id);
+
+    	$res_array = array();
+
+	    foreach ($resSQL as $item) {
+	    	$list = self::getListeTachesByID($item["idListe"]);
+
+	    	if ($list != null) {
+	    		array_push($res_array, $list);
+		    }
+    	}
+
+	    return $res_array;
     }
 
     /**

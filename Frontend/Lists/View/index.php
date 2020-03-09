@@ -54,8 +54,10 @@ if ($liste == null) {
 
 <div class="container-fluid w-90 d-block">
 
-
-    <h2><?php echo $liste->nom; ?></h2>
+	<div class="d-flex container-fluid">
+        <h2><?php echo $liste->nom; ?></h2>
+		<button> Ajouter une personne </button>
+	</div>
 
 	<table class="table">
 		<thead>
