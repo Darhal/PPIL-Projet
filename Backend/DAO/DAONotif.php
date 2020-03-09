@@ -62,4 +62,10 @@ class DAONotif extends DAO
     {
         // TODO: Implement getByRequete() method.
     }
+
+    public function updateBDD($attribs, $condition)
+    {
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
+    }
 }

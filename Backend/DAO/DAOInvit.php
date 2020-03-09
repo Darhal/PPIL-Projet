@@ -4,7 +4,6 @@ include_once getenv('BASE')."Backend/DAO/DAO.php";
 
 class DAOInvit extends DAO
 {
-
     private static $tab_name = "Invitation";
 
     public function __construct($bdd)
@@ -48,5 +47,11 @@ class DAOInvit extends DAO
     public function getByRequete($requete)
     {
         // TODO: Implement getByRequete() method.
+    }
+
+    public function updateBDD($attribs, $condition)
+    {
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
     }
 }

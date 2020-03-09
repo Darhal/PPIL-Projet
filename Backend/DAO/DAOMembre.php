@@ -84,4 +84,10 @@ class DAOMembre extends DAO
 
 		$this->ajouterDansBDD($membre);
     }
+
+    public function updateBDD($attribs, $condition)
+    {
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
+    }
 }
