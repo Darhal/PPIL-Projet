@@ -51,6 +51,8 @@ nav {
 
 .container {
     width: 100%;
+    align-items: baseline;
+    margin: auto auto;
 }
 
 .d-block {
@@ -159,6 +161,7 @@ a.disabled {
 
 .center-div {
     margin: auto auto;
+
 }
 
 .d-flex-centered-row {

@@ -59,7 +59,13 @@ if ($nom != "" && $nom != $logged_user->nom) {
 }
 
 if ($email != "" && $email != $logged_user->email) {
-	$logged_user->email = $email;
+
+    $val = Systeme::getUserByEmail($email); //Test si l'email est déjà utilisée par un autre compte
+    if ($val == null)
+        $logged_user->email = $email;
+    else
+        header("location: edit.php?erreur=1");
+
 }
 
 //Systeme::updateUser($user);

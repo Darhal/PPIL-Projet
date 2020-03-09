@@ -55,9 +55,10 @@
         {
             $ret = $this->exec($query);
             $this->handleErrors($ret);
+            return $ret;
         }
 
-        //TODO: il faut retourner un booléen: True si tout ok
+        // retourner un booléen: True si tout ok
         function insertRow($tab_name, $row_data)
         {
             $attribs = "";
@@ -72,7 +73,8 @@
             $attribs = rtrim($attribs, ",");
             $values = rtrim($values, ",");
             $ret = $this->exec("INSERT INTO $tab_name ($attribs) VALUES($values);");
-            $this->handleErrors($ret);
+            // $this->handleErrors($ret);
+            return !$ret ? false : true;
         }
 
         function insertRows($tab_name, $rows)
@@ -84,7 +86,7 @@
 
         function deleteRow($tab_name, $condition){
             $query = "DELETE FROM ".$tab_name." WHERE ".$condition;
-            $this->execQuery($query);
+            return $this->execQuery($query);
         }
 
         function createTable($tab_name, $attribs, $foreign_keys = array())
@@ -107,7 +109,26 @@
             }
 
             $attrib_str = rtrim($attrib_str, ",");
-            $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
+            return $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
+        }
+
+        function updateRow($tab_name, $attribs, $condition = "", $extra = "")
+        {
+            if (count($attribs) == 0){
+                return false;
+            }
+
+            $attrib_str = "";
+            foreach($attribs as $key => $value){
+                $attrib_str = $attrib_str."$key = '$value',";
+            }
+
+            if ($condition != ""){
+                $condition = "WHERE $condition";
+            }
+
+            $attrib_str = rtrim($attrib_str, ",");
+            return $this->execQuery("UPDATE $tab_name SET $attrib_str $condition $extra");
         }
 
         function handleErrors($ret){

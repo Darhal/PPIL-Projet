@@ -3,7 +3,7 @@
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
+    session_start();
 }
 
 $text = "Connexion";
@@ -12,11 +12,13 @@ $account = $target;
 $tasks = $target;
 $lists = $target;
 if (Systeme::estConnecte()) {
-	$text = "Déconnexion";
-	$target = "/Frontend/Login/logout.php";
-	$account = "/Frontend/Profil";
-	$tasks = "/Frontend/Tasks";
-	$lists = "/Frontend/Lists";
+    $text = "Déconnexion";
+    $target = "/Frontend/Login/logout.php";
+    $account = "/Frontend/Profil";
+    $tasks = "/Frontend/Tasks";
+    $lists = "/Frontend/Lists";
+    $notification = "/Frontend/Notification/notification.php";
+    $invit = "/Frontend/Invit/invitation.php";
 }
 
 echo '
@@ -25,6 +27,8 @@ echo '
 		<a class="py-1 d-none" href="/index.php">Accueil</a>
 		<a class="py-1 d-none" href="'.$account.'">Mon compte</a>
 		<a class="py-1 d-none" href="'.$lists.'">Mes listes</a>
+		<a class="py-1 d-none " href="'.$notification.'">Notifications </a>
+		<a class="py-1 d-none " href="'.$invit.'">Invitations</a>
 		<a class="py-1 d-none disabled" href="'.$tasks.'">Mes tâches</a>
 		<a class="py-1 d-none" href="'.$target.'">'.$text . '</a>
 	</div>
