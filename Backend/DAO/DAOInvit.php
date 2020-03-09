@@ -23,11 +23,10 @@ class DAOInvit extends DAO
     public function ajouterDansBDD($invitation)
     {
         $attribs = array(
-            "id" => $invitation->id,
 	        "emetteur" => $invitation->emetteur,
 	        "destinataire" => $invitation->destinataire,
             "message" => $invitation->message,
-            "idListe" => $invitation->idListe,
+            "idListe" => $invitation->liste,
         );
 
         $this->BDD->insertRow(self::$tab_name, $attribs);

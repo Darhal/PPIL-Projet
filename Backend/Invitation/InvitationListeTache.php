@@ -14,7 +14,7 @@ include_once "Invitation.php";
 class InvitationListeTache extends Invitation {
 
 	function __construct(string $message, int $emetteur, int $destinataire, int $liste) {
-        parent::__construct($message, $emetteur, $destinataire, $liste);
+        parent::__construct(SQLite3::escapeString($message), $emetteur, $destinataire, $liste);
     }
 
 }
