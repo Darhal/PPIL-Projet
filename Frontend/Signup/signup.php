@@ -17,7 +17,7 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     $err_code = Systeme::ajouterUtilisateur($user);
 
     if ($err_code) {
-        header("location: ../Login/index.php?erreur=".$err_code);
+        header("location: ../Signup/index.php?erreur=".$err_code);
     }
 
     if (Systeme::seConnecter($user->email, $user->mdp)){
@@ -27,7 +27,7 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
 }
 else{     //Si les informations ne sont pas remplies
     echo "REDIR: ";
-	header("location: ../Login/index.php?erreur=2");
+	header("location: ../Signup/index.php?erreur=2");
 }
 
 ?>

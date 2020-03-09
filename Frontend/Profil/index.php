@@ -2,7 +2,9 @@
 include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
-session_start();
+if (session_status() != PHP_SESSION_ACTIVE) {
+	session_start();
+}
 $email = $_SESSION["email"];
 
 $unwanted_array = array(
@@ -13,9 +15,17 @@ $unwanted_array = array(
 	'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
 );
 
+if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+	$uid = $_SESSION["id"];
+} else {
+	// Redirection vers la page d'accueil
+	header("location: /Frontend/Login");
+	exit;
+}
+
 Systeme::Init();
 
-$user = Systeme::getUserByEmail($email);
+$user = Systeme::getUserByID($uid);
 
 if ($user == null){
 	die("ERROR: Unable to find user by email");
@@ -38,10 +48,14 @@ if ($user == null){
 		<h1><?php echo ucfirst($user->prenom) . " " . ucfirst($user->nom)?></h1>
 		<h4><?php echo ucfirst($user->pseudo) ?></h4>
 		<p><?php echo ucfirst($user->email) ?></p>
-		<div class="container">
-			<button onclick="window.location.href='edit.php'"> Modifier le profil </button>
-			<div>
-			</div>
+		<div class="d-flex container-fluid">
+			<form method="post" action="edit.php">
+				<input type="submit" value="Modifier mon profil">
+			</form>
+
+			<form method="post" action="delete.php">
+				<input type="submit" value="Supprimer mon compte" style="color: red">
+			</form>
 		</div>
 	</div>
 </div>

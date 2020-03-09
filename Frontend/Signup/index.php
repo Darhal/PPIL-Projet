@@ -10,10 +10,10 @@
 <?php 
 	include_once getenv('BASE')."Shared/navbar.php";
 ?>
-<div class="container">
+<div class="container align-center">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
-	<div class="container center-div">
+	<div class="container align-center">
 		<form method="post" action="signup.php">
 
 			<div class="form-group">
@@ -53,7 +53,7 @@
 		if(isset($_GET['erreur'])){
 			$err = $_GET['erreur'];
 			if($err==1) {
-				echo "<p style='color:red'>email déjà utilisé, veuillez changer </p>";
+				echo "<p style='color:red'>email déjà utilisée, veuillez changer </p>";
 			}
 			if($err==2) {
 				echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
