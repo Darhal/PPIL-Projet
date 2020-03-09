@@ -333,6 +333,16 @@ class Systeme
         
     }
 
+    /**
+     * Ajouter une tache à une liste de tache
+     * @param ListeTaches $list
+     * @param Tache $task
+     */
+    public static function addTask(ListeTaches $list, Tache $task){
+
+
+    }
+
 
 }
 
