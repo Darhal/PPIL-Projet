@@ -61,7 +61,6 @@ class Systeme
         self::$dao_listeTaches = new DAOListeTaches($bdd);
         self::$dao_tache = new DAOTache($bdd);
         self::$dao_membre = new DAOMembre($bdd);
-
     }
 
     //---------------------------- Utilisateur ---------------------------------
