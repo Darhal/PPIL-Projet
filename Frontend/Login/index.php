@@ -1,7 +1,8 @@
 <?php
-// set_include_path("/var/www/ppil.ugocottin.fr/");
 
-session_start();
+if (session_status() != PHP_SESSION_ACTIVE) {
+	session_start();
+}
 if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 	// Redirection vers la page d'accueil
 	header("location: /Frontend/Profil");

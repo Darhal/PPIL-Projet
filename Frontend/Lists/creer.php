@@ -1,4 +1,3 @@
-<?php set_include_path("/var/www/ppil.ugocottin.fr/"); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,7 +11,7 @@
 	<title>Créer une tâche</title>
 </head>
 <body>
-<?php include_once "Assets/navbar.php"; ?>
+<?php include_once getenv("BASE") . "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Créer une liste de tâches </h1>
 <div class="spacer"></div>
@@ -82,9 +81,9 @@
 
 	    return true;
 
-	    $('#form').submit();
+	    //$('#form').submit();
 	}
 
 </script>
-<?php include_once "Assets/footer.php"; ?>
+<?php include_once getenv("BASE") . "Shared/footer.php"; ?>
 </body>

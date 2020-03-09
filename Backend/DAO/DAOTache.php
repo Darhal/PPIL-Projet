@@ -32,13 +32,14 @@ class DAOTache extends DAO
         );
     }
 
-    public function ajouterDansBDD($tache){
+    //TODO: il faut retourner un booléen en fonction de si ça s'est bien passé!
+    public function ajouterDansBDD($tache) {
 
         $attribs = array(
-            "idTache" => $tache->id,
+//            "idTache" => $tache->id,   // l'id est généré par la BDD
             "nom" => $tache->nom,
             "statut" => $tache->finie,
-            "idListe" => $tache->liste
+            "idListe" => $tache->idListe
         );
 
         if($tache->responsable != null){
@@ -46,10 +47,11 @@ class DAOTache extends DAO
         }
 
         $this->BDD->insertRow(self::$tab_name, $attribs);
+
     }
 
-    public function supprimerDeBDD($objet){
-        //TODO
+    public function supprimerDeBDD($tache){
+        $this->BDD->deleteRow($this->tab_name, "idTache = ".$tache->id);
     }
 
     public function getByRequete($requete){

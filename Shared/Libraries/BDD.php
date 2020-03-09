@@ -57,6 +57,7 @@
             $this->handleErrors($ret);
         }
 
+        //TODO: il faut retourner un booléen: True si tout ok
         function insertRow($tab_name, $row_data)
         {
             $attribs = "";
@@ -79,6 +80,11 @@
             foreach ($rows as $value) {
                 $this->insertRow($tab_name, $value);
             }
+        }
+
+        function deleteRow($tab_name, $condition){
+            $query = "DELETE FROM ".$tab_name." WHERE ".$condition;
+            $this->execQuery($query);
         }
 
         function createTable($tab_name, $attribs, $foreign_keys = array())
