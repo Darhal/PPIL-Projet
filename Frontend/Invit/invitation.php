@@ -15,60 +15,43 @@ $unwanted_array = array(
     <meta charset="UTF-8">
     <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/Frontend/CSS/style.css">
-    <style>
-        .retour {
-            background-color: #555;
-            color: white;
-            text-decoration: none;
-            padding: 15px 26px;
-            position: relative;
-            display: inline-block;
-            border-radius: 2px;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-    </style>
 </head>
 
 <body>
-<?php include_once "Shared/navbar.php"; ?>
+<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
 <div class="spacer"></div>
-<a href="profile.php" class="retour">
-    <span>Retour</span>
-</a>
 <h1 class="text-center"> Invitations </h1>
 <div class="spacer"></div>
 <table style="width: 90%" border="1" id="tableauNotif">
     <tr>
-        <th style="width: 70%" bgcolor="#ffe4c4" > Invitations<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > Accepter</th>
-        <th style="background:bisque" > Refuser</th>
+        <th  > Invitations<FONT face="Times New Roman"></FONT></th>
+        <th  > Accepter</th>
+        <th > Refuser</th>
     </tr>
     <tr>
-        <th style="width: 70%" bgcolor="#ffe4c4" > Maela vous invite à participer à la liste x<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > <img src="./img/add.png" width="20px"></th>
-        <th style="background:bisque" > <img src="./img/refus.png" width="20px"></th>
+        <th > Maela vous invite à participer à la liste x<FONT face="Times New Roman"></FONT></th>
+        <th > <img src="/Assets/Images/add.png" width="20px"></th>
+        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
     </tr>
     <tr id="3">
-        <th style="width: 70%" bgcolor="#ffe4c4"  > Maela vous invite à participer à la liste y<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > <img src="./img/add.png" width="20px" onclick="document.getElementById('tableauNotif').deleteRow(document.getElementById('3'))"></th>
-        <th style="background:bisque" > <img src="./img/refus.png" width="20px"></th>
+        <th   > Maela vous invite à participer à la liste y<FONT face="Times New Roman"></FONT></th>
+        <th  > <img src="/Assets/Images/add.png" width="20px" onclick="document.getElementById('tableauNotif').deleteRow(document.getElementById('3'))"></th>
+        <th > <img src="/Assets/Images/refus.png" width="20px"></th>
     </tr>
     <tr>
-        <th style="width: 70%" bgcolor="#ffe4c4" > Maela vous invite à participer à la liste z<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > <img src="./img/add.png" width="20px"></th>
-        <th style="background:bisque" > <img src="./img/refus.png" width="20px"></th>
+        <th  > Maela vous invite à participer à la liste z<FONT face="Times New Roman"></FONT></th>
+        <th  > <img src="/Assets/Images/add.png" width="20px"></th>
+        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
     </tr>
     <tr>
-        <th style="width: 70%" bgcolor="#ffe4c4" > Maela vous invite à participer à la liste a<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > <img src="./img/add.png" width="20px" ></th>
-        <th style="background:bisque" > <img src="./img/refus.png" width="20px"></th>
+        <th   > Maela vous invite à participer à la liste a<FONT face="Times New Roman"></FONT></th>
+        <th  > <img src="/Assets/Images/add.png" width="20px" ></th>
+        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
     </tr>
     <tr>
-        <th style="width: 70%" bgcolor="#ffe4c4" > Maela vous invite à participer à la liste b<FONT face="Times New Roman"></FONT></th>
-        <th style="background:bisque" > <img src="./img/add.png" width="20px"></th>
-        <th style="background:bisque" > <img src="./img/refus.png" width="20px"></th>
+        <th  > Maela vous invite à participer à la liste b<FONT face="Times New Roman"></FONT></th>
+        <th > <img src="/Assets/Images/add.png" width="20px"></th>
+        <th > <img src="/Assets/Images/refus.png" width="20px"></th>
     </tr>
     <?php
     try {
