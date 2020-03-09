@@ -304,8 +304,8 @@ class Systeme
         $tache = new Tache($nom, $listeTaches->id);
 
         //TODO: retour valeur booléenne
-        self::$dao_tache->ajouterDansBDD($tache);
-        return true;
+
+        return self::$dao_tache->ajouterDansBDD($tache);
     }
 
     /**
@@ -341,15 +341,6 @@ class Systeme
         self::$dao_listeTaches->ajouterDansBDD($liste);
     }
 
-    /**
-     * Ajouter une tache à une liste de tache
-     * @param ListeTaches $list
-     * @param Tache $task
-     */
-    public static function addTask(ListeTaches $list, Tache $task){
-
-
-    }
 
 
 }
