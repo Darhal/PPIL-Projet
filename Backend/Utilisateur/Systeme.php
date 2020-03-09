@@ -353,6 +353,12 @@ class Systeme
 
     }
 
+    public static function accepterInvitation($idListe, $idUtilisateur){
+        $liste = self::$dao_listeTaches->getListeTachesByID($idListe);
+        $utilisateur = self::$dao_user->getUserByID($idUtilisateur);
+        return self::$dao_membre->add($utilisateur, $liste);
+    }
+
 
 }
 
