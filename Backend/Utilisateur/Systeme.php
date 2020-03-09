@@ -208,9 +208,11 @@ class Systeme
         // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
         $listeTache = null;
         if($req['dateFin'] !=null){
-            $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+            $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+            $listeTache->id = $req['idListe'];
         }else{
-            $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+            $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut']);
+            $listeTache->id = $req['idListe'];
         }
 
         return $listeTache;
@@ -236,9 +238,11 @@ class Systeme
 		    // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
 		    $listeTache = null;
 		    if ($req['dateFin'] != null) {
-			    $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+                $listeTache->id = $req['idListe'];
 		    } else {
-			    $listeTache = new ListeTaches($req['idListe'], $req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
+			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut']);
+                $listeTache->id = $req['idListe'];
 		    }
 
 		    array_push($res_array, $listeTache);
@@ -300,8 +304,8 @@ class Systeme
         $tache = new Tache($nom, $listeTaches->id);
 
         //TODO: retour valeur booléenne
-        self::$dao_tache->ajouterDansBDD($tache);
-        return true;
+
+        return self::$dao_tache->ajouterDansBDD($tache);
     }
 
     /**
@@ -329,9 +333,16 @@ class Systeme
 
 
     public static function createList($nom, $dateDebut, $dateFin, $idUtilisateur){
-        $query = "INSERT INTO Liste VALUES('".$nom."', '".$dateDebut."', '".$dateFin."', '".$idUtilisateur."')";
-        
+
+        if($dateFin == null){
+            $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut);
+        } else {
+            $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut, $dateFin);
+        }
+
+        return self::$dao_listeTaches->ajouterDansBDD($liste);
     }
+
 
 
 }
