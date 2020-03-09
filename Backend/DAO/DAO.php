@@ -49,7 +49,7 @@ abstract class DAO
     public abstract function ajouterDansBDD($objet);
     public abstract function supprimerDeBDD($objet);
     public abstract function getByRequete($requete);
-    public abstract function updateBDD($requete);
+    public abstract function updateBDD($objet, $condition = "");
 }
 
 ?>

@@ -184,6 +184,15 @@ class Systeme
         return $user;
     }
 
+    public static function updateUserByEmail(Utilisateur $usr, String $email)
+    {
+        return $dao_user->updateBDD($usr, "email = '$email'");
+    }
+
+    public static function updateUserByID(Utilisateur $usr, int $id)
+    {
+        return $dao_user->updateBDD($usr, "idutilisateur = '$id'");
+    }
 
     //---------------------------- ListeTaches---------------------------------
 

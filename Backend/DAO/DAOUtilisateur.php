@@ -68,8 +68,15 @@ class DAOUtilisateur extends DAO
         return $res;
     }
 
-    public function updateBDD($attribs, $condition)
+    public function updateBDD($utilisateur, $condition = "")
     {
+        $attribs = array(
+            "pseudo" => $utilisateur->pseudo,
+            "nom" => $utilisateur->nom,
+            "prenom" => $utilisateur->prenom,
+            "email" => $utilisateur->email,
+            "mdp" => $utilisateur->mdp
+        );
         $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
         return $res;
     }
