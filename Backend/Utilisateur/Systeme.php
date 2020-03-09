@@ -166,7 +166,7 @@ class Systeme
      * @param $id
      * @return Utilisateur|null
      */
-    public static function getUserByID($id) : Utilisateur
+    public static function getUserByID($id)
     {
         if (!isset($id)) {
             return null;
@@ -182,6 +182,26 @@ class Systeme
         $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
         $user->id = $req['idutilisateur'];
         return $user;
+    }
+
+
+    public static function getUsersByPseudo(string $pseudo): array {
+
+    	if (!isset($pseudo)) {
+    		return [];
+	    }
+
+    	$req = self::$dao_user->getUsersByPseudo($pseudo);
+    	$res_array = array();
+
+	    foreach ($req as $user) {
+		    $u = new Utilisateur($user["pseudo"], "", "", $user["email"], "");
+		    $u->setId($user["idutilisateur"]);
+
+		    array_push($res_array, $u);
+    	}
+
+    	return $res_array;
     }
 
 
@@ -343,6 +363,12 @@ class Systeme
         return self::$dao_listeTaches->ajouterDansBDD($liste);
     }
 
+
+    public static function accepterInvitation($idListe, $idUtilisateur){
+        $liste = self::$dao_listeTaches->getListeTachesByID($idListe);
+        $utilisateur = self::$dao_user->getUserByID($idUtilisateur);
+        return self::$dao_membre->add($utilisateur, $liste);
+    }
 
 
 }

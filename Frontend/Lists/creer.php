@@ -27,12 +27,12 @@
 
 			<div class="form-group">
 				<h2> Date de début </h2>
-				<label for="startingDate"></label><input class="form-control" type="date" id="startingDate" name="startingDate" placeholder="JJ/MM/YYYY" onkeydown="return false">
+				<label for="startingDate"></label><input class="form-control" type="date" id="startingDate" name="startingDate" placeholder="JJ/MM/YYYY">
 			</div>
 
 			<div class="form-group">
 				<h2> Date de fin </h2>
-				<label for="endingDate"></label><input class="form-control" type="date" id="endingDate" name="endingDate" placeholder="JJ/MM/YYYY" onkeydown="return false">
+				<label for="endingDate"></label><input class="form-control" type="date" id="endingDate" name="endingDate" placeholder="JJ/MM/YYYY">
 			</div>
 
 			<div class="d-flex justify-content-between">

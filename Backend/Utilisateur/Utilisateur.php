@@ -24,6 +24,14 @@ class Utilisateur
         $this->email = $email;
         $this->mdp = $mdp;
     }
+
+	/**
+	 * @param mixed $id
+	 */
+	public function setId($id): void
+	{
+		$this->id = $id;
+	}
 }
 
 ?>

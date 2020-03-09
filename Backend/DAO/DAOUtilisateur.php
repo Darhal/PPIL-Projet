@@ -47,7 +47,7 @@ class DAOUtilisateur extends DAO
 
     function supprimerDeBDD($utilisateur)
     {
-        $this->BDD->deleteRow($this->tab_name, "idUtilisateur = ".$utilisateur->id);
+        $this->BDD->deleteRow(self::$tab_name, "idUtilisateur = ".$utilisateur->id);
     }
 
     function getUserByEmail($email)
@@ -77,8 +77,13 @@ class DAOUtilisateur extends DAO
             "email" => $utilisateur->email,
             "mdp" => $utilisateur->mdp
         );
-        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
+    }
+
+    function getUsersByPseudo($pseudo) {
+    	$res = $this->getByRequete("pseudo LIKE '%" . SQLite3::escapeString($pseudo) . "%'");
+    	return $res;
     }
 }
 

@@ -86,7 +86,7 @@
 
         function deleteRow($tab_name, $condition){
             $query = "DELETE FROM ".$tab_name." WHERE ".$condition;
-            $this->execQuery($query);
+            return $this->execQuery($query);
         }
 
         function createTable($tab_name, $attribs, $foreign_keys = array())
@@ -109,7 +109,7 @@
             }
 
             $attrib_str = rtrim($attrib_str, ",");
-            $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
+            return $this->execQuery("CREATE TABLE IF NOT EXISTS $tab_name ($attrib_str);");
         }
 
         function updateRow($tab_name, $attribs, $condition = "", $extra = "")
@@ -128,8 +128,7 @@
             }
 
             $attrib_str = rtrim($attrib_str, ",");
-            $this->execQuery("UPDATE $tab_name SET $attrib_str $condition $extra");
-            return true;
+            return $this->execQuery("UPDATE $tab_name SET $attrib_str $condition $extra");
         }
 
         function handleErrors($ret){

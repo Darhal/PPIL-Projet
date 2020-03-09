@@ -82,6 +82,20 @@ if ($liste == null) {
 		</tbody>
 	</table>
 
+	<form method="post" action="add_member.php">
+		<select name="user" id="user">
+			<?php
+			$users = Systeme::getUsersByPseudo("");
+			foreach ($users as $u) {
+				if ($u->email != $user->email) {
+				echo "<option value='$u->email'> $u->pseudo </option>";
+				}
+			}
+			?>
+		</select>
+		<input type="submit" value="Ajouter!">
+	</form>
+
 </div>
 
 <?php include_once getenv("BASE") . "Shared/footer.php"; ?>
