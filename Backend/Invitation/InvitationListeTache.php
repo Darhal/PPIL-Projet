@@ -13,9 +13,8 @@ include_once "Invitation.php";
 
 class InvitationListeTache extends Invitation {
 
-    function __construct(string $message, int $idInviteur, int $idListe)
-    {
-        parent::__construct($message, $idInviteur, $idListe);
+	function __construct(string $message, int $emetteur, int $destinataire, int $liste) {
+        parent::__construct($message, $emetteur, $destinataire, $liste);
     }
 
 }

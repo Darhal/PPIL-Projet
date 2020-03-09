@@ -1,93 +1,69 @@
 <?php
-session_start();
-//include("../database/database.php");
-$unwanted_array = array(
-    'Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
-    'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U',
-    'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
-    'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
-    'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y'
-);
+include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
+Systeme::Init();
+
+if (session_status() != PHP_SESSION_ACTIVE) {
+	session_start();
+}
+
+if(Systeme::estConnecte()){
+	$uid = $_SESSION["id"];
+} else {
+	// Redirection vers la page d'accueil
+	header("location: /Frontend/Login");
+	exit;
+}
+
+$user = Systeme::getUserByEmail($_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
     <link rel="stylesheet" type="text/css" href="/Frontend/CSS/style.css">
+	<title> Invitations </title>
 </head>
-
 <body>
 <?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Invitations </h1>
 <div class="spacer"></div>
-<table style="width: 90%" border="1" id="tableauNotif">
-    <tr>
-        <th  > Invitations<FONT face="Times New Roman"></FONT></th>
-        <th  > Accepter</th>
-        <th > Refuser</th>
-    </tr>
-    <tr>
-        <th > Maela vous invite à participer à la liste x<FONT face="Times New Roman"></FONT></th>
-        <th > <img src="/Assets/Images/add.png" width="20px"></th>
-        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
-    </tr>
-    <tr id="3">
-        <th   > Maela vous invite à participer à la liste y<FONT face="Times New Roman"></FONT></th>
-        <th  > <img src="/Assets/Images/add.png" width="20px" onclick="document.getElementById('tableauNotif').deleteRow(document.getElementById('3'))"></th>
-        <th > <img src="/Assets/Images/refus.png" width="20px"></th>
-    </tr>
-    <tr>
-        <th  > Maela vous invite à participer à la liste z<FONT face="Times New Roman"></FONT></th>
-        <th  > <img src="/Assets/Images/add.png" width="20px"></th>
-        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
-    </tr>
-    <tr>
-        <th   > Maela vous invite à participer à la liste a<FONT face="Times New Roman"></FONT></th>
-        <th  > <img src="/Assets/Images/add.png" width="20px" ></th>
-        <th  > <img src="/Assets/Images/refus.png" width="20px"></th>
-    </tr>
-    <tr>
-        <th  > Maela vous invite à participer à la liste b<FONT face="Times New Roman"></FONT></th>
-        <th > <img src="/Assets/Images/add.png" width="20px"></th>
-        <th > <img src="/Assets/Images/refus.png" width="20px"></th>
-    </tr>
-    <?php
-    try {
-        $bd = new SQLite3('BD.sqlite');
-    } catch (SQLiteException $e) {
-        die("La création ou l'ouverture de la base a échouée ".
-            "pour la raison suivante: ".$e->getMessage());
-    }
-    $notifications=$bd->query("SELECT msg FROM Notification n, Notifie noti where n.idNotif=noti.idNotif AND noti.idUtilisateur='".$_SESSION["id"]."'");
-    $nbre=sqlite_num_rows($notifications);
-    //creation du tableau
-    $i=0;
-    while ($val=sqlite_fetch_array($notifications)){
-        $tab[$i]=$val['msg'];
-        $i++;
-    }
-    //affichage
-    if ($nbre!=0){
-        for ($j=0;$j<$nbre;$j++){
-            echo '<tr>';
-            echo '<th style="width: 70%" bgcolor="#ffe4c4" >';
-            echo $tab[$j];
-            echo '</th>';
-            echo '<th style="background:bisque" > ';
 
-        }
-    }
+<div class="container-fluid w-90 d-block">
+	<h2> Mes invitations </h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col"> ID </th>
+				<th scope="col"> Message </th>
+				<th scope="col"> De la part de </th>
+				<th scope="col"> Accepter </th>
+				<th scope="col"> Refuser </th>
+			</tr>
+		</thead>
 
-    ?>
-</table>
+		<tbody>
+		<?php
+		$invitations = Systeme::getInvitations($user);
 
+		foreach ($invitations as $invitation) {
+			$emetteur = Systeme::getUserByID($invitation->emetteur);
+
+			echo "
+			<tr>
+				<th scope='row'> " . $invitation->id . "</th>
+				<th scope='row'> " . $invitation->message . "</th>
+				<th scope='row'> " . $emetteur->pseudo . "</th>
+				<th scope='row'><img src='/Assets/Images/add.png' width='2%' title='Accepter' style='box-sizing: border-box;width: 5%;'></th>
+				<th scope='row' class='container w-30'><img src='/Assets/Images/refus.png' title='Refuser' style='box-sizing: border-box;width: 5%;'></th>
+			</tr>
+			";
+		}
+		?>
+		</tbody>
+	</table>
+</div>
 </body>
-<script language="javascript">
-    function supprimerligne(numL)
-    {
-        document.getElementById("tableauNotif").deleteRow(0);
-    }
-</script>
 </html>

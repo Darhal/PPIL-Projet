@@ -1,20 +1,21 @@
 <?php
+
+include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
+include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+
+Systeme::Init();
+
 if (session_status() != PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
 	header("location: /Frontend/Login");
 	exit;
 }
-
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
-
-Systeme::Init();
 
 $user = Systeme::getUserByEmail($_SESSION['email']);
 ?>

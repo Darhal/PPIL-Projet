@@ -93,6 +93,7 @@ if ($liste == null) {
 			}
 			?>
 		</select>
+		<input type="hidden" value="<?php echo $liste->id; ?>" name="lid" id="lid">
 		<input type="submit" value="Ajouter!">
 	</form>
 

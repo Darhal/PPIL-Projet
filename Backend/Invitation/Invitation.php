@@ -10,17 +10,22 @@
  *
  */
 abstract class Invitation {
-    public $msg;
-    public $inviteur;
-    public $liste;
-    public $idInvitation;
-    function __construct(string $message,int $idInviteur, int $idListe)
-    {
-        $this->msg=$message;
-        $this->inviteur = $idInviteur;
-        $this->liste=$idListe;
 
+	public $message;
+    public $emetteur;
+    public $destinataire;
+    public $id;
+    public $liste;
+
+    function __construct(string $message, int $emetteur, int $destinataire, int $liste) {
+
+    	$this->id = null;
+    	$this->message = $message;
+    	$this->emetteur = $emetteur;
+    	$this->destinataire = $destinataire;
+    	$this->liste = $liste;
     }
+
     function __destruct()
     {
         // TODO: Implement __destruct() method.

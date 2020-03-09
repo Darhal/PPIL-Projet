@@ -6,7 +6,9 @@ include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
 include_once getenv('BASE')."Backend/DAO/DAOMembre.php";
+include_once getenv('BASE')."Backend/DAO/DAOInvit.php";
 
+include_once getenv('BASE')."Backend/Invitation/InvitationListeTache.php";
 include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
 include_once getenv('BASE')."Backend/Taches/Tache.php";
 include_once getenv('BASE')."Backend/Membre.php";
@@ -52,6 +54,11 @@ class Systeme
 	 */
     private static $dao_membre = null;
 
+	/**
+	 * @var DAOInvit
+	 */
+    private static $dao_invit = null;
+
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
@@ -61,6 +68,7 @@ class Systeme
         self::$dao_listeTaches = new DAOListeTaches($bdd);
         self::$dao_tache = new DAOTache($bdd);
         self::$dao_membre = new DAOMembre($bdd);
+        self::$dao_invit = new DAOInvit($bdd);
     }
 
     //---------------------------- Utilisateur ---------------------------------
@@ -368,6 +376,39 @@ class Systeme
         $liste = self::$dao_listeTaches->getListeTachesByID($idListe);
         $utilisateur = self::$dao_user->getUserByID($idUtilisateur);
         return self::$dao_membre->add($utilisateur, $liste);
+    }
+
+    public static function inviterUtilisateur(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
+
+    	if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
+    		return false;
+	    }
+
+	    $invitation = new InvitationListeTache("Je t'invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
+
+    	self::$dao_invit->ajouterDansBDD($invitation);
+
+    	return true;
+    }
+
+    public static function getInvitations(Utilisateur $utilisateur) : array {
+
+    	if (!isset($utilisateur)) {
+    		return [];
+	    }
+
+    	$resSQL = self::$dao_invit->getInvitationsFor($utilisateur);
+
+    	$res_array = array();
+
+	    foreach ($resSQL as $item) {
+		    $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+		    $invitation->id = $item['id'];
+
+		    array_push($res_array, $invitation);
+    	}
+
+    	return $res_array;
     }
 
 
