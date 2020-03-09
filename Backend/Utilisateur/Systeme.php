@@ -185,6 +185,26 @@ class Systeme
     }
 
 
+    public static function getUsersByPseudo(string $pseudo): array {
+
+    	if (!isset($pseudo)) {
+    		return [];
+	    }
+
+    	$req = self::$dao_user->getUsersByPseudo($pseudo);
+    	$res_array = array();
+
+	    foreach ($req as $user) {
+		    $u = new Utilisateur($user["pseudo"], "", "", $user["email"], "");
+		    $u->setId($user["idutilisateur"]);
+
+		    array_push($res_array, $u);
+    	}
+
+    	return $res_array;
+    }
+
+
     //---------------------------- ListeTaches---------------------------------
 
     /**
