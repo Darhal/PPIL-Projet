@@ -1,9 +1,13 @@
 <?php
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+set_include_path(getenv('BASE'));
+
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
+
+if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
@@ -11,31 +15,31 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
-
 Systeme::Init();
 
 $user = Systeme::getUserByID($uid);
 
 if ($user == null){
+	// TODO: - Afficher une erreur
 	die("ERROR: Unable to find user by ID");
 }
 
 if (!isset($_POST['lid'])) {
+	// TODO: - Afficher une erreur
 	die("ID de liste non défini");
 }
 
 $lid = intval($_POST['lid']);
 
 if (!is_int($lid)) {
-
+	// TODO: - Afficher une erreur
 	die("L'ID de liste n'est pas valide");
 }
 
 $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
+	// TODO: - Afficher une erreur
 	die("Liste d'ID " . $lid . " inexistante");
 }
 
@@ -49,7 +53,7 @@ if ($liste == null) {
 </head>
 <body>
 <?php 
-	include_once getenv('BASE')."Shared/navbar.php";
+	include_once "Shared/navbar.php";
 ?>
 <div class="container align-center">
 	<div class="spacer"></div>
@@ -68,7 +72,7 @@ if ($liste == null) {
 				<button onclick="window.location.href='../Profil'"> Retour </button>
 				<input type="submit" value="Ajouter">
 			</div>
-			<input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
+			<label for="lid"></label><input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">
 		</form>
 
 		<?php
@@ -85,7 +89,7 @@ if ($liste == null) {
 	</div>
 </div>
 <?php 
-	include_once getenv('BASE')."Shared/footer.php";
+	include_once "Shared/footer.php";
 ?>
 </body>
 </html>

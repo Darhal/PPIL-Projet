@@ -11,12 +11,11 @@
 
     class BDD extends SQLite3
     {
-        private $file_path;
-        private $file_name;
+        /*private $file_path;
+        private $file_name;*/
 
         function __construct($filename) {
             $file_path = getenv('BASE')."/Assets/BD/".$filename;
-            $file_name = $filename;
             parent::__construct($file_path);
         }
 
@@ -24,14 +23,14 @@
             $this->close();
         }
 
-        function getFilePath() {
+        /*function getFilePath() {
             return $this->file_path;
         }
 
         function getFileName()
         {
             return $this->file_name;
-        }
+        }*/
 
         function fetchResults($tab_name, $what = "*", $condition = "")
         {
@@ -77,12 +76,11 @@
             return !$ret ? false : true;
         }
 
-        function insertRows($tab_name, $rows)
-        {
+        /*function insertRows($tab_name, $rows) {
             foreach ($rows as $value) {
                 $this->insertRow($tab_name, $value);
             }
-        }
+        }*/
 
         function deleteRow($tab_name, $condition){
             $query = "DELETE FROM ".$tab_name." WHERE ".$condition;
@@ -98,7 +96,6 @@
             }
 
             foreach ($foreign_keys as $key => $value){
-                $f_str = "";
                 if (count($value) >= 3){
                     $f_str = "FOREIGN KEY($key) REFERENCES $value[0]($value[1]) $value[2]";
                 }else{
@@ -137,5 +134,5 @@
             }
         }
     }
-?>
+
 

@@ -1,4 +1,4 @@
-<?php //set_include_path("/var/www/ppil.ugocottin.fr/"); ?>
+<?php set_include_path(getenv('BASE')); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php 
-	include_once getenv('BASE')."Shared/navbar.php";
+	include_once "Shared/navbar.php";
 ?>
 <div class="container align-center">
 	<div class="spacer"></div>
@@ -65,7 +65,7 @@
 	</div>
 </div>
 <?php 
-	include_once getenv('BASE')."Shared/footer.php";
+	include_once "Shared/footer.php";
 ?>
 </body>
 </html>

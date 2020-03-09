@@ -1,63 +1,61 @@
 <?php
-// Affichage des erreurs
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-// Démarrage de la session
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
 
 // Vérification si un utilisateur est connecté
-if(!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] != true) {
+if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
 	header("location: /Frontend/Login");
 	exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	echo "Type de requête invalide";
-	header( "refresh:5;url=../Lists" );
+	// TODO: - Afficher une erreur
+	header( "location: ../Lists" );
 }
 
 if (!isset($_POST['lid'])) {
+	// TODO: - Afficher une erreur
 	die("ID de liste non défini");
 }
 
 $lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
-
+	// TODO: - Afficher une erreur
 	die("L'ID de liste n'est pas valide");
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 Systeme::Init();
 $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
+	// TODO: - Afficher une erreur
 	die("Liste d'ID " . $lid . " inexistante");
 }
 
 if (!isset($_POST['tname'])) {
+	// TODO: - Afficher une erreur
 	die("Nom de tâche non défini");
 }
 
 $tname = SQLite3::escapeString(strval($_POST['tname']));
 
 if (!is_string($tname)) {
-
+	// TODO: - Afficher une erreur
 	die("Le nom de tâche n'est pas valide");
 }
 
-include_once (getenv('BASE')."Backend/Taches/Tache.php");
+include_once "Backend/Taches/Tache.php";
 
 $res = Systeme::createTask($tname, $liste);
 
 if ($res == true) {
-	echo "success";
 	header("location: ../Lists/View/index.php?id=" . $liste->id);
 } else {
+	// TODO: - Afficher une erreur
 	echo "failure";
 }

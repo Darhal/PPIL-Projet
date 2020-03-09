@@ -71,6 +71,12 @@ class Systeme
         self::$dao_invit = new DAOInvit($bdd);
     }
 
+    public static function start_session() {
+	    if (session_status() != PHP_SESSION_ACTIVE) {
+		    session_start();
+	    }
+    }
+
     //---------------------------- Utilisateur ---------------------------------
 
 

@@ -1,8 +1,13 @@
-<?php set_include_path("/var/www/ppil.ugocottin.fr/");
+<?php
+
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
 
 session_start();
 
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
