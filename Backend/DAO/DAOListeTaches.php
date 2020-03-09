@@ -47,7 +47,7 @@ class DAOListeTaches extends DAO
             $attribs["idUtilisateur"] = $liste->proprietaire->id;
         }
 
-        $this->BDD->insertRow(self::$tab_name, $attribs);
+        return $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
 

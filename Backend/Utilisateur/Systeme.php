@@ -333,12 +333,14 @@ class Systeme
 
 
     public static function createList($nom, $dateDebut, $dateFin, $idUtilisateur){
+
         if($dateFin == null){
             $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut);
         } else {
             $liste = new ListeTaches($nom, $idUtilisateur, $dateDebut, $dateFin);
         }
-        self::$dao_listeTaches->ajouterDansBDD($liste);
+
+        return self::$dao_listeTaches->ajouterDansBDD($liste);
     }
 
 
