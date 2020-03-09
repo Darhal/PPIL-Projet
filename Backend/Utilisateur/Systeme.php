@@ -1,13 +1,3 @@
-/*
-* Projet Procrast
-* Classe Systeme
-* L'implentation du Design Pattern Facade. Systeme sert de facade entre l'utilisateur et le reste du back-end
-* Intermediare entre la base de données et php pour les donnees qui concernent les extensions de la classe Notification
-* @authors: Omar C, Jonathan P,
-* @date:05/03/2020
-* @version: 1.0
-*
-*/
 <?php
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
@@ -21,6 +11,16 @@ include_once getenv('BASE')."Backend/Taches/Tache.php";
 
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 
+/**
+ * Projet Procrast
+ * Classe Systeme
+ * L'implentation du Design Pattern Facade. Systeme sert de facade entre l'utilisateur et le reste du back-end
+ * Intermediare entre la base de données et php pour les donnees qui concernent les extensions de la classe Notification
+ * @authors: Omar C, Jonathan P,
+ * @date:05/03/2020
+ * @version: 1.0
+ *
+ */
 class Systeme
 {
 	/**
@@ -253,7 +253,7 @@ class Systeme
 
         //TODO: retour valeur booléenne
         self::$dao_tache->ajouterDansBDD($tache);
-        return false;
+        return true;
     }
 
     /**
@@ -269,9 +269,9 @@ class Systeme
 
         foreach ($resSQL as $key => $req) {
             $tache = new Tache($req['nom'], $req['idListe']);
-            $tache->finie = req['statut'];
-            $tache->id= req['idTache'];
-            $tache->responsable = req['idResponsable'];
+            $tache->finie = $req['statut'];
+            $tache->id= $req['idTache'];
+            $tache->responsable = $req['idResponsable'];
 
             array_push($res_array, $tache);
         }

@@ -70,15 +70,29 @@ if ($liste == null) {
 		</thead>
 		<tbody>
 		<?php
-		$tasks = null; //Systeme::getTasks($liste);
+		$tasks = Systeme::getTasks($liste);
 
 		foreach ($tasks as $task) {
+
+			$responsable = "<small> personne </small>";
+
+			if ($task->responsable != "") {
+				$user = Systeme::getUserByID(intval($task->responsable));
+				$responsable = $user->nom;
+			}
+
+			$finie = "non";
+
+			if ($task->finie) {
+				$finie = "oui";
+			}
+
 			echo "
 				<tr>
 					<th scope='row'>" . $task->id . "</th>
 					<td>" . $task->nom . "</td>
-					<td>" . $task->responsable . "</td>
-					<td>" . $task->finie . "</td>
+					<td>" . $responsable . "</td>
+					<td>" . $finie . "</td>
 					<td><a href='/Frontend/Task/edit.php?id=" . $task->id . "'> Go </a></td>
 					<td><a href='/Frontend/Task/delete.php?id=" . $task->id . "'> Go </a></td>
 				</tr>";

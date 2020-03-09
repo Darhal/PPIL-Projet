@@ -51,7 +51,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		$lists = Systeme::getOwnedLists($user);
 
 		foreach ($lists as $list) {
-
 			$proprietaire = Systeme::getUserByID($list->proprietaire);
 			if ($proprietaire != null) {
 				$np = $proprietaire->nom;

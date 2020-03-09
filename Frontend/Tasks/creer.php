@@ -19,7 +19,7 @@ Systeme::Init();
 $user = Systeme::getUserByID($uid);
 
 if ($user == null){
-	die("ERROR: Unable to find user by email");
+	die("ERROR: Unable to find user by ID");
 }
 
 if (!isset($_POST['lid'])) {
