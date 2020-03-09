@@ -67,6 +67,19 @@ class DAOUtilisateur extends DAO
         $res = $this->BDD->fetchResults("Utilisateur", "*", $requete);
         return $res;
     }
+
+    public function updateBDD($utilisateur, $condition = "")
+    {
+        $attribs = array(
+            "pseudo" => $utilisateur->pseudo,
+            "nom" => $utilisateur->nom,
+            "prenom" => $utilisateur->prenom,
+            "email" => $utilisateur->email,
+            "mdp" => $utilisateur->mdp
+        );
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
+    }
 }
 
 ?>

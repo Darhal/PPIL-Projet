@@ -33,7 +33,7 @@ class DAOTache extends DAO
     }
 
     //TODO: il faut retourner un booléen en fonction de si ça s'est bien passé!
-    public function ajouterDansBDD($tache) {
+    public function ajouterDansBDD($tache) : bool {
 
         $attribs = array(
 //            "idTache" => $tache->id,   // l'id est généré par la BDD
@@ -46,7 +46,7 @@ class DAOTache extends DAO
             $attribs["idResponsable"] = $tache->responsable->id;
         }
 
-        $this->BDD->insertRow(self::$tab_name, $attribs);
+        return $this->BDD->insertRow(self::$tab_name, $attribs);
 
     }
 
@@ -56,5 +56,12 @@ class DAOTache extends DAO
 
     public function getByRequete($requete){
         return $this->BDD->fetchResults("Tache", "*", $requete);;
+    }
+
+    public function updateBDD($tache, $condition = "")
+    {
+        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
     }
 }

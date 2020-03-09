@@ -53,7 +53,7 @@
 		if(isset($_GET['erreur'])){
 			$err = $_GET['erreur'];
 			if($err==1) {
-				echo "<p style='color:red'>email déjà utilisé, veuillez changer </p>";
+				echo "<p style='color:red'>email déjà utilisée, veuillez changer </p>";
 			}
 			if($err==2) {
 				echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";

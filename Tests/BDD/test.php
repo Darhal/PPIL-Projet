@@ -20,6 +20,8 @@
     // insert into the table test: the following info
     $db->insertRow("test", array("user" => "test", "pass" => "XD", "num" => 666));
 
+    $db->updateRow("test", array("pass" => "No xD", "num" => 999), "user = 'test'");
+
     // fetch results from table test:
     $arr = $db->fetchResults("test");
     foreach( $arr as $v){
