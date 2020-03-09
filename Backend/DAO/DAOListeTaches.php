@@ -34,7 +34,6 @@ class DAOListeTaches extends DAO
 
     public function ajouterDansBDD($liste){
         $attribs = array(
-//            "idListe" => $liste->id, // généré par la BDD
             "nom" => $liste->nom,
             "dateDebut" => $liste->dateDebut,
             "dateFin" => $liste->dateFin
