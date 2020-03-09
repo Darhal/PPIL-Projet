@@ -25,7 +25,7 @@ if (!isset($_POST['lid'])) {
 	die("ID de liste non défini");
 }
 
-$lid = intval($_POST['lid']);
+$lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
 
@@ -44,7 +44,7 @@ if (!isset($_POST['tname'])) {
 	die("Nom de tâche non défini");
 }
 
-$tname = strval($_POST['tname']);
+$tname = SQLite3::escapeString(strval($_POST['tname']));
 
 if (!is_string($tname)) {
 
