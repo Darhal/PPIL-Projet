@@ -69,4 +69,11 @@ class DAOListeTaches extends DAO
     {
         return $this->getByRequete("idUtilisateur = $id");
     }
+
+    public function updateBDD($liste_tache, $condition = "")
+    {
+        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
+    }
 }

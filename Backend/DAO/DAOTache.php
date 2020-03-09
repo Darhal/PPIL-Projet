@@ -57,4 +57,11 @@ class DAOTache extends DAO
     public function getByRequete($requete){
         return $this->BDD->fetchResults("Tache", "*", $requete);;
     }
+
+    public function updateBDD($tache, $condition = "")
+    {
+        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        return $res;
+    }
 }
