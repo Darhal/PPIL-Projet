@@ -328,6 +328,12 @@ class Systeme
     }
 
 
+    public static function createList($nom, $dateDebut, $dateFin, $idUtilisateur){
+        $query = "INSERT INTO Liste VALUES('".$nom."', '".$dateDebut."', '".$dateFin."', '".$idUtilisateur."')";
+        
+    }
+
+
 }
 
 ?>
