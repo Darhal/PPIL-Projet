@@ -66,13 +66,41 @@ $unwanted_array = array(
         background: red;
         color: white;
     }
+    .invitation {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 26px;
+        display: inline-block;
+        border-radius: 2px;
+        position: absolute;
+        bottom: 0px;
+        left 0;
+    }
+    .invitation:hover {
+        background: red;
+    }
+    .invitation .badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        padding: 5px 10px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+    }
 	</style>
 </head>
 <body>
 <?php include_once "Shared/navbar.php"; ?>
+
 <a href="notification.php" class="notification">
     <span>Notification</span>
     <span class="badge">3</span>
+</a>
+<a href="invitation.php" class="invitation">
+    <span>Invitation</span>
+    <span class="badge">5</span>
 </a>
 
 <h2 style="text-align:center"></h2>
