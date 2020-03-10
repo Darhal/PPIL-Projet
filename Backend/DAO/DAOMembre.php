@@ -41,7 +41,7 @@ class DAOMembre extends DAO
 
 
     public function supprimerDeBDD($membre){
-        return $this->BDD->deleteRow(self::$tab_name, "idListe = " . $membre->liste);
+        return $this->BDD->deleteRow(self::$tab_name, "idListe = $membre->idListe AND idUtilisateur = $membre->idUtilisateur");
     }
 
     public function getByRequete($requete){
@@ -83,6 +83,11 @@ class DAOMembre extends DAO
 		$membre = new Membre($liste->id, $user->id);
 		return $this->ajouterDansBDD($membre);
     }
+
+	public function delete(Utilisateur $user, ListeTaches $liste) {
+		$membre = new Membre($liste->id, $user->id);
+		return $this->supprimerDeBDD($membre);
+	}
 
     public function updateBDD($membre, $condition = "")
     {

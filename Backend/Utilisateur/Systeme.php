@@ -375,11 +375,19 @@ class Systeme
         return self::$dao_listeTaches->ajouterDansBDD($liste);
     }
 
+	public static function refuserInvitation(InvitationListeTache $invitation){
+		self::$dao_invit->supprimerDeBDD($invitation);
 
-    public static function accepterInvitation($idListe, $idUtilisateur){
-        $liste = self::getListeTachesByID($idListe);
-        $utilisateur = self::getUserByID($idUtilisateur);
-        return self::$dao_membre->add($utilisateur, $liste);
+		return true;
+	}
+
+    public static function accepterInvitation(InvitationListeTache $invitation){
+        $liste = self::getListeTachesByID($invitation->liste);
+        $utilisateur = self::getUserByID($invitation->destinataire);
+        self::$dao_membre->add($utilisateur, $liste);
+        self::$dao_invit->supprimerDeBDD($invitation);
+
+	    return true;
     }
 
     public static function inviterUtilisateur(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
