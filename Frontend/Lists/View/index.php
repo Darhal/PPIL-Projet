@@ -79,7 +79,7 @@ if ($liste == null) {
 
 		foreach ($tasks as $task) {
 
-			$responsable = "<small> personne </small>";
+			$responsable = "<button> Volontaire </button>";
 
 			if ($task->responsable != "") {
 				$user = Systeme::getUserByID(intval($task->responsable));
@@ -90,6 +90,10 @@ if ($liste == null) {
 
 			if ($task->finie) {
 				$finie = "oui";
+			} else {
+				if ($task->responsable == $user->id) {
+					$finie = "<button> Marquer comme finie </button>";
+				}
 			}
 
 			echo "

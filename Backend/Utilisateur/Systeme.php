@@ -294,16 +294,14 @@ class Systeme
     public static function getLists(Utilisateur $user) {
 
     	if (!isset($user->id)) {
-    		return null;
+    		return [];
 	    }
 
     	$resSQL = self::$dao_membre->getLists($user->id);
-
     	$res_array = array();
 
 	    foreach ($resSQL as $item) {
 	    	$list = self::getListeTachesByID($item["idListe"]);
-
 	    	if ($list != null) {
 	    		array_push($res_array, $list);
 		    }

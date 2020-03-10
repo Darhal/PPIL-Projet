@@ -68,14 +68,21 @@ if ($liste == null) {
 		<tbody>
 		<?php
 		$membres = Systeme::getMembres($liste);
+		$owner = Systeme::getUserByID($liste->proprietaire);
+
+		array_unshift( $membres, $owner);
 
 		foreach ($membres as $membre) {
+			$dis = '';
+			if ($membre == $owner) {
+				$dis = 'disabled';
+			}
 			echo "
 				<tr>
 					<th scope='row'>" . $membre->id . "</th>
 					<td>" . $membre->pseudo . "</td>
 					<td>" . $membre->email . "</td>
-					<td><a class='diabled' href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>
+					<td><a class='$dis' href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>
 				</tr>";
 		}
 		?>
