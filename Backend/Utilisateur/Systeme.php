@@ -199,6 +199,11 @@ class Systeme
     }
 
 
+    /**
+     *
+     * @param string $pseudo
+     * @return array
+     */
     public static function getUsersByPseudo(string $pseudo): array {
 
     	if (!isset($pseudo)) {
@@ -209,6 +214,7 @@ class Systeme
     	$res_array = array();
 
 	    foreach ($req as $user) {
+	        //TODO: pourquoi il remplit pas prenom et non ?
 		    $u = new Utilisateur($user["pseudo"], "", "", $user["email"], "");
 		    $u->setId($user["idutilisateur"]);
 
@@ -287,7 +293,7 @@ class Systeme
     }
 
 	/**
-	 * Liste de toutes les liste dont l'utilisateur est membre
+	 * Donne la liste de toutes les liste dont l'utilisateur est membre
 	 * @param Utilisateur $user
 	 * @return array | null
 	 */
@@ -311,6 +317,7 @@ class Systeme
     }
 
 	/**
+     * Donne un tableau contenant tous les membres qui appartiennent à une ListeDeTaches
 	 * @param ListeTaches $listeTaches
 	 * @return null | array
 	 */
@@ -364,6 +371,15 @@ class Systeme
     }
 
 
+    /**
+     * Ajoute une Liste de Taches pour un utilisateur
+     * Retourne True si tout s'est bien passé, False sinon
+     * @param $nom
+     * @param $dateDebut
+     * @param $dateFin
+     * @param $idUtilisateur
+     * @return bool
+     */
     public static function createList($nom, $dateDebut, $dateFin, $idUtilisateur){
 
         if($dateFin == null){
@@ -375,12 +391,24 @@ class Systeme
         return self::$dao_listeTaches->ajouterDansBDD($liste);
     }
 
+    /**
+     * Supprime une invitation
+     * @param InvitationListeTache $invitation
+     * @return bool
+     */
 	public static function refuserInvitation(InvitationListeTache $invitation){
+	    //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
 		self::$dao_invit->supprimerDeBDD($invitation);
 
 		return true;
 	}
 
+    /**
+     * Ajoute la personne invitée à la Liste de Taches à laquelle est invitée
+     * Supprime l'invitation
+     * @param InvitationListeTache $invitation
+     * @return bool
+     */
     public static function accepterInvitation(InvitationListeTache $invitation){
         $liste = self::getListeTachesByID($invitation->liste);
         $utilisateur = self::getUserByID($invitation->destinataire);
@@ -390,6 +418,13 @@ class Systeme
 	    return true;
     }
 
+    /**
+     * Créer une invitation pour rejoindre une Liste de Taches
+     * @param ListeTaches $liste
+     * @param Utilisateur $emetteur
+     * @param Utilisateur $destinataire
+     * @return bool
+     */
     public static function inviterUtilisateur(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
 
     	if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
@@ -405,6 +440,11 @@ class Systeme
     	return true;
     }
 
+    /**
+     * Permet de récupérer toutes les invitations en cours qu'un Utilisateur a reçu
+     * @param Utilisateur $utilisateur
+     * @return array
+     */
     public static function getInvitations(Utilisateur $utilisateur) : array {
 
     	if (!isset($utilisateur)) {
@@ -425,6 +465,11 @@ class Systeme
     	return $res_array;
     }
 
+    /**
+     * Met à jour les parametres d'un utilisateur dans la BBD
+     * @param Utilisateur $utilisateur
+     * @return bool
+     */
     public static function updateUser(Utilisateur $utilisateur) {
 
 	    if (!isset($utilisateur)) {
