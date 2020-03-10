@@ -15,6 +15,7 @@
 
 </head>
 <body>
+<?php include_once "Shared/navarbaraccueil.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Procrast </h1>
 <h4 class="text-center"> List now what you could do later </h4>
