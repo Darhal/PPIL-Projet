@@ -419,6 +419,15 @@ class Systeme
     	return $res_array;
     }
 
+    public static function updateUser(Utilisateur $utilisateur) {
+
+	    if (!isset($utilisateur)) {
+		    return false;
+	    }
+
+	    self::$dao_user->updateBDD($utilisateur, "idUtilisateur == $utilisateur->id AND mdp == '$utilisateur->mdp'");
+	    return true;
+    }
 
 }
 

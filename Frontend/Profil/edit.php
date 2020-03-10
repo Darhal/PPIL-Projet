@@ -60,7 +60,7 @@ if ($user == null){
 
 			<div class="form-group">
 				<h3> Confirmer votre mot de passe </h3>
-				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password">
+				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password">
 			</div>
 			<div class="d-flex container-fluid">
 				<button onclick="window.location.href='./'"> Retour </button>

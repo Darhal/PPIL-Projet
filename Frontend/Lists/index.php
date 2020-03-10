@@ -58,7 +58,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		foreach ($lists as $list) {
 			$proprietaire = Systeme::getUserByID($list->proprietaire);
 			if ($proprietaire != null) {
-				$np = $proprietaire->nom;
+				$np = $proprietaire->pseudo;
 			} else {
 				$np = "Inconnu?";
 			}
