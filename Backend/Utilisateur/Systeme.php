@@ -535,7 +535,7 @@ class Systeme
      * @param $nomTache
      * @return bool
      */
-    public static function supprimerTacheListe(int $idTache) : bool {
+    public static function supprimerTache(int $idTache) : bool {
         if (!isset($idTache)) {
             return false;
         }
