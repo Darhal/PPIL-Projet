@@ -79,4 +79,8 @@ class DAOTache extends DAO
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
+
+	public function update(Tache $task) {
+    	return $this->updateBDD($task, "idTache == $task->id");
+	}
 }
