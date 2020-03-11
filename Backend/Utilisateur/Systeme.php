@@ -389,7 +389,7 @@ class Systeme
      * @param string $nom
      * @return array
      */
-    public static function getTaskByName(ListeTaches $liste, string $nom) : Tache {
+    public static function getTaskById(ListeTaches $liste, int $idTache) : Tache {
         if(!isset($liste)) return null;
 
         $resSQL = self::$dao_tache->getByRequete("idListe = $liste->id");
@@ -399,7 +399,7 @@ class Systeme
             $tache->finie = $req['statut'];
             $tache->id = $req['idTache'];
             $tache->responsable = $req['idResponsable'];
-            if($tache->nom == $nom){
+            if($tache->id == $idTache){
                 return $tache;
             }
         }
@@ -540,12 +540,12 @@ class Systeme
      * @param $nomTache
      * @return bool
      */
-    public static function supprimerTacheListe(int $idListe, string $nomTache) : bool {
+    public static function supprimerTacheListe(int $idListe, int $idTache) : bool {
         if (!isset($idListe)) {
             return false;
         }
         $liste = self::getListeTachesByID($idListe);
-        $tache = self::getTaskByName($liste, $nomTache);
+        $tache = self::getTaskById($liste, $idTache);
 
         return self::$dao_tache->supprimerDeBDD($tache);
     }
