@@ -50,18 +50,18 @@ class DAOTache extends DAO
 
     }
 
-    public function supprimerDeBDD($tache){
-        $this->BDD->deleteRow($this->tab_name, "idTache = ".$tache->id);
+    public function supprimerDeBDD($tache) : bool {
+        return $this->BDD->deleteRow(self::$tab_name, "idTache = ".$tache->id);
     }
 
-    public function getByRequete($requete){
-        return $this->BDD->fetchResults("Tache", "*", $requete);;
+    public function getByRequete($requete) : array {
+        return $this->BDD->fetchResults("Tache", "*", $requete);
     }
 
-    public function updateBDD($tache, $condition = "")
+    public function updateBDD($tache, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
 }
