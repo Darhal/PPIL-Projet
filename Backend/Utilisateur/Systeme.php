@@ -294,17 +294,8 @@ class Systeme
 	    $res_array = array();
 
 	    foreach ($resSQL as $key => $req) {
-		    // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
-		    $listeTache = null;
-		    if ($req['dateFin'] != null) {
-			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
-                $listeTache->id = $req['idListe'];
-		    } else {
-			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut']);
-                $listeTache->id = $req['idListe'];
-		    }
-
-		    array_push($res_array, $listeTache);
+	    	$liste = Systeme::getListeTachesByID($req['idListe']);
+		    array_push($res_array, $liste);
 	    }
 
 	    return $res_array;
