@@ -78,7 +78,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
 					<td><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></td>
 					<td>
-						<form action='../Tasks/delete.php' method='post'>
+						<form action='../Lists/deleteList.php' method='post'>
 							<input type='image' src='/Assets/Images/member.png' style='width: 2rem' alt='Submit Form'>
 							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 						</form>

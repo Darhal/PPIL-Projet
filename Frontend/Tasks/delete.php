@@ -9,24 +9,24 @@ Systeme::start_session();
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	//header("location: /Frontend/Login");
 	exit;
 }
 
 Systeme::Init();
 $user = Systeme::getUserByID($_SESSION['id']);
 
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+if ($_SERVER['REQUEST_METHOD'] != 'GET') {
 	// TODO: - Afficher une erreur
 	header( "location: ../Lists" );
 }
 
-if (!isset($_POST['id'])) {
+if (!isset($_GET['id'])) {
 	// TODO: - Afficher une erreur
 	die("ID de tâche non défini");
 }
 
-$id = intval(SQLite3::escapeString($_POST['id']));
+$id = intval(SQLite3::escapeString($_GET['id']));
 
 if (!is_int($id)) {
 	// TODO: - Afficher une erreur

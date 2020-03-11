@@ -152,7 +152,7 @@ if ($liste == null) {
 					<td>" . $responsable . "</td>
 					<td>" . $finie . "</td>
 					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "'> Go </a></td>
-					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."?idListe=" . $lid ."'> Go </a></td>
+					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."'> Go </a></td>
 				</tr>";
 		}
 		?>
