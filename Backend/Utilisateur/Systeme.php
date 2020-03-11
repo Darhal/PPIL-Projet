@@ -389,11 +389,10 @@ class Systeme
      * @param string $nom
      * @return array
      */
-    public static function getTaskByName(ListeTaches $liste, string $nom) : array {
+    public static function getTaskByName(ListeTaches $liste, string $nom) : Tache {
         if(!isset($liste)) return null;
 
         $resSQL = self::$dao_tache->getByRequete("idListe = $liste->id");
-        $res_array = array();
 
         foreach ($resSQL as $key => $req) {
             $tache = new Tache($req['nom'], $req['idListe']);
@@ -401,11 +400,9 @@ class Systeme
             $tache->id = $req['idTache'];
             $tache->responsable = $req['idResponsable'];
             if($tache->nom == $nom){
-                array_push($res_array, $tache);
-                return $res_array;
+                return $tache;
             }
         }
-
         return null;
     }
 
