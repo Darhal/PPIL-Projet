@@ -151,7 +151,7 @@ if ($liste == null) {
 					<td>" . $task->nom . "</td>
 					<td>" . $responsable . "</td>
 					<td>" . $finie . "</td>
-					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "'> Go </a></td>
+					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "' class='disabled d-none'> (bientôt disponible) </a></td>
 					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."'> Go </a></td>
 				</tr>";
 		}

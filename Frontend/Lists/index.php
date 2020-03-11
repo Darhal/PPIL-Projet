@@ -44,7 +44,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 			<th scope="col"> Propriétaire </th>
 			<th scope="col"> Date de début </th>
 			<th scope="col"> Date de fin </th>
-			<th scope="col"> Lien </th>
             <th scope="col">Editer</th>
             <th scope="col">Supprimer</th>
             <th scope="col">Membres</th>
@@ -75,11 +74,12 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td>" . $np . "</td>
 					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
 					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
-					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
-					<td><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></td>
+					<td>
+						<a href='/Frontend/Lists/View/index.php?id=$list->id'><img src='../../Assets/Images/edit.png' style='width: 2rem'  alt='Edit link'/>
+					</td>
 					<td>
 						<form action='../Lists/deleteList.php' method='post'>
-							<input type='image' src='/Assets/Images/member.png' style='width: 2rem' alt='Submit Form'>
+							<input type='image' src='/Assets/Images/delete.png' style='width: 2rem' alt='Submit Form'>
 							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 						</form>
 					</td>

@@ -40,6 +40,11 @@ if ($task == null) {
 	die("Aucune tâche d'ID " . $id);
 }
 
+if ($task->aUnResponsable()) {
+	$task->supprimerResponsable();
+	Systeme::retirerResponsable($task);
+}
+
 $lid = $task->idListe;
 
 $list = Systeme::getListeTachesByID($lid);
