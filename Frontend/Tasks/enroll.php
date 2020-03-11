@@ -49,4 +49,4 @@ if ($task->aUnResponsable()) {
 
 Systeme::ajouterResponsable($task, $user);
 
-header("location: ../Lists");
+header("location: ../Lists/View/index.php?id=$task->idListe");
