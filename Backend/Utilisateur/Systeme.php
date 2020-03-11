@@ -393,12 +393,13 @@ class Systeme
 
         $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
 
-        foreach ($resSQL as $key => $req) {
-            $tache = new Tache($req['nom'], $req['idListe']);
-            $tache->finie = $req['statut'];
-            $tache->id = $req['idTache'];
-            $tache->responsable = $req['idResponsable'];
-        }
+        $req = $resSQL[0];
+        
+        $tache = new Tache($req['nom'], $req['idListe']);
+        $tache->finie = $req['statut'];
+        $tache->id = $req['idTache'];
+        $tache->responsable = $req['idResponsable'];
+
         return $tache;
     }
 
@@ -532,7 +533,7 @@ class Systeme
     /**
      * Supprimer une tache
      * La BDD s'occupe de la suppression des choses liées
-     * @param $nomTache
+     * @param int $idTache
      * @return bool
      */
     public static function supprimerTache(int $idTache) : bool {
