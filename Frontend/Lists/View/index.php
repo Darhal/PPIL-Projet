@@ -102,8 +102,8 @@ if ($liste == null) {
 					<td>" . $task->nom . "</td>
 					<td>" . $responsable . "</td>
 					<td>" . $finie . "</td>
-					<td><a href='/Frontend/Task/edit.php?id=" . $task->id . "'> Go </a></td>
-					<td><a href='/Frontend/Task/delete.php?id=" . $task->id . "'> Go </a></td>
+					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "'> Go </a></td>
+					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."?idListe=" . $lid ."'> Go </a></td>
 				</tr>";
 		}
 		?>

@@ -7,6 +7,7 @@ include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
 include_once getenv('BASE')."Backend/DAO/DAOMembre.php";
 include_once getenv('BASE')."Backend/DAO/DAOInvit.php";
+include_once getenv('BASE')."Backend/DAO/DAONotif.php";
 
 include_once getenv('BASE')."Backend/Invitation/InvitationListeTache.php";
 include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
@@ -59,6 +60,8 @@ class Systeme
 	 */
     private static $dao_invit = null;
 
+    private static $dao_notif = null;
+
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
@@ -69,6 +72,7 @@ class Systeme
         self::$dao_tache = new DAOTache($bdd);
         self::$dao_membre = new DAOMembre($bdd);
         self::$dao_invit = new DAOInvit($bdd);
+//        self::$dao_notif = new DAONotif($bdd);
     }
 
     public static function start_session() {
@@ -384,26 +388,25 @@ class Systeme
     }
 
     /**
-     * Retourne un tableau qui contient la tache de nom $nom recherchée dans la liste en paramètres
-     * @param ListeTaches $liste
-     * @param string $nom
+     * Retourne la tache associée à l'ID en paramètre
+     * @param int $idTache
      * @return array
      */
-    public static function getTaskById(ListeTaches $liste, int $idTache) : Tache {
-        if(!isset($liste)) return null;
+    public static function getTaskById(int $idTache) : Tache {
+        if(!isset($idTache)) return null;
 
-        $resSQL = self::$dao_tache->getByRequete("idListe = $liste->id");
+        $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
 
-        foreach ($resSQL as $key => $req) {
-            $tache = new Tache($req['nom'], $req['idListe']);
-            $tache->finie = $req['statut'];
-            $tache->id = $req['idTache'];
+        $req = $resSQL[0];
+
+        $tache = new Tache($req['nom'], $req['idListe']);
+        $tache->finie = $req['statut'];
+        $tache->id = $req['idTache'];
+        if(isset($req['idResponsable'])){
             $tache->responsable = $req['idResponsable'];
-            if($tache->id == $idTache){
-                return $tache;
-            }
         }
-        return null;
+
+        return $tache;
     }
 
 
@@ -534,19 +537,17 @@ class Systeme
 
 
     /**
-     * Supprimer une tache d'une liste de de taches
+     * Supprimer une tache
      * La BDD s'occupe de la suppression des choses liées
-     * @param int $idListe
-     * @param $nomTache
+     * @param int $idTache
      * @return bool
      */
-    public static function supprimerTacheListe(int $idListe, int $idTache) : bool {
-        if (!isset($idListe)) {
+    public static function supprimerTache(int $idTache) : bool {
+        if (!isset($idTache)) {
             return false;
         }
-        $liste = self::getListeTachesByID($idListe);
-        $tache = self::getTaskById($liste, $idTache);
 
+        $tache = self::getTaskById($idTache);
         return self::$dao_tache->supprimerDeBDD($tache);
     }
 
@@ -588,6 +589,18 @@ class Systeme
         $utilisateur = self::getUserByID($idUtilisateur);
 
 
+        $resSQL = self::$dao_notif->getByRequete("???");
+
+        $res_array = array();
+
+//        foreach ($resSQL as $item) {
+//            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+//            $invitation->id = $item['id'];
+//
+//            array_push($res_array, $invitation);
+//        }
+
+        return $res_array;
     }
 
     //---------------------------- FIN Notifications ---------------------------------
