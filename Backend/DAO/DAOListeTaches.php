@@ -56,19 +56,20 @@ class DAOListeTaches extends DAO
         return $this->BDD->deleteRow($this->tab_name, "idListe = ".$liste->id);
     }
 
-    public function getByRequete($requete) {
+    public function getByRequete($requete) : array {
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
-    public function getListeTachesByID(int $id)
+    public function getListeTachesByID(int $id) : array
     {
         return $this->getByRequete("idListe = $id");
     }
 
-    public function getListesTachesByUserID(int $id)
+    public function getListesTachesByUserID(int $id) : array
     {
         return $this->getByRequete("idUtilisateur = $id");
     }
+
 
     public function updateBDD($liste_tache, $condition = "") : bool
     {
