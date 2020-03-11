@@ -383,6 +383,32 @@ class Systeme
         return $res_array;
     }
 
+    /**
+     * Retourne un tableau qui contient la tache de nom $nom recherchée dans la liste en paramètres
+     * @param ListeTaches $liste
+     * @param string $nom
+     * @return array
+     */
+    public static function getTaskByName(ListeTaches $liste, string $nom) : array {
+        if(!isset($liste)) return null;
+
+        $resSQL = self::$dao_tache->getByRequete("idListe = $liste->id");
+        $res_array = array();
+
+        foreach ($resSQL as $key => $req) {
+            $tache = new Tache($req['nom'], $req['idListe']);
+            $tache->finie = $req['statut'];
+            $tache->id = $req['idTache'];
+            $tache->responsable = $req['idResponsable'];
+            if($tache->nom == $nom){
+                array_push($res_array, $tache);
+                return $res_array;
+            }
+        }
+
+        return null;
+    }
+
 
     /**
      * Ajoute une Liste de Taches pour un utilisateur
@@ -507,6 +533,24 @@ class Systeme
 
         return self::supprimerListe($liste);
 
+    }
+
+
+    /**
+     * Supprimer une tache d'une liste de de taches
+     * La BDD s'occupe de la suppression des choses liées
+     * @param int $idListe
+     * @param $nomTache
+     * @return bool
+     */
+    public static function supprimerTacheListe(int $idListe, string $nomTache) : bool {
+        if (!isset($idListe)) {
+            return false;
+        }
+        $liste = self::getListeTachesByID($idListe);
+        $tache = self::getTaskByName($liste, $nomTache);
+
+        return self::$dao_tache->supprimerDeBDD($tache);
     }
 
     //---------------------------- FIN ListeTaches---------------------------------
