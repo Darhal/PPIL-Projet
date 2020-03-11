@@ -7,7 +7,7 @@ class Tache
     public $id;
     public $nom;
     public $finie;
-    public $responsable;
+    public $responsable;//int
     public $idListe;
 
     function __construct(string $n, int $idListe)
