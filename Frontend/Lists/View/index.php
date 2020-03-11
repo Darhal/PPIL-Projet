@@ -68,7 +68,7 @@ if ($liste == null) {
 			<th scope="col"> ID </th>
 			<th scope="col"> Item </th>
 			<th scope="col"> Responsable </th>
-			<th scope="col"> Complété </th>
+			<th scope="col"> Complétée </th>
 			<th scope="col"> Editer </th>
 			<th scope="col"> Suppression </th>
 		</tr>

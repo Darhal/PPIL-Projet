@@ -79,7 +79,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					</td>
 					<td>
 						<form action='../Lists/deleteList.php' method='post'>
-							<input type='image' src='/Assets/Images/delete.png' style='width: 2rem' alt='Submit Form'>
+							<input disabled type='image' src='/Assets/Images/delete.png' style='width: 2rem' alt='Submit Form'>
 							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 						</form>
 					</td>
