@@ -49,15 +49,19 @@ $email = $_POST['email'];
 
 
 if (!isset($_POST['conf-password'])) {
-	die("password non défini");
+    //die("veuillez entrer votre mot de passe");
+    header("location: edit.php?erreur=2");
+    exit;
 }
 
 $password = $_POST['conf-password'];
 
+
 if ($password != $logged_user->mdp) {
-	header("location: edit.php?erreur=2");
-	exit;
+	header("location: edit.php?erreur=3");
+    exit;
 }
+
 
 if ($pseudo != "" && $pseudo != $logged_user->pseudo) {
 	$logged_user->pseudo = $pseudo;
@@ -77,16 +81,21 @@ if ($email != "" && $email != $logged_user->email) {
     $val = Systeme::getUserByEmail($email); //Test si l'email est déjà utilisée par un autre compte
     if ($val == null)
         $logged_user->email = $email;
-    else
+    else {
+        //die("email deja existant");
         header("location: edit.php?erreur=1");
+        exit;
+    }
 
 }
 
 if (Systeme::updateUser($logged_user)) {
 	header("location: /Frontend/Profil");
 	$_SESSION["username"] = $logged_user->pseudo;
+	exit;
 } else {
 	header("location: edit.php?erreur=3");
+	exit;
 }
 
 // TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification
