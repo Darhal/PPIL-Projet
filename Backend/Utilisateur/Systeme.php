@@ -479,7 +479,12 @@ class Systeme
     }
 
 
-
+    /**
+     * Supprime une ListeDeTaches
+     * La BDD s'occupe de la suppression des choses liées
+     * @param ListeTaches $liste
+     * @return bool
+     */
     public static function supprimerListe(ListeTaches $liste) : bool {
         if (!isset($liste)) {
             return false;
@@ -488,15 +493,41 @@ class Systeme
         return self::$dao_invit->supprimerDeBDD($liste);
     }
 
+    /**
+     * Supprime une ListeDeTaches
+     * La BDD s'occupe de la suppression des choses liées
+     * @param int $idListe
+     * @return bool
+     */
     public static function supprimerListeByID(int $idListe) : bool {
         if (!isset($idListe)) {
             return false;
         }
         $liste = self::$dao_invit->getListeTachesByID($idListe);
 
-        return self::$dao_invit->supprimerDeBDD($liste);
+        return self::supprimerListe($liste);
 
     }
+
+    //---------------------------- FIN ListeTaches---------------------------------
+
+
+
+    //---------------------------- Invitations ---------------------------------
+
+    //---------------------------- FIN Invitations ---------------------------------
+
+    //---------------------------- Notifications ---------------------------------
+    public static function getNotifications(int $idUtilisateur) : array {
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+        $utilisateur = self::getUserByID($idUtilisateur);
+
+
+    }
+
+    //---------------------------- FIN Notifications ---------------------------------
 
 
 }
