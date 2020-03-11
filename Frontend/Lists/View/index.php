@@ -79,11 +79,15 @@ if ($liste == null) {
 
 		foreach ($tasks as $task) {
 
-			$responsable = "<button> Volontaire </button>";
+			$responsable = "
+<form action='../../Tasks/enroll.php' method='post'>
+	<input type='submit' value='Volontaire'>
+	<input type='hidden' value='$task->id' name='tid' id='tid'> 
+</form>";
 
 			if ($task->responsable != "") {
 				$user = Systeme::getUserByID(intval($task->responsable));
-				$responsable = $user->nom;
+				$responsable = $user->pseudo;
 			}
 
 			$finie = "non";

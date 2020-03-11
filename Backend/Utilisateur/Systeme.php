@@ -327,18 +327,36 @@ class Systeme
     }
 
 	/**
-     * Donne un tableau contenant tous les membres qui appartiennent à une ListeDeTaches
+     * Donne un tableau contenant tous les membres invités qui appartiennent à une ListeDeTaches
 	 * @param ListeTaches $listeTaches
 	 * @return null | array
 	 */
-    public static function getMembres(ListeTaches $listeTaches) {
+    public static function getMembresInvites(ListeTaches $listeTaches) {
 
 	    if (!isset($listeTaches->id)) {
-		    return null;
+		    return [];
 	    }
 
 	    return self::$dao_membre->getUsers($listeTaches->id);
     }
+
+	/**
+	 * Donne un tableau contenant tous les membres qui appartiennent à une ListeDeTaches
+	 * @param ListeTaches $listeTaches
+	 * @return null | array
+	 */
+	public static function getMembres(ListeTaches $listeTaches) {
+
+		if (!isset($listeTaches->id)) {
+			return [];
+		}
+
+		$membres = self::getMembresInvites($listeTaches);
+		$proprietaire = Systeme::getUserByID($listeTaches->proprietaire);
+		array_unshift($membres, $proprietaire);
+
+		return $membres;
+	}
 
     /**
      * Crée une tache dans une liste de tâche et l'ajoute à la BDD
@@ -551,18 +569,21 @@ class Systeme
      */
     public static function ajouterResponsable(Tache $tache, Utilisateur $utilisateur){
         //verifier si un utilisateur est déjà defini pour la tache
-        $res = false;
+
         if (!isset($tache) || !isset($utilisateur)) {
             return false;
         }
-        //verifier le type des paramètres tache et utilisateur pour recuperer l'identifiant (de type int) de chaque obj
-//        $idTache=($tache instanceof Tache)?$tache->id:$tache;
-//        $idUtil=($utilisateur instanceof Utilisateur)?$utilisateur->id:$utilisateur;
-        $tache->responsable = $utilisateur->id;
-        $condition = "idTache == $tache->id";
-        $res = self::$dao_tache->updateBDD($tache,$condition);
 
-        return $res;
+	    $liste = Systeme::getListeTachesByID($tache->idListe);
+	    $membres = Systeme::getMembres($liste);
+
+	    if (!in_array($utilisateur, $membres)) {
+		    return false;
+	    }
+
+	    $tache->ajouterResponsable($utilisateur);
+        $condition = "idTache == $tache->id";
+        return self::$dao_tache->updateBDD($tache,$condition);
     }
     //---------------------------- FIN ListeTaches---------------------------------
 

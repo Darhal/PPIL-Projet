@@ -68,7 +68,7 @@ if ($liste == null) {
 		</thead>
 		<tbody>
 		<?php
-		$membres = Systeme::getMembres($liste);
+		$membres = Systeme::getMembresInvites($liste);
 		$owner = Systeme::getUserByID($liste->proprietaire);
 
 		array_unshift( $membres, $owner);

@@ -72,9 +72,9 @@ class DAOTache extends DAO
         $attribs = array(
             "idTache" => $tache->id,
             "nom" => $tache->nom,
-            "status" => ($tache->finie)?1:0,
+            "statut" => ($tache->finie)?1:0,
             "idListe" => $tache->idListe,
-            "idResponsable" => $tache->responsable->id
+            "idResponsable" => $tache->responsable
         );
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;

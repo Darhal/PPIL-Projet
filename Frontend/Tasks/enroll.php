@@ -1,6 +1,7 @@
 <?php
 
 set_include_path(getenv('BASE'));
+
 include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
@@ -8,36 +9,44 @@ Systeme::start_session();
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Lists");
 	exit;
 }
+
+Systeme::Init();
+
+$user = Systeme::getUserByID($_SESSION['id']);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	// TODO: - Afficher une erreur
 	header( "location: ../Lists" );
 }
 
-if (!isset($_POST['id'])) {
+if (!isset($_POST['tid'])) {
 	// TODO: - Afficher une erreur
 	die("ID de tâche non défini");
 }
 
-$id = intval(SQLite3::escapeString($_POST['id']));
-$lid = intval(SQLite3::escapeString($_POST['idListe']));
-if (!is_int($id)) {
+$tid = $_POST['tid'];
+
+if (intval($tid) == null) {
 	// TODO: - Afficher une erreur
-	die("L'ID de la tache n'est pas valide");
+	die("Format de l'ID invalide");
 }
 
-Systeme::Init();
-$res = Systeme::supprimerTacheListe($id);
+$tid = intval($tid);
 
-include_once "Backend/Taches/Tache.php";
+$task = Systeme::getTaskById($tid);
 
-
-if ($res == true) {
-	header("location: ../Lists/View/index.php?id=" . $lid);
-} else {
+if($task == null) {
 	// TODO: - Afficher une erreur
-	echo "failure";
+	die("Aucune tache d'ID " . $tid);
 }
+
+if ($task->aUnResponsable()) {
+	die("Un responsable est déjà assigné à cette tâche");
+}
+
+Systeme::ajouterResponsable($task, $user);
+
+header("location: ../Lists");
