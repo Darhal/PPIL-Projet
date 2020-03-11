@@ -43,10 +43,10 @@ if($task == null) {
 	die("Aucune tache d'ID " . $tid);
 }
 
-if ($task->aUnResponsable()) {
-	die("Un responsable est déjà assigné à cette tâche");
+if (!$task->aUnResponsable()) {
+	die("Aucun responsable n'est déjà assigné à cette tâche");
 }
 
-Systeme::ajouterResponsable($task, $user);
+Systeme::retirerResponsable($task);
 
 header("location: ../Lists/View/index.php?id=$task->idListe");

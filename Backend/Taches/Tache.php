@@ -44,7 +44,7 @@ class Tache
     }
 
     public function aUnResponsable() : bool {
-        return isset($this->responsable);
+        return $this->responsable != null;
     }
 
 

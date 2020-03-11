@@ -585,6 +585,24 @@ class Systeme
         $condition = "idTache == $tache->id";
         return self::$dao_tache->updateBDD($tache,$condition);
     }
+
+	/**
+	 * Ajouter un Utilisateur à une Tache
+	 * retourne false en cas d'échec
+	 * @param Tache $tache
+	 * @return bool
+	 */
+	public static function retirerResponsable(Tache $tache){
+		//verifier si un utilisateur est déjà defini pour la tache
+
+		if (!isset($tache)) {
+			return false;
+		}
+
+		$tache->supprimerResponsable();
+		$condition = "idTache == $tache->id";
+		return self::$dao_tache->updateBDD($tache,$condition);
+	}
     //---------------------------- FIN ListeTaches---------------------------------
 
 
