@@ -394,11 +394,13 @@ class Systeme
         $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
 
         $req = $resSQL[0];
-        
+
         $tache = new Tache($req['nom'], $req['idListe']);
         $tache->finie = $req['statut'];
         $tache->id = $req['idTache'];
-        $tache->responsable = $req['idResponsable'];
+        if(isset($req['idResponsable'])){
+            $tache->responsable = $req['idResponsable'];
+        }
 
         return $tache;
     }
