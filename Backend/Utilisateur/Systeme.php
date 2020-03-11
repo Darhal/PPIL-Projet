@@ -7,6 +7,7 @@ include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
 include_once getenv('BASE')."Backend/DAO/DAOTache.php";
 include_once getenv('BASE')."Backend/DAO/DAOMembre.php";
 include_once getenv('BASE')."Backend/DAO/DAOInvit.php";
+include_once getenv('BASE')."Backend/DAO/DAONotif.php";
 
 include_once getenv('BASE')."Backend/Invitation/InvitationListeTache.php";
 include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
@@ -59,6 +60,8 @@ class Systeme
 	 */
     private static $dao_invit = null;
 
+    private static $dao_notif = null;
+
     private static $DEFAULT_DB_FILE = "db.sql";
 
     public static function Init()
@@ -69,6 +72,7 @@ class Systeme
         self::$dao_tache = new DAOTache($bdd);
         self::$dao_membre = new DAOMembre($bdd);
         self::$dao_invit = new DAOInvit($bdd);
+//        self::$dao_notif = new DAONotif($bdd);
     }
 
     public static function start_session() {
@@ -525,6 +529,18 @@ class Systeme
         $utilisateur = self::getUserByID($idUtilisateur);
 
 
+        $resSQL = self::$dao_notif->getByRequete("???");
+
+        $res_array = array();
+
+//        foreach ($resSQL as $item) {
+//            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+//            $invitation->id = $item['id'];
+//
+//            array_push($res_array, $invitation);
+//        }
+
+        return $res_array;
     }
 
     //---------------------------- FIN Notifications ---------------------------------

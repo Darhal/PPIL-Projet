@@ -14,11 +14,14 @@ abstract class Notification {
     public $dejaLu;
     public $listeTaches;
     public $idNotif;
-    function __construct(string $message,bool $lu,int $liste)
+    public $destinataire; // id
+
+    function __construct(string $message, bool $lu, int $liste, int $idDestinaire)
     {
         $this->dejaLu=$lu;
         $this->msg = $message;
         $this->listeTaches=$liste;
+        $this->destinataire = $idDestinaire;
     }
     function __destruct()
     {
