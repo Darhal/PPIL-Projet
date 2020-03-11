@@ -225,6 +225,21 @@ class Systeme
     }
 
 
+    /**
+     * Met à jour les parametres d'un utilisateur dans la BBD
+     * @param Utilisateur $utilisateur
+     * @return bool
+     */
+    public static function updateUser(Utilisateur $utilisateur) {
+
+        if (!isset($utilisateur)) {
+            return false;
+        }
+
+        self::$dao_user->updateBDD($utilisateur, "idUtilisateur == $utilisateur->id AND mdp == '$utilisateur->mdp'");
+        return true;
+    }
+
     //---------------------------- ListeTaches---------------------------------
 
     /**
@@ -341,8 +356,6 @@ class Systeme
         if(!isset($listeTaches) || !isset($nom)) return false;
 
         $tache = new Tache($nom, $listeTaches->id);
-
-        //TODO: retour valeur booléenne
 
         return self::$dao_tache->ajouterDansBDD($tache);
     }
@@ -465,19 +478,15 @@ class Systeme
     	return $res_array;
     }
 
-    /**
-     * Met à jour les parametres d'un utilisateur dans la BBD
-     * @param Utilisateur $utilisateur
-     * @return bool
-     */
-    public static function updateUser(Utilisateur $utilisateur) {
 
-	    if (!isset($utilisateur)) {
-		    return false;
-	    }
 
-	    self::$dao_user->updateBDD($utilisateur, "idUtilisateur == $utilisateur->id AND mdp == '$utilisateur->mdp'");
-	    return true;
+
+    public static function supprimerListe(int $idListe) : bool {
+        if (!isset($idListe)) {
+            return false;
+        }
+
+
     }
 
 }
