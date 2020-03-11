@@ -78,10 +78,11 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 						<a href='/Frontend/Lists/View/index.php?id=$list->id'><img src='../../Assets/Images/edit.png' style='width: 2rem'  alt='Edit link'/>
 					</td>
 					<td>
-						<form action='../Lists/deleteList.php' method='post'>
+						<!--<form action='../Lists/deleteList.php' method='post'>
 							<input disabled type='image' src='/Assets/Images/delete.png' style='width: 2rem' alt='Submit Form'>
 							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-						</form>
+						</form>-->
+						<p class='text-muted'> Bientôt disponible </p>
 					</td>
 					<td>
 						<form action='./View/membres.php' method='post'>
