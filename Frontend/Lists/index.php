@@ -69,20 +69,27 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 
 			echo "
-            <form action='./View/membres.php' method='post'>
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
-					<td id='nom_'. $list->id >" . $list->nom . "</td>
-					<td id='proprio_'. $list->id >" . $np . "</td>
-					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
-					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>
+					<td>" . $list->nom . "</td>
+					<td>" . $np . "</td>
+					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
+					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
 					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
-					<td id='edit_'. $list->id><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></td>
-					<td id='delete_'. $list->id><img src='../../Assets/Images/delete.png' onclick='supprimerListe()' style='width:20px;height:20px;' /></td>
-					<td id='membre_'. $list->id><button type='submit' style='border:0px'><img src='../../Assets/Images/member.png' style='width:20px;height:20px;'/></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
-				</tr>
-			</form>" ;
-
+					<td><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></td>
+					<td>
+						<form action='../Tasks/delete.php' method='post'>
+							<input type='image' src='/Assets/Images/member.png' style='width: 2rem' alt='Submit Form'>
+							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+						</form>
+					</td>
+					<td>
+						<form action='./View/membres.php' method='post'>
+							<input type='image' src='/Assets/Images/member.png' style='width: 2rem' alt='Submit Form'>
+							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+						</form>
+					</td>
+				</tr>" ;
 		}
 		?>
 		</tbody>
