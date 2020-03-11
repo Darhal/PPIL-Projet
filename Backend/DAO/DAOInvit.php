@@ -20,7 +20,7 @@ class DAOInvit extends DAO
         );
     }
 
-    public function ajouterDansBDD($invitation)
+    public function ajouterDansBDD($invitation) : bool
     {
         $attribs = array(
 	        "emetteur" => $invitation->emetteur,
@@ -29,27 +29,27 @@ class DAOInvit extends DAO
             "idListe" => $invitation->liste,
         );
 
-        $this->BDD->insertRow(self::$tab_name, $attribs);
+        return  $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
-    public function supprimerDeBDD($invitation)
+    public function supprimerDeBDD($invitation) : bool
     {
-        $this->BDD->deleteRow(self::$tab_name, "id = ".$invitation->id);
+        return $this->BDD->deleteRow(self::$tab_name, "id = ".$invitation->id);
     }
 
-    public function getByRequete($requete)
+    public function getByRequete($requete) : array
     {
 	    return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
-    public function updateBDD($invite, $condition = "")
+    public function updateBDD($invite, $condition = "") : bool
     {
-        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $attribs = array(); //TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
 
-    public function getInvitationsFor(Utilisateur $utilisateur) {
+    public function getInvitationsFor(Utilisateur $utilisateur) : array {
     	return $this->getByRequete("destinataire = $utilisateur->id");
     }
 }

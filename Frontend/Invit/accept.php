@@ -27,7 +27,7 @@ $invitations = Systeme::getInvitations($utilisateur);
 
 foreach ($invitations as $invitation) {
 	if ($invitation->id == $invID) {
-		Systeme::refuserInvitation($invitation);
+		Systeme::accepterInvitation($invitation);
 	}
 }
 

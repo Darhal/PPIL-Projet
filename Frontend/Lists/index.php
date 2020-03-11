@@ -54,11 +54,15 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
         <tbody>
 		<?php
 		$lists = Systeme::getOwnedLists($user);
+		$other = Systeme::getLists($user);
+		if (count($other) > 0) {
+			$lists = array_merge($lists, $other);
+		}
 
 		foreach ($lists as $list) {
 			$proprietaire = Systeme::getUserByID($list->proprietaire);
 			if ($proprietaire != null) {
-				$np = $proprietaire->nom;
+				$np = $proprietaire->pseudo;
 			} else {
 				$np = "Inconnu?";
 			}
@@ -84,7 +88,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<div class="float-right">
 		<button onclick="window.location.href='creer.php'"> Ajouter une liste </button>
 	</div>
-
 </div>
 <script type="text/javascript">
     function supprimerListe() {

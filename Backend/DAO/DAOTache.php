@@ -4,7 +4,7 @@
  * Classe DAOTache
  * L'implentation de "Design Pattern"s: Data access object, Singleton
  * Intermediare entre la base de données et php pour les données qui concernent la classe Tache
- * @author: Jonathan Pierrel
+ * @author: Jonathan Pierrel & Ali MIRMOHAMMADI
  * @date:05/03/2020
  * @version: 1.0
  *
@@ -12,6 +12,8 @@
 
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 include_once getenv('BASE')."Backend/Taches/Tache.php";
+include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
+include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
 
 
 class DAOTache extends DAO
@@ -49,19 +51,32 @@ class DAOTache extends DAO
         return $this->BDD->insertRow(self::$tab_name, $attribs);
 
     }
-
-    public function supprimerDeBDD($tache){
-        $this->BDD->deleteRow($this->tab_name, "idTache = ".$tache->id);
-    }
-
-    public function getByRequete($requete){
-        return $this->BDD->fetchResults("Tache", "*", $requete);;
-    }
-
-    public function updateBDD($tache, $condition = "")
+    public function ajouterIdResponsable($idUtilisateur, $tache)
     {
-        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+
+    }
+
+    public function supprimerDeBDD($tache) : bool {
+        return $this->BDD->deleteRow(self::$tab_name, "idTache = ".$tache->id);
+    }
+
+    public function getByRequete($requete) : array {
+        return $this->BDD->fetchResults("Tache", "*", $requete);
+    }
+
+
+    public function updateBDD($tache, $condition = "") : bool
+    {
+        $attribs = array();
+        // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $attribs = array(
+            "idTache" => $tache->id,
+            "nom" => $tache->nom,
+            "status" => ($tache->finie)?1:0,
+            "idListe" => $tache->idListe,
+            "idResponsable" => $tache->responsable->id
+        );
+        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
 }

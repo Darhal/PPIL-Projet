@@ -33,7 +33,7 @@ class DAOUtilisateur extends DAO
         );
     }
 
-    function ajouterDansBDD($utilisateur)
+    function ajouterDansBDD($utilisateur) : bool
     {
         $attribs = array(
             "pseudo" => $utilisateur->pseudo,
@@ -42,33 +42,33 @@ class DAOUtilisateur extends DAO
             "email" => $utilisateur->email,
             "mdp" => $utilisateur->mdp
         );
-        $this->BDD->insertRow(self::$tab_name, $attribs);
+        return $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
-    function supprimerDeBDD($utilisateur)
+    function supprimerDeBDD($utilisateur) : bool
     {
-        $this->BDD->deleteRow(self::$tab_name, "idUtilisateur = ".$utilisateur->id);
+        return $this->BDD->deleteRow(self::$tab_name, "idUtilisateur = ".$utilisateur->id);
     }
 
-    function getUserByEmail($email)
+    function getUserByEmail($email) : array
     {
         $res = $this->getByRequete("email = '$email'");
         return $res;
     }
 
-    function getUserByID($id)
+    function getUserByID($id) : array
     {
         $res = $this->getByRequete("idutilisateur = '$id'");
         return $res;
     }
 
-    function getByRequete($requete = "")
+    function getByRequete($requete = "") : array
     {
         $res = $this->BDD->fetchResults("Utilisateur", "*", $requete);
         return $res;
     }
 
-    public function updateBDD($utilisateur, $condition = "")
+    public function updateBDD($utilisateur, $condition = "") : bool
     {
         $attribs = array(
             "pseudo" => $utilisateur->pseudo,
@@ -81,7 +81,7 @@ class DAOUtilisateur extends DAO
         return $res;
     }
 
-    function getUsersByPseudo($pseudo) {
+    function getUsersByPseudo($pseudo) : array {
     	$res = $this->getByRequete("pseudo LIKE '%" . SQLite3::escapeString($pseudo) . "%'");
     	return $res;
     }

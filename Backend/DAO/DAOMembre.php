@@ -30,7 +30,7 @@ class DAOMembre extends DAO
         );
     }
 
-    public function ajouterDansBDD($membre){
+    public function ajouterDansBDD($membre) : bool{
         $attribs = array(
             "idListe" => $membre->idListe,
             "idUtilisateur" => $membre->idUtilisateur
@@ -40,11 +40,11 @@ class DAOMembre extends DAO
     }
 
 
-    public function supprimerDeBDD($membre){
-        return $this->BDD->deleteRow(self::$tab_name, "idListe = " . $membre->liste);
+    public function supprimerDeBDD($membre) : bool{
+        return $this->BDD->deleteRow(self::$tab_name, "idListe = $membre->idListe AND idUtilisateur = $membre->idUtilisateur");
     }
 
-    public function getByRequete($requete){
+    public function getByRequete($requete) : array{
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);;
     }
 
@@ -52,16 +52,16 @@ class DAOMembre extends DAO
 	 * @param int $id ID de l'utilisateur
 	 * @return array
 	 */
-    public function getLists(int $id)
+    public function getLists(int $id) : array
     {
-        return $this->getByRequete("idUtilisateur = $id");
+	    return $this->getByRequete("idUtilisateur = $id");
     }
 
 	/**
 	 * @param int $id ID de la liste
 	 * @return array
 	 */
-    public function getUsers(int $id)
+    public function getUsers(int $id) : array
     {
         $resSQL =  $this->getByRequete("idListe = $id");
 
@@ -79,12 +79,17 @@ class DAOMembre extends DAO
 	    return $res_array;
     }
 
-    public function add(Utilisateur $user, ListeTaches $liste) {
+    public function add(Utilisateur $user, ListeTaches $liste) : bool{
 		$membre = new Membre($liste->id, $user->id);
 		return $this->ajouterDansBDD($membre);
     }
 
-    public function updateBDD($membre, $condition = "")
+	public function delete(Utilisateur $user, ListeTaches $liste) : bool {
+		$membre = new Membre($liste->id, $user->id);
+		return $this->supprimerDeBDD($membre);
+	}
+
+    public function updateBDD($membre, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
