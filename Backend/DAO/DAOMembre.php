@@ -52,7 +52,7 @@ class DAOMembre extends DAO
 	 * @param int $id ID de l'utilisateur
 	 * @return array
 	 */
-    public function getLists(int $id)
+    public function getLists(int $id) : array
     {
 	    return $this->getByRequete("idUtilisateur = $id");
     }
@@ -61,7 +61,7 @@ class DAOMembre extends DAO
 	 * @param int $id ID de la liste
 	 * @return array
 	 */
-    public function getUsers(int $id)
+    public function getUsers(int $id) : array
     {
         $resSQL =  $this->getByRequete("idListe = $id");
 
@@ -79,17 +79,17 @@ class DAOMembre extends DAO
 	    return $res_array;
     }
 
-    public function add(Utilisateur $user, ListeTaches $liste) {
+    public function add(Utilisateur $user, ListeTaches $liste) : bool{
 		$membre = new Membre($liste->id, $user->id);
 		return $this->ajouterDansBDD($membre);
     }
 
-	public function delete(Utilisateur $user, ListeTaches $liste) {
+	public function delete(Utilisateur $user, ListeTaches $liste) : bool {
 		$membre = new Membre($liste->id, $user->id);
 		return $this->supprimerDeBDD($membre);
 	}
 
-    public function updateBDD($membre, $condition = "")
+    public function updateBDD($membre, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);

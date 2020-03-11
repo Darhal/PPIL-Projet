@@ -33,7 +33,7 @@ class DAONotif extends DAO
     }
 
 
-    public function ajouterDansBDD($notif)
+    public function ajouterDansBDD($notif) : bool
     {
         $attribs = array(
             "idNotif" => $notif->id,
@@ -50,12 +50,12 @@ class DAONotif extends DAO
             $attribs["idTache"] = $notif->tache->id;
         }
 
-        $this->BDD->insertRow(self::$tab_name, $attribs);
+        return $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
-    public function supprimerDeBDD($notif)
+    public function supprimerDeBDD($notif) : bool
     {
-        $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
+        return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
     }
 
     public function getByRequete($requete)
@@ -63,10 +63,10 @@ class DAONotif extends DAO
         // TODO: Implement getByRequete() method.
     }
 
-    public function updateBDD($notif, $condition = "")
+    public function updateBDD($notif, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow($tab_name, $attribs, $condition);
+        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
 }

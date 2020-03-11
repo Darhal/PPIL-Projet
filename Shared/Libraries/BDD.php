@@ -32,7 +32,7 @@
             return $this->file_name;
         }*/
 
-        function fetchResults($tab_name, $what = "*", $condition = "")
+        function fetchResults($tab_name, $what = "*", $condition = "") : array
         {
             if ($condition != ""){
                 $condition = "WHERE ".$condition;

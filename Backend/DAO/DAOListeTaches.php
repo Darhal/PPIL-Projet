@@ -32,7 +32,7 @@ class DAOListeTaches extends DAO
         );
     }
 
-    public function ajouterDansBDD($liste){
+    public function ajouterDansBDD($liste) : bool {
         $attribs = array(
             "nom" => $liste->nom,
             "dateDebut" => $liste->dateDebut,
@@ -51,12 +51,12 @@ class DAOListeTaches extends DAO
     }
 
 
-    public function supprimerDeBDD($liste){
+    public function supprimerDeBDD($liste) : bool {
         // Incomplet (ne supprime pas les tâches)
-        $this->BDD->deleteRow($this->tab_name, "idListe = ".$liste->id);
+        return $this->BDD->deleteRow($this->tab_name, "idListe = ".$liste->id);
     }
 
-    public function getByRequete($requete){
+    public function getByRequete($requete) {
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
@@ -70,7 +70,7 @@ class DAOListeTaches extends DAO
         return $this->getByRequete("idUtilisateur = $id");
     }
 
-    public function updateBDD($liste_tache, $condition = "")
+    public function updateBDD($liste_tache, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
