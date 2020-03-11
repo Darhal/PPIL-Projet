@@ -244,6 +244,24 @@ class Systeme
         return true;
     }
 
+	public static function changePassword(Utilisateur $user, string $old_password, string $new_password) {
+
+    	if (!isset($user) || !isset($old_password) || !isset($new_password)) {
+    		return false;
+	    }
+
+    	if ($old_password == $new_password) {
+    		return false;
+	    }
+
+    	if ($user->mdp != $old_password) {
+    		return false;
+	    }
+
+    	$user->mdp = $new_password;
+    	self::$dao_user->updateBDD($user, "idUtilisateur == $user->id");
+	}
+
     //---------------------------- ListeTaches---------------------------------
 
     /**
@@ -446,6 +464,7 @@ class Systeme
      */
 	public static function refuserInvitation(InvitationListeTache $invitation){
 	    //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
+		// Réponse de Ugo: OUI!
 		self::$dao_invit->supprimerDeBDD($invitation);
 
 		return true;
