@@ -63,7 +63,7 @@ if ($user == null){
 				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password">
 			</div>
 			<div class="d-flex container-fluid">
-				<button onclick="window.location.href='./'"> Retour </button>
+				<button type="button" onclick="window.location.href='./'"> Retour </button>
 				<input type="submit" value="Modifier ses informations">
 			</div>
 		</form>
