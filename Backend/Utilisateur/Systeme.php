@@ -550,6 +550,28 @@ class Systeme
         return self::$dao_tache->supprimerDeBDD($tache);
     }
 
+    /**
+     * Ajouter un Utilisateur à une Tache
+     * retourne false en cas d'échec
+     * @param Tache $tache
+     * @param Utilisateur $utilisateur
+     * @return bool
+     */
+    public static function ajouterResponsable(Tache $tache, Utilisateur $utilisateur){
+        //verifier si un utilisateur est déjà defini pour la tache
+        $res = false;
+        if (!isset($tache) || !isset($utilisateur)) {
+            return false;
+        }
+        //verifier le type des paramètres tache et utilisateur pour recuperer l'identifiant (de type int) de chaque obj
+//        $idTache=($tache instanceof Tache)?$tache->id:$tache;
+//        $idUtil=($utilisateur instanceof Utilisateur)?$utilisateur->id:$utilisateur;
+        $tache->responsable = $utilisateur->id;
+        $condition = "idTache == $tache->id";
+        $res = self::$dao_tache->updateBDD($tache,$condition);
+
+        return $res;
+    }
     //---------------------------- FIN ListeTaches---------------------------------
 
 
@@ -569,6 +591,7 @@ class Systeme
     }
 
     //---------------------------- FIN Notifications ---------------------------------
+
 
 
 }
