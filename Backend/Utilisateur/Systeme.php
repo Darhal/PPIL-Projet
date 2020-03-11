@@ -479,13 +479,17 @@ class Systeme
     }
 
 
-
-
-    public static function supprimerListe(int $idListe) : bool {
+    /**
+     *
+     * @param int $idListe
+     * @return bool
+     */
+    public static function supprimerListe(ListeTaches $liste) : bool {
         if (!isset($idListe)) {
             return false;
         }
 
+        return self::$dao_invit->supprimerDeBDD($liste);
 
     }
 
