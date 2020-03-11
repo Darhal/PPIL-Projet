@@ -653,7 +653,12 @@ class Systeme
     }
 
     //---------------------------- FIN Notifications ---------------------------------
+	public static function setDone(Tache $task) {
 
+		if (!isset($task)) {
+			return false;
+		}
+	}
 
 
 }
