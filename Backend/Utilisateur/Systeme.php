@@ -509,6 +509,26 @@ class Systeme
 
     }
 
+    //---------------------------- FIN ListeTaches---------------------------------
+
+
+
+    //---------------------------- Invitations ---------------------------------
+
+    //---------------------------- FIN Invitations ---------------------------------
+
+    //---------------------------- Notifications ---------------------------------
+    public static function getNotifications(int $idUtilisateur) : array {
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+        $utilisateur = self::getUserByID($idUtilisateur);
+
+
+    }
+
+    //---------------------------- FIN Notifications ---------------------------------
+
 
 }
 
