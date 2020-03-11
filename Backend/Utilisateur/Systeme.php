@@ -383,6 +383,26 @@ class Systeme
         return $res_array;
     }
 
+    /**
+     * Retourne la tache associée à l'ID en paramètre
+     * @param int $idTache
+     * @return array
+     */
+    public static function getTaskById(int $idTache) : Tache {
+        if(!isset($idTache)) return null;
+
+        $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
+
+        $req = $resSQL[0];
+        
+        $tache = new Tache($req['nom'], $req['idListe']);
+        $tache->finie = $req['statut'];
+        $tache->id = $req['idTache'];
+        $tache->responsable = $req['idResponsable'];
+
+        return $tache;
+    }
+
 
     /**
      * Ajoute une Liste de Taches pour un utilisateur
@@ -479,7 +499,12 @@ class Systeme
     }
 
 
-
+    /**
+     * Supprime une ListeDeTaches
+     * La BDD s'occupe de la suppression des choses liées
+     * @param ListeTaches $liste
+     * @return bool
+     */
     public static function supprimerListe(ListeTaches $liste) : bool {
         if (!isset($liste)) {
             return false;
@@ -488,15 +513,57 @@ class Systeme
         return self::$dao_invit->supprimerDeBDD($liste);
     }
 
+    /**
+     * Supprime une ListeDeTaches
+     * La BDD s'occupe de la suppression des choses liées
+     * @param int $idListe
+     * @return bool
+     */
     public static function supprimerListeByID(int $idListe) : bool {
         if (!isset($idListe)) {
             return false;
         }
         $liste = self::$dao_invit->getListeTachesByID($idListe);
 
-        return self::$dao_invit->supprimerDeBDD($liste);
+        return self::supprimerListe($liste);
 
     }
+
+
+    /**
+     * Supprimer une tache
+     * La BDD s'occupe de la suppression des choses liées
+     * @param int $idTache
+     * @return bool
+     */
+    public static function supprimerTache(int $idTache) : bool {
+        if (!isset($idTache)) {
+            return false;
+        }
+
+        $tache = self::getTaskById($idTache);
+        return self::$dao_tache->supprimerDeBDD($tache);
+    }
+
+    //---------------------------- FIN ListeTaches---------------------------------
+
+
+
+    //---------------------------- Invitations ---------------------------------
+
+    //---------------------------- FIN Invitations ---------------------------------
+
+    //---------------------------- Notifications ---------------------------------
+    public static function getNotifications(int $idUtilisateur) : array {
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+        $utilisateur = self::getUserByID($idUtilisateur);
+
+
+    }
+
+    //---------------------------- FIN Notifications ---------------------------------
 
 
 }

@@ -30,7 +30,7 @@ class DAOMembre extends DAO
         );
     }
 
-    public function ajouterDansBDD($membre){
+    public function ajouterDansBDD($membre) : bool{
         $attribs = array(
             "idListe" => $membre->idListe,
             "idUtilisateur" => $membre->idUtilisateur
@@ -40,11 +40,11 @@ class DAOMembre extends DAO
     }
 
 
-    public function supprimerDeBDD($membre){
+    public function supprimerDeBDD($membre) : bool{
         return $this->BDD->deleteRow(self::$tab_name, "idListe = $membre->idListe AND idUtilisateur = $membre->idUtilisateur");
     }
 
-    public function getByRequete($requete){
+    public function getByRequete($requete) : array{
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);;
     }
 

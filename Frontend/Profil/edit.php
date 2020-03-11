@@ -63,7 +63,7 @@ if ($user == null){
 				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password">
 			</div>
 			<div class="d-flex container-fluid">
-				<button onclick="window.location.href='./'"> Retour </button>
+				<button type="button" onclick="window.location.href='./'"> Retour </button>
 				<input type="submit" value="Modifier ses informations">
 			</div>
 		</form>
@@ -83,8 +83,11 @@ if ($user == null){
 				echo "<p style='color:red'>email déjà utilisée, veuillez changer </p>";
 			}
 			if($err==2) {
-				echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
+				echo "<p style='color:red'>Vous devez rentrer votre mot de passe</p>";
 			}
+            if($err==3) {
+                echo "<p style='color:red'>Mauvais mot de passe</p>";
+            }
 		}
 		?>
 

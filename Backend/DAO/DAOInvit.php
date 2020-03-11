@@ -44,7 +44,7 @@ class DAOInvit extends DAO
 
     public function updateBDD($invite, $condition = "") : bool
     {
-        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $attribs = array(); //TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
     }
