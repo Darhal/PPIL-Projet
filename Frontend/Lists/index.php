@@ -67,7 +67,9 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 				$np = "Inconnu?";
 			}
 
+
 			echo "
+            <form action='./View/membres.php' method='post'>
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
 					<td id='nom_'. $list->id >" . $list->nom . "</td>
@@ -77,9 +79,10 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'> Go </a></td>
 					<td id='edit_'. $list->id><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></td>
 					<td id='delete_'. $list->id><img src='../../Assets/Images/delete.png' onclick='supprimerListe()' style='width:20px;height:20px;' /></td>
-					<td id='membre_'. $list->id><img src='../../Assets/Images/member.png' style='width:20px;height:20px;' /></td>
+					<td id='membre_'. $list->id><button type='submit' style='border:0px'><img src='../../Assets/Images/member.png' style='width:20px;height:20px;'/></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
+				</tr>
+			</form>" ;
 
-				</tr>";
 		}
 		?>
 		</tbody>
