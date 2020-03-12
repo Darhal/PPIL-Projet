@@ -244,6 +244,24 @@ class Systeme
         return true;
     }
 
+	public static function changePassword(Utilisateur $user, string $old_password, string $new_password) {
+
+    	if (!isset($user) || !isset($old_password) || !isset($new_password)) {
+    		return false;
+	    }
+
+    	if ($old_password == $new_password) {
+    		return false;
+	    }
+
+    	if ($user->mdp != $old_password) {
+    		return false;
+	    }
+
+    	$user->mdp = $new_password;
+    	self::$dao_user->updateBDD($user, "idUtilisateur == $user->id");
+	}
+
     //---------------------------- ListeTaches---------------------------------
 
     /**
@@ -294,17 +312,8 @@ class Systeme
 	    $res_array = array();
 
 	    foreach ($resSQL as $key => $req) {
-		    // Si il y a une dateFin on construit avec, si on n'a pas dateFin, on construit sans
-		    $listeTache = null;
-		    if ($req['dateFin'] != null) {
-			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut'], $req['dateFin']);
-                $listeTache->id = $req['idListe'];
-		    } else {
-			    $listeTache = new ListeTaches($req['nom'], $req['idUtilisateur'], $req['dateDebut']);
-                $listeTache->id = $req['idListe'];
-		    }
-
-		    array_push($res_array, $listeTache);
+	    	$liste = Systeme::getListeTachesByID($req['idListe']);
+		    array_push($res_array, $liste);
 	    }
 
 	    return $res_array;
@@ -336,18 +345,36 @@ class Systeme
     }
 
 	/**
-     * Donne un tableau contenant tous les membres qui appartiennent à une ListeDeTaches
+     * Donne un tableau contenant tous les membres invités qui appartiennent à une ListeDeTaches
 	 * @param ListeTaches $listeTaches
 	 * @return null | array
 	 */
-    public static function getMembres(ListeTaches $listeTaches) {
+    public static function getMembresInvites(ListeTaches $listeTaches) {
 
 	    if (!isset($listeTaches->id)) {
-		    return null;
+		    return [];
 	    }
 
 	    return self::$dao_membre->getUsers($listeTaches->id);
     }
+
+	/**
+	 * Donne un tableau contenant tous les membres qui appartiennent à une ListeDeTaches
+	 * @param ListeTaches $listeTaches
+	 * @return null | array
+	 */
+	public static function getMembres(ListeTaches $listeTaches) {
+
+		if (!isset($listeTaches->id)) {
+			return [];
+		}
+
+		$membres = self::getMembresInvites($listeTaches);
+		$proprietaire = Systeme::getUserByID($listeTaches->proprietaire);
+		array_unshift($membres, $proprietaire);
+
+		return $membres;
+	}
 
     /**
      * Crée une tache dans une liste de tâche et l'ajoute à la BDD
@@ -390,7 +417,7 @@ class Systeme
     /**
      * Retourne la tache associée à l'ID en paramètre
      * @param int $idTache
-     * @return array
+     * @return Tache
      */
     public static function getTaskById(int $idTache) : Tache {
         if(!isset($idTache)) return null;
@@ -437,6 +464,7 @@ class Systeme
      */
 	public static function refuserInvitation(InvitationListeTache $invitation){
 	    //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
+		// Réponse de Ugo: OUI!
 		self::$dao_invit->supprimerDeBDD($invitation);
 
 		return true;
@@ -551,6 +579,49 @@ class Systeme
         return self::$dao_tache->supprimerDeBDD($tache);
     }
 
+    /**
+     * Ajouter un Utilisateur à une Tache
+     * retourne false en cas d'échec
+     * @param Tache $tache
+     * @param Utilisateur $utilisateur
+     * @return bool
+     */
+    public static function ajouterResponsable(Tache $tache, Utilisateur $utilisateur){
+        //verifier si un utilisateur est déjà defini pour la tache
+
+        if (!isset($tache) || !isset($utilisateur)) {
+            return false;
+        }
+
+	    $liste = Systeme::getListeTachesByID($tache->idListe);
+	    $membres = Systeme::getMembres($liste);
+
+	    if (!in_array($utilisateur, $membres)) {
+		    return false;
+	    }
+
+	    $tache->ajouterResponsable($utilisateur);
+        $condition = "idTache == $tache->id";
+        return self::$dao_tache->updateBDD($tache,$condition);
+    }
+
+	/**
+	 * Ajouter un Utilisateur à une Tache
+	 * retourne false en cas d'échec
+	 * @param Tache $tache
+	 * @return bool
+	 */
+	public static function retirerResponsable(Tache $tache){
+		//verifier si un utilisateur est déjà defini pour la tache
+
+		if (!isset($tache)) {
+			return false;
+		}
+
+		$tache->supprimerResponsable();
+		$condition = "idTache == $tache->id";
+		return self::$dao_tache->updateBDD($tache,$condition);
+	}
     //---------------------------- FIN ListeTaches---------------------------------
 
 
@@ -582,6 +653,33 @@ class Systeme
     }
 
     //---------------------------- FIN Notifications ---------------------------------
+	public static function setDone(Tache $task) {
+
+		if (!isset($task)) {
+			return false;
+		}
+
+		if ($task->estFinie()) {
+			return false;
+		}
+
+		$task->setFait(true);
+		return self::$dao_tache->update($task);
+	}
+
+	public static function setNotDone(Tache $task) {
+
+		if (!isset($task)) {
+			return false;
+		}
+
+		if (!$task->estFinie()) {
+			return false;
+		}
+
+		$task->setFait(false);
+		return self::$dao_tache->update($task);
+	}
 
 
 }

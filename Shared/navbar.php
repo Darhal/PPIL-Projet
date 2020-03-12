@@ -9,6 +9,7 @@ $target = "/Frontend/Login/";
 $account = $target;
 $tasks = $target;
 $lists = $target;
+$invit = $target;
 if (Systeme::estConnecte()) {
     $text = "Déconnexion";
     $target = "/Frontend/Login/logout.php";
