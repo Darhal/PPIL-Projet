@@ -15,6 +15,7 @@ abstract class Notification {
     public $listeTaches;
     public $idNotif;
     public $destinataire; // id
+    public $idTache;  // Seulement pour NotificationTache
 
     function __construct(string $message, bool $lu, int $idListe, int $idDestinaire)
     {

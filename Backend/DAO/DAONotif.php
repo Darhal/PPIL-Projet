@@ -63,11 +63,36 @@ class DAONotif extends DAO
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
-    public function getNotificationsTache() : array {
+    public function getNotificationsTache(int $idUtilisateur) : array {
+        $resSQL = self::getByRequete("destinataire = $idUtilisateur");
 
+        $res_array = array();
+
+        foreach ($resSQL as $item) {
+            if($item['nature'] == "tache"){
+                $notif = new NotificationListeTaches($item['msg'], $item['statut'], $item['idListe'], $item['destinataire']);
+                $notif->idNotif = $item['idNotif'];
+                $notif->idTache = $item['idTache'];
+
+                array_push($res_array, $notif);
+            }
+        }
+
+        return $res_array;
     }
-    public function getNotificationsListeTache() : array {
+    public function getNotificationsListeTache(int $idUtilisateur) : array {
+        $resSQL = self::getByRequete("destinataire = $idUtilisateur");
 
+        $res_array = array();
+
+        foreach ($resSQL as $item) {
+            if($item['nature'] == "liste"){
+                $notif = new NotificationListeTaches($item['msg'], $item['statut'], $item['idListe'], $item['destinataire']);
+                $notif->idNotif = $item['idNotif'];
+
+                array_push($res_array, $notif);
+            }
+        }
     }
 
 
