@@ -19,6 +19,7 @@ abstract class Notification {
 
     function __construct(string $message, bool $lu, int $idListe, int $idDestinaire)
     {
+        $this->idNotif =null;
         $this->dejaLu=$lu;
         $this->msg = $message;
         $this->listeTaches=$idListe;
