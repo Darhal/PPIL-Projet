@@ -59,7 +59,9 @@ class Systeme
 	 * @var DAOInvit
 	 */
     private static $dao_invit = null;
-
+    /**
+     * @var DAONotif
+     */
     private static $dao_notif = null;
 
     private static $DEFAULT_DB_FILE = "db.sql";
