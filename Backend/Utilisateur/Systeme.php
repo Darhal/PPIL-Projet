@@ -417,7 +417,7 @@ class Systeme
     /**
      * Retourne la tache associée à l'ID en paramètre
      * @param int $idTache
-     * @return array
+     * @return Tache
      */
     public static function getTaskById(int $idTache) : Tache {
         if(!isset($idTache)) return null;
