@@ -416,28 +416,6 @@ class Systeme
         return $res_array;
     }
 
-    /**
-     * Retourne la tache associée à l'ID en paramètre
-     * @param int $idTache
-     * @return Tache
-     */
-    public static function getTaskById(int $idTache) : Tache {
-        if(!isset($idTache)) return null;
-
-        $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
-
-        $req = $resSQL[0];
-
-        $tache = new Tache($req['nom'], $req['idListe']);
-        $tache->finie = $req['statut'];
-        $tache->id = $req['idTache'];
-        if(isset($req['idResponsable'])){
-            $tache->responsable = $req['idResponsable'];
-        }
-
-        return $tache;
-    }
-
 
     /**
      * Ajoute une Liste de Taches pour un utilisateur
@@ -457,81 +435,6 @@ class Systeme
         }
 
         return self::$dao_listeTaches->ajouterDansBDD($liste);
-    }
-
-    /**
-     * Supprime une invitation
-     * @param InvitationListeTache $invitation
-     * @return bool
-     */
-	public static function refuserInvitation(InvitationListeTache $invitation){
-	    //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
-		// Réponse de Ugo: OUI!
-		self::$dao_invit->supprimerDeBDD($invitation);
-
-		return true;
-	}
-
-    /**
-     * Ajoute la personne invitée à la Liste de Taches à laquelle est invitée
-     * Supprime l'invitation
-     * @param InvitationListeTache $invitation
-     * @return bool
-     */
-    public static function accepterInvitation(InvitationListeTache $invitation){
-        $liste = self::getListeTachesByID($invitation->liste);
-        $utilisateur = self::getUserByID($invitation->destinataire);
-        self::$dao_membre->add($utilisateur, $liste);
-        self::$dao_invit->supprimerDeBDD($invitation);
-
-	    return true;
-    }
-
-    /**
-     * Créer une invitation pour rejoindre une Liste de Taches
-     * @param ListeTaches $liste
-     * @param Utilisateur $emetteur
-     * @param Utilisateur $destinataire
-     * @return bool
-     */
-    public static function inviterUtilisateur(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
-
-    	if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
-    		return false;
-	    }
-
-	    $invitation = new InvitationListeTache("Je t'invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
-		echo "<pre>";
-		var_dump($invitation);
-		echo "</pre>";
-    	self::$dao_invit->ajouterDansBDD($invitation);
-
-    	return true;
-    }
-
-    /**
-     * Permet de récupérer toutes les invitations en cours qu'un Utilisateur a reçu
-     * @param Utilisateur $utilisateur
-     * @return array
-     */
-    public static function getInvitations(Utilisateur $utilisateur) : array {
-
-    	if (!isset($utilisateur)) {
-    		return [];
-	    }
-
-    	$resSQL = self::$dao_invit->getInvitationsFor($utilisateur);
-
-    	$res_array = array();
-
-	    foreach ($resSQL as $item) {
-		    $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
-		    $invitation->id = $item['id'];
-
-		    array_push($res_array, $invitation);
-    	}
-
-    	return $res_array;
     }
 
 
@@ -565,65 +468,10 @@ class Systeme
 
     }
 
-
-    /**
-     * Supprimer une tache
-     * La BDD s'occupe de la suppression des choses liées
-     * @param int $idTache
-     * @return bool
-     */
-    public static function supprimerTache(int $idTache) : bool {
-        if (!isset($idTache)) {
-            return false;
-        }
-
-        $tache = self::getTaskById($idTache);
-        return self::$dao_tache->supprimerDeBDD($tache);
+    public static function updateList(ListeTaches $liste) : bool {
+        return self::$dao_listeTaches->update($liste);
     }
 
-    /**
-     * Ajouter un Utilisateur à une Tache
-     * retourne false en cas d'échec
-     * @param Tache $tache
-     * @param Utilisateur $utilisateur
-     * @return bool
-     */
-    public static function ajouterResponsable(Tache $tache, Utilisateur $utilisateur){
-        //verifier si un utilisateur est déjà defini pour la tache
-
-        if (!isset($tache) || !isset($utilisateur)) {
-            return false;
-        }
-
-	    $liste = Systeme::getListeTachesByID($tache->idListe);
-	    $membres = Systeme::getMembres($liste);
-
-	    if (!in_array($utilisateur, $membres)) {
-		    return false;
-	    }
-
-	    $tache->ajouterResponsable($utilisateur);
-        $condition = "idTache == $tache->id";
-        return self::$dao_tache->updateBDD($tache,$condition);
-    }
-
-	/**
-	 * Ajouter un Utilisateur à une Tache
-	 * retourne false en cas d'échec
-	 * @param Tache $tache
-	 * @return bool
-	 */
-	public static function retirerResponsable(Tache $tache){
-		//verifier si un utilisateur est déjà defini pour la tache
-
-		if (!isset($tache)) {
-			return false;
-		}
-
-		$tache->supprimerResponsable();
-		$condition = "idTache == $tache->id";
-		return self::$dao_tache->updateBDD($tache,$condition);
-	}
     //---------------------------- FIN ListeTaches---------------------------------
 
     //---------------------------- Taches -------------------------------------
@@ -655,11 +503,170 @@ class Systeme
         return self::$dao_tache->update($task);
     }
 
+
+    /**
+     * Supprimer une tache
+     * La BDD s'occupe de la suppression des choses liées
+     * @param int $idTache
+     * @return bool
+     */
+    public static function supprimerTache(int $idTache) : bool {
+        if (!isset($idTache)) {
+            return false;
+        }
+
+        $tache = self::getTaskById($idTache);
+        return self::$dao_tache->supprimerDeBDD($tache);
+    }
+
+    /**
+     * Ajouter un Utilisateur à une Tache
+     * retourne false en cas d'échec
+     * @param Tache $tache
+     * @param Utilisateur $utilisateur
+     * @return bool
+     */
+    public static function ajouterResponsable(Tache $tache, Utilisateur $utilisateur){
+        //verifier si un utilisateur est déjà defini pour la tache
+
+        if (!isset($tache) || !isset($utilisateur)) {
+            return false;
+        }
+
+        $liste = Systeme::getListeTachesByID($tache->idListe);
+        $membres = Systeme::getMembres($liste);
+
+        if (!in_array($utilisateur, $membres)) {
+            return false;
+        }
+
+        $tache->ajouterResponsable($utilisateur);
+        $condition = "idTache == $tache->id";
+        return self::$dao_tache->updateBDD($tache,$condition);
+    }
+
+    /**
+     * Retirer un Utilisateur à une Tache
+     * retourne false en cas d'échec
+     * @param Tache $tache
+     * @return bool
+     */
+    public static function retirerResponsable(Tache $tache){
+        //verifier si un utilisateur est déjà defini pour la tache
+
+        if (!isset($tache)) {
+            return false;
+        }
+
+        $tache->supprimerResponsable();
+        $condition = "idTache == $tache->id";
+        return self::$dao_tache->updateBDD($tache,$condition);
+    }
+
+
+    /**
+     * Retourne la tache associée à l'ID en paramètre
+     * @param int $idTache
+     * @return Tache
+     */
+    public static function getTaskById(int $idTache) : Tache {
+        if(!isset($idTache)) return null;
+
+        $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
+
+        $req = $resSQL[0];
+
+        $tache = new Tache($req['nom'], $req['idListe']);
+        $tache->finie = $req['statut'];
+        $tache->id = $req['idTache'];
+        if(isset($req['idResponsable'])){
+            $tache->responsable = $req['idResponsable'];
+        }
+
+        return $tache;
+    }
+
+
     //---------------------------- FIN Taches ---------------------------------
 
 
 
     //---------------------------- Invitations ------------------------------------
+
+    /**
+     * Supprime une invitation
+     * @param InvitationListeTache $invitation
+     * @return bool
+     */
+    public static function refuserInvitation(InvitationListeTache $invitation){
+        //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
+        // Réponse de Ugo: OUI!
+        self::$dao_invit->supprimerDeBDD($invitation);
+
+        return true;
+    }
+
+    /**
+     * Ajoute la personne invitée à la Liste de Taches à laquelle est invitée
+     * Supprime l'invitation
+     * @param InvitationListeTache $invitation
+     * @return bool
+     */
+    public static function accepterInvitation(InvitationListeTache $invitation){
+        $liste = self::getListeTachesByID($invitation->liste);
+        $utilisateur = self::getUserByID($invitation->destinataire);
+        self::$dao_membre->add($utilisateur, $liste);
+        self::$dao_invit->supprimerDeBDD($invitation);
+
+        return true;
+    }
+
+    /**
+     * Créer une invitation pour rejoindre une Liste de Taches
+     * @param ListeTaches $liste
+     * @param Utilisateur $emetteur
+     * @param Utilisateur $destinataire
+     * @return bool
+     */
+    public static function inviterUtilisateur(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
+
+        if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
+            return false;
+        }
+
+        $invitation = new InvitationListeTache("Je t'invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
+        echo "<pre>";
+        var_dump($invitation);
+        echo "</pre>";
+        self::$dao_invit->ajouterDansBDD($invitation);
+
+        return true;
+    }
+
+    /**
+     * Permet de récupérer toutes les invitations en cours qu'un Utilisateur a reçu
+     * @param Utilisateur $utilisateur
+     * @return array
+     */
+    public static function getInvitations(Utilisateur $utilisateur) : array {
+
+        if (!isset($utilisateur)) {
+            return [];
+        }
+
+        $resSQL = self::$dao_invit->getInvitationsFor($utilisateur);
+
+        $res_array = array();
+
+        foreach ($resSQL as $item) {
+            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+            $invitation->id = $item['id'];
+
+            array_push($res_array, $invitation);
+        }
+
+        return $res_array;
+    }
 
     //---------------------------- FIN Invitations ---------------------------------
 
