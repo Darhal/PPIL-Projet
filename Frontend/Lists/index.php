@@ -68,29 +68,19 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 
 			echo "
+            <form name='myform' id='formId' action='./View/membres.php' method='post'>
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
-					<td>" . $list->nom . "</td>
-					<td>" . $np . "</td>
-					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
-					<td>" . date("d/m/y", intval($list->dateFin)) . "</td>
-					<td>
-						<a href='/Frontend/Lists/View/index.php?id=$list->id'><img src='../../Assets/Images/edit.png' style='width: 2rem'  alt='Edit link'/>
-					</td>
-					<td>
-						<!--<form action='../Lists/deleteList.php' method='post'>
-							<input disabled type='image' src='/Assets/Images/delete.png' style='width: 2rem' alt='Submit Form'>
-							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-						</form>-->
-						<p class='text-muted'> Bientôt disponible </p>
-					</td>
-					<td>
-						<form action='./View/membres.php' method='post'>
-							<input type='image' src='/Assets/Images/member.png' style='width: 2rem' alt='Submit Form'>
-							</button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-						</form>
-					</td>
-				</tr>" ;
+					<td id='nom_'. $list->id ><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
+					<td id='proprio_'. $list->id >" . $np . "</td>
+					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
+					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>
+					<td id='edit_'. $list->id><button type='submit' name='member' style='border:0px'><img src='../../Assets/Images/edit.png' onclick='editer()' style='width:20px;height:20px;' /></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
+					<td id='delete_'. $list->id><img src='../../Assets/Images/delete.png' onclick='supprimerListe()' style='width:20px;height:20px;' /></td>
+					<td id='membre_'. $list->id><button type='submit' name='member' style='border:0px'><img src='../../Assets/Images/member.png' style='width:20px;height:20px;'/></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
+				</tr>
+			</form>" ;
+
 		}
 		?>
 		</tbody>
@@ -114,6 +104,14 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
         else{
             console.log('dans le esle') ;
         }
+    }
+
+    function editer() {
+        //document.myform.action="editList.php";
+        console.log("dans la fonction editer") ;
+
+        document.getElementById('formId').action = "editLists.php"; //Will set it
+        document.getElementById('formId').submit() ;
     }
 </script>
 <?php include_once getenv('BASE') . "Shared/footer.php"; ?>
