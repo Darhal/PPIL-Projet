@@ -92,6 +92,7 @@ class DAONotif extends DAO
 
         return $res_array;
     }
+
     public function getNotificationsListeTache(int $idUtilisateur) : array {
         $resSQL = self::getByRequete("destinataire = $idUtilisateur");
 

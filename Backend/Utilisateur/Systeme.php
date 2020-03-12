@@ -72,7 +72,7 @@ class Systeme
         self::$dao_tache = new DAOTache($bdd);
         self::$dao_membre = new DAOMembre($bdd);
         self::$dao_invit = new DAOInvit($bdd);
-//        self::$dao_notif = new DAONotif($bdd);
+        self::$dao_notif = new DAONotif($bdd);
     }
 
     public static function start_session() {
