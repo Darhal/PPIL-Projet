@@ -68,7 +68,7 @@ if ($liste == null) {
 			<th scope="col"> ID </th>
 			<th scope="col"> Item </th>
 			<th scope="col"> Responsable </th>
-			<th scope="col"> Complété </th>
+			<th scope="col"> Complétée </th>
 			<th scope="col"> Editer </th>
 			<th scope="col"> Suppression </th>
 		</tr>
@@ -79,20 +79,69 @@ if ($liste == null) {
 
 		foreach ($tasks as $task) {
 
-			$responsable = "<button> Volontaire </button>";
+			// Reponsable, trois cas
+			// 1 - Personne n'est responsable
+			//  -> Tout le monde peut se proproser pour être responsable
+			// 2 - Un utilisateur est responsable
+			//  A - L'utilisateur connecté est responsable de la tâche
+			//      -> Il peut se retirer de sa qualité de responsable
+			//  B - L'utilsiateur connecté n'est pas responsable de la tâche
+			//      -> Le nom du responsable lui est alors affiché
 
+			// 1
+			$responsable = "
+<form action='../../Tasks/enroll.php' method='post'>
+	<input type='submit' value='Volontaire'>
+	<input type='hidden' value='$task->id' name='tid' id='tid'> 
+</form>";
+
+			// 2
 			if ($task->responsable != "") {
-				$user = Systeme::getUserByID(intval($task->responsable));
-				$responsable = $user->nom;
+
+				$resp_user = Systeme::getUserByID(intval($task->responsable));
+
+				if ($resp_user == $user) {
+
+					// A
+					$responsable = "
+						<form action='../../Tasks/leave.php' method='post'>
+							<input type='submit' value='Ne plus être responsable'>
+							<input type='hidden' value='$task->id' name='tid' id='tid'> 
+						</form>";
+				} else {
+					// B
+					$responsable = $resp_user->pseudo;
+				}
 			}
 
-			$finie = "non";
+			// Statut de la tâche
+			// 1 - L'utilisateur n'est pas responsable de la tâche
+			//  -> Le statut de la tâche est affiché
+			// 2 - L'utilisateur est responsable de la tâche
+			//  A - La tâche n'est pas finie
+			//      -> Il peut définir la tâche comme finie
+			//  B - La tâche est finie
+			//      -> Il peut invalider le statut de la tâche
 
-			if ($task->finie) {
-				$finie = "oui";
+			if ($task->responsable != $user->id) {
+				// 1
+				$finie = $task->finie ? "oui" : "non";
 			} else {
-				if ($task->responsable == $user->id) {
-					$finie = "<button> Marquer comme finie </button>";
+				// 2
+				if (!$task->finie) {
+					// A
+					$finie = "
+						<form action='../../Tasks/setDone.php' method='post'>
+							<input type='submit' value='Marquer comme finie'>
+							<input type='hidden' value='$task->id' name='tid' id='tid'> 
+						</form>";
+				} else {
+					// B
+					$finie = "
+						<form action='../../Tasks/setNotDone.php' method='post'>
+							<input type='submit' value='Marquer comme non finie'>
+							<input type='hidden' value='$task->id' name='tid' id='tid'> 
+						</form>";
 				}
 			}
 
@@ -102,8 +151,8 @@ if ($liste == null) {
 					<td>" . $task->nom . "</td>
 					<td>" . $responsable . "</td>
 					<td>" . $finie . "</td>
-					<td><a href='/Frontend/Task/edit.php?id=" . $task->id . "'> Go </a></td>
-					<td><a href='/Frontend/Task/delete.php?id=" . $task->id . "'> Go </a></td>
+					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "' class='disabled d-none'> (bientôt disponible) </a></td>
+					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."'> Go </a></td>
 				</tr>";
 		}
 		?>

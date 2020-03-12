@@ -16,10 +16,16 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="../CSS/style.css">
 	<title>Procrast - Se connecter</title>
+    <style>
+        h5 {
+            text-decoration: underline;
+            text-decoration-color: blue;
+            color:blue;        }
+    </style>
 </head>
 <body>
-<?php 
-	include_once getenv('BASE')."Shared/navbar.php";
+<?php
+	include_once getenv('BASE')."Shared/navarbaraccueil.php";
 ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Connexion </h1>
@@ -39,6 +45,9 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 
 		<input type="submit" value="Se connecter">
 	</div>
+<div>
+    <h5><a href="../Signup/">Pas encore inscrit? C'est par ici.</a></h5>
+</div>
 </form>
 
 <?php 

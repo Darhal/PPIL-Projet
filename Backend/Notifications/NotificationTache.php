@@ -13,10 +13,10 @@ include_once "Notification.php";
 
 class NotificationTache extends Notification {
     public $tache;
-    function __construct(string $message,bool $lu,int $liste,int $tache)
+    function __construct(string $message, bool $lu, int $idListe, int $idTache, int $idDestinataire)
     {
-        parent::__construct($message,$lu,$liste);
-        $this->tache=$tache;
+        parent::__construct($message,$lu,$idListe, $idDestinataire);
+        $this->tache=$idTache;
 
     }
     function __destruct()

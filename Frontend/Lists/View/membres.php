@@ -15,6 +15,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Taches/ListeTaches.php");
 include_once (getenv('BASE')."Backend/Taches/Tache.php");
+
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 Systeme::Init();
@@ -67,7 +68,7 @@ if ($liste == null) {
 		</thead>
 		<tbody>
 		<?php
-		$membres = Systeme::getMembres($liste);
+		$membres = Systeme::getMembresInvites($liste);
 		$owner = Systeme::getUserByID($liste->proprietaire);
 
 		array_unshift( $membres, $owner);

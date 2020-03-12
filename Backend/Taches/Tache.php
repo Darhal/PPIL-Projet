@@ -1,5 +1,8 @@
 <?php
 
+set_include_path(getenv('BASE'));
+
+include_once "Backend/Utilisateur/Utilisateur.php";
 
 class Tache
 {
@@ -7,7 +10,7 @@ class Tache
     public $id;
     public $nom;
     public $finie;
-    public $responsable;
+    public $responsable;//int
     public $idListe;
 
     function __construct(string $n, int $idListe)
@@ -32,7 +35,7 @@ class Tache
         return $this->nom;
     }
 
-    public function getResponsable() : Utilisateur {
+    public function getResponsable() {
         return $this->responsable;
     }
 
@@ -41,13 +44,13 @@ class Tache
     }
 
     public function aUnResponsable() : bool {
-        return isset($this->responsable);
+        return $this->responsable != null;
     }
 
 
     //Fonctions
-    public function ajouterResponsable(int $i) {
-        $this->responsable = DAOUtilisateur::getUserById($i);
+    public function ajouterResponsable(Utilisateur $utilisateur) {
+        $this->responsable = $utilisateur->id;
     }
 
     public function supprimerResponsable() {

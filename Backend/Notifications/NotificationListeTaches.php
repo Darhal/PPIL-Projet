@@ -13,9 +13,9 @@ include_once "Notification.php";
 
 class NotificationListeTaches extends Notification
 {
-    function __construct(string $message,bool $lu,int $liste)
+    function __construct(string $message, bool $lu, int $idListe, int $idDestinatire)
     {
-        parent::__construct($message,$lu,$liste);
+        parent::__construct($message,$lu,$idListe, $idDestinatire);
     }
     function __destruct()
     {

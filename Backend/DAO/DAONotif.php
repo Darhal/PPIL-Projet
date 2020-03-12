@@ -27,7 +27,8 @@ class DAONotif extends DAO
                 "statut" => "varchar not null",
                 "nature" => "varchar not null",
                 "idListe" => "INTEGER constraint Notification_Liste_idListe_fk references Liste",
-                "idTache" => "INTEGER constraint Notification_Tache_idTache_fk references Tache"
+                "idTache" => "INTEGER constraint Notification_Tache_idTache_fk references Tache",
+                "destinataire" => "INTEGER constraint Notification_Utilisateur_idUtilisateur_fk references Utilisateur",
             )
         );
     }
@@ -58,10 +59,17 @@ class DAONotif extends DAO
         return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
     }
 
-    public function getByRequete($requete)
-    {
-        // TODO: Implement getByRequete() method.
+    public function getByRequete($requete) : array {
+        return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
+
+    public function getNotificationsTache() : array {
+
+    }
+    public function getNotificationsListeTache() : array {
+
+    }
+
 
     public function updateBDD($notif, $condition = "") : bool
     {

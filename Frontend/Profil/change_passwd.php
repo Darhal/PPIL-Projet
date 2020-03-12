@@ -43,7 +43,7 @@ if (!isset($_POST['conf-password'])) {
 $conf_password = $_POST['conf-password'];
 
 if ($new_password == $conf_password) {
-	//Systeme::changePassword($user, $old_password, $new_password);
+	Systeme::changePassword($logged_user, $old_password, $new_password);
 }
 
 
