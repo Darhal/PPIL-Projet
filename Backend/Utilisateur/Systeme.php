@@ -571,12 +571,12 @@ class Systeme
 
         $res_array = array();
 
-//        foreach ($resSQL as $item) {
-//            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+        foreach ($resSQL as $item) {
+//            $notif = new Notification($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
 //            $invitation->id = $item['id'];
 //
 //            array_push($res_array, $invitation);
-//        }
+        }
 
         return $res_array;
     }

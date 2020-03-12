@@ -63,6 +63,14 @@ class DAONotif extends DAO
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
+    public function getNotificationsTache() : array {
+
+    }
+    public function getNotificationsListeTache() : array {
+
+    }
+
+
     public function updateBDD($notif, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
