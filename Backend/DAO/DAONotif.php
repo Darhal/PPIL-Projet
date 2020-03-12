@@ -71,6 +71,11 @@ class DAONotif extends DAO
         return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
     }
 
+    public function supprimerDeBDDByID($idNotif) : bool
+    {
+        return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$idNotif);
+    }
+
     public function getByRequete($requete) : array {
         return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
@@ -82,7 +87,7 @@ class DAONotif extends DAO
 
         foreach ($resSQL as $item) {
             if($item['nature'] == "tache"){
-                $notif = new NotificationListeTaches($item['msg'], $item['statut'], $item['idListe'], $item['destinataire']);
+                $notif = new NotificationTache($item['msg'], $item['statut'], $item['idListe'], $item['destinataire']);
                 $notif->idNotif = $item['idNotif'];
                 $notif->idTache = $item['idTache'];
 
