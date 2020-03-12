@@ -544,7 +544,7 @@ class Systeme
             return false;
         }
 
-        return self::$dao_invit->supprimerDeBDD($liste);
+        return self::$dao_listeTaches->supprimerDeBDD($liste);
     }
 
     /**
@@ -557,7 +557,7 @@ class Systeme
         if (!isset($idListe)) {
             return false;
         }
-        $liste = self::$dao_invit->getListeTachesByID($idListe);
+        $liste = self::$dao_listeTaches->getListeTachesByID($idListe);
 
         return self::supprimerListe($liste);
 
@@ -666,7 +666,6 @@ class Systeme
         if (!isset($idUtilisateur)) {
             return null;
         }
-
         return self::$dao_notif->getNotificationsTache($idUtilisateur);
     }
 
