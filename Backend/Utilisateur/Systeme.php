@@ -662,27 +662,21 @@ class Systeme
     //---------------------------- FIN Invitations ---------------------------------
 
     //---------------------------- Notifications ---------------------------------
-    public static function getNotifications(int $idUtilisateur) : array {
+    public static function getNotificationsTache(int $idUtilisateur) : array {
         if (!isset($idUtilisateur)) {
             return null;
         }
-        $utilisateur = self::getUserByID($idUtilisateur);
 
-
-        $resSQL = self::$dao_notif->getByRequete("???");
-
-        $res_array = array();
-
-        foreach ($resSQL as $item) {
-//            $notif = new Notification($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
-//            $invitation->id = $item['id'];
-//
-//            array_push($res_array, $invitation);
-        }
-
-        return $res_array;
+        return self::$dao_notif->getNotificationsTache($idUtilisateur);
     }
 
+    public static function getNotificationsListe(int $idUtilisateur) : array {
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+
+        return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
+    }
     //---------------------------- FIN Notifications ---------------------------------
 
 
