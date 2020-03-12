@@ -624,9 +624,40 @@ class Systeme
 	}
     //---------------------------- FIN ListeTaches---------------------------------
 
+    //---------------------------- Taches -------------------------------------
+    public static function setDone(Tache $task) {
+
+        if (!isset($task)) {
+            return false;
+        }
+
+        if ($task->estFinie()) {
+            return false;
+        }
+
+        $task->setFait(true);
+        return self::$dao_tache->update($task);
+    }
+
+    public static function setNotDone(Tache $task) {
+
+        if (!isset($task)) {
+            return false;
+        }
+
+        if (!$task->estFinie()) {
+            return false;
+        }
+
+        $task->setFait(false);
+        return self::$dao_tache->update($task);
+    }
+
+    //---------------------------- FIN Taches ---------------------------------
 
 
-    //---------------------------- Invitations ---------------------------------
+
+    //---------------------------- Invitations ------------------------------------
 
     //---------------------------- FIN Invitations ---------------------------------
 
@@ -653,33 +684,6 @@ class Systeme
     }
 
     //---------------------------- FIN Notifications ---------------------------------
-	public static function setDone(Tache $task) {
-
-		if (!isset($task)) {
-			return false;
-		}
-
-		if ($task->estFinie()) {
-			return false;
-		}
-
-		$task->setFait(true);
-		return self::$dao_tache->update($task);
-	}
-
-	public static function setNotDone(Tache $task) {
-
-		if (!isset($task)) {
-			return false;
-		}
-
-		if (!$task->estFinie()) {
-			return false;
-		}
-
-		$task->setFait(false);
-		return self::$dao_tache->update($task);
-	}
 
 
 }
