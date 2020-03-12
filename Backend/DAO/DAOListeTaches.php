@@ -73,8 +73,20 @@ class DAOListeTaches extends DAO
 
     public function updateBDD($liste_tache, $condition = "") : bool
     {
-        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        $attribs = array(
+            "idListe" => $liste_tache->id,
+            "nom" => $liste_tache->nom,
+            "dateDebut" => $liste_tache->dateDebut,
+            "dateFin" => $liste_tache->dateFin,
+            "idUtilisateur" => $liste_tache->proprietaire
+
+        );
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
+    }
+
+    public function update(ListeTaches $liste):bool
+    {
+        return $this->updateBDD($liste, "idListe == $liste->id");
     }
 }

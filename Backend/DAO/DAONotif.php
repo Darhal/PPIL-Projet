@@ -12,6 +12,10 @@
 include_once getenv('BASE')."Shared/Libraries/BDD.php";
 include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
 include_once getenv('BASE')."Backend/DAO/DAO.php";
+include_once getenv('BASE')."Backend/Notifications/Notification.php";
+include_once getenv('BASE')."Backend/Notifications/NotificationListeTaches.php";
+include_once getenv('BASE')."Backend/Notifications/NotificationTache.php";
+
 
 class DAONotif extends DAO
 {
@@ -36,20 +40,28 @@ class DAONotif extends DAO
 
     public function ajouterDansBDD($notif) : bool
     {
+        if($notif instanceof NotificationListeTaches){
+            $nature = "liste";
+        }elseif ($notif instanceof NotificationTache){
+            $nature = "tache";
+        }
         $attribs = array(
             "idNotif" => $notif->id,
             "msg" => $notif->msg,
-            "statut" => $notif->statut,
-            "nature" => $notif->nature
+            "statut" => ($notif->dejaLu)?1:0,
+            "nature" => $nature,
+            "idListe" =>$notif->listeTaches,
+            "idTache" =>($notif instanceof NotificationTache)? $notif->tache : "null",
+            "destinataire" => $notif->destinataire
         );
 
-        if($notif->liste != null){
+       /* if($notif->liste != null){
             $attribs["idListe"] = $notif->liste->id;
         }
 
         if($notif->tache != null){
             $attribs["idTache"] = $notif->tache->id;
-        }
+        }*/
 
         return $this->BDD->insertRow(self::$tab_name, $attribs);
     }
@@ -98,8 +110,26 @@ class DAONotif extends DAO
 
     public function updateBDD($notif, $condition = "") : bool
     {
-        $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
+        if($notif instanceof NotificationListeTaches){
+            $nature = "liste";
+        }elseif ($notif instanceof NotificationTache){
+            $nature = "tache";
+        }
+        $attribs = array(
+            "idNotif" => $notif->idNotif,
+            "msg" => $notif->msg,
+            "statut" => ($notif->dejaLu)?1:0,
+            "nature" => $nature,
+            "idListe" =>$notif->listeTaches,
+            "idTache" =>($notif instanceof NotificationTache)? $notif->tache : "null",
+            "destinataire" => $notif->destinataire
+        );
         $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
         return $res;
+    }
+
+    public function update(Notification $notification): bool
+    {
+        return $this->updateBDD($notification, "idNotif == $notification->idNotif");
     }
 }
