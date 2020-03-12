@@ -264,6 +264,9 @@ class Systeme
     	self::$dao_user->updateBDD($user, "idUtilisateur == $user->id");
 	}
 
+    //---------------------------- FIN Utilisateur ---------------------------------
+
+
     //---------------------------- ListeTaches---------------------------------
 
     /**
@@ -683,6 +686,11 @@ class Systeme
         return self::$dao_notif->getNotificationsTache($idUtilisateur);
     }
 
+    /**
+     * Récupère de la BDD toutes les Notifications de type ListeTache liées à un Utilisateur
+     * @param int $idUtilisateur
+     * @return array
+     */
     public static function getNotificationsListe(int $idUtilisateur) : array {
         if (!isset($idUtilisateur)) {
             return null;
@@ -691,6 +699,11 @@ class Systeme
         return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
     }
 
+    /**
+     * Récupère de la BDD toutes les Notifications de type Notification liées à un Utilisateur
+     * @param int $idNotification
+     * @return bool
+     */
     public static function supprimerNotification(int $idNotification) : bool {
         if (!isset($idNotification)) {
             return null;
