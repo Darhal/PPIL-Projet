@@ -29,7 +29,7 @@ abstract class DAO
 
     private function __construct()
     {
-        $this->BDD= new SQLite3("BD.sqlite");
+        $this->BDD= new SQLite3("db.sqlite");
         $this->BDD.exec('create table if not exists Utilisateur (idutilisateur INTEGER PRIMARY KEY NOT NULL, pseudo VARCHAR(50) NOT NULL, prenom VARCHAR(50), nom VARCHAR(50),email VARCHAR(100) NOT NULL, mdp VARCHAR(50) NOT NULL)');
 
     }
