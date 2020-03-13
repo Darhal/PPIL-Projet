@@ -45,5 +45,5 @@ if ($new_password == $conf_password) {
 }
 
 
-header("location: /Frontend/Login/logout.php");
+header("location: /Frontend/Profil/change_password.php?erreur=2");
 // TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification
