@@ -15,7 +15,7 @@ include_once getenv('BASE')."Shared/Libraries/BDD.php";
 abstract class DAO
 {
     private static $_instances = array();
-    private static $DEFAULT_DB_FILE = "db.sql";
+    private static $DEFAULT_DB_FILE = "db.sqlite";
     protected $BDD;
 
     protected function __construct($bdd = null)
@@ -39,11 +39,11 @@ abstract class DAO
 
         return self::$_instances[$class];
     }
-
-    public function getBDD()
+    //Jamais Appelée
+    /*public function getBDD()
     {
         return $BDD;
-    }
+    }*/
 
     //-----------------------------------functions abstraits
     public abstract function ajouterDansBDD($objet);

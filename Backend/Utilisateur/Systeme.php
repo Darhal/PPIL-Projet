@@ -64,7 +64,7 @@ class Systeme
      */
     private static $dao_notif = null;
 
-    private static $DEFAULT_DB_FILE = "db.sql";
+    private static $DEFAULT_DB_FILE = "db.sqlite";
 
     public static function Init()
     {
@@ -676,6 +676,14 @@ class Systeme
 
     //---------------------------- Notifications ---------------------------------
 
+    /**
+     * Ajoute une NotificationTache dans la BDD
+     * @param string $message
+     * @param int $idListe
+     * @param int $idTache
+     * @param int $idDestinataire
+     * @return bool
+     */
     public static function createNotificationTache(string $message, int $idListe, int $idTache, int $idDestinataire) : bool {
         if (!isset($message) || !isset($idListe) || ! isset($idTache) || !isset($idDestinataire)) {
             return false;
@@ -684,9 +692,15 @@ class Systeme
         $notifTache = new NotificationTache($message, false, $idListe, $idTache, $idDestinataire);
 
         return self::$dao_notif->ajouterDansBDD($notifTache);
-
     }
 
+    /**
+     * Ajoute une NotificationListeTache dans la BDD
+     * @param string $message
+     * @param int $idListe
+     * @param int $idDestinataire
+     * @return bool
+     */
     public static function createNotificationListeTaches(string $message, int $idListe, int $idDestinataire) : bool {
         if (!isset($message) || !isset($idListe)  || !isset($idDestinataire)) {
             return false;
@@ -698,6 +712,31 @@ class Systeme
 
     }
 
+    /**
+     * Supprime une notification
+     * @param Notification $notif
+     * @return bool
+     */
+    public static function supprimerNotification(Notification $notif) : bool {
+        if (!isset($notif)) {
+            return false;
+        }
+
+        return self::$dao_notif->supprimerDeBDD($notif);
+    }
+
+    /**
+     * Supprime une Notification
+     * @param int $idNotification
+     * @return bool
+     */
+    public static function supprimerNotificationByID(int $idNotification) : bool {
+        if (!isset($idNotification)) {
+            return null;
+        }
+
+        return self::$dao_notif->supprimerDeBDDByID($idNotification);
+    }
     /**
      * Retourne un tableau contenant des Obj Not
      * @param int $idUtilisateur
@@ -723,18 +762,7 @@ class Systeme
         return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
     }
 
-    /**
-     * Récupère de la BDD toutes les Notifications de type Notification liées à un Utilisateur
-     * @param int $idNotification
-     * @return bool
-     */
-    public static function supprimerNotification(int $idNotification) : bool {
-        if (!isset($idNotification)) {
-            return null;
-        }
 
-        return self::$dao_notif->supprimerDeBDDByID($idNotification);
-    }
 
     //---------------------------- FIN Notifications ---------------------------------
 
