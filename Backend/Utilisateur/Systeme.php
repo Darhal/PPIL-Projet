@@ -763,6 +763,23 @@ class Systeme
     }
 
 
+    /**
+     * Retourne le nombre de notifications
+     * @param $idUtilisateur
+     * @return int|null
+     */
+    public static function getNbNotifications($idUtilisateur) : int{
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+        $nbNotifs = 0;
+
+        $nbNotifs += count(self::getNotificationsListe($idUtilisateur));
+        $nbNotifs += count(self::getNotificationsTache($idUtilisateur));
+
+        return $nbNotifs;
+    }
+
 
     //---------------------------- FIN Notifications ---------------------------------
 
