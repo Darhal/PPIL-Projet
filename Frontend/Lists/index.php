@@ -76,9 +76,10 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
 					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>
 					<td id='edit_'. $list->id>
-					<form action='./editLists.php' method='post'>
-                        <button type='submit' name='edit' style='border:0px'><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-					</form>
+						<form action='./editLists.php' method='post'>
+                            <button type='submit' name='edit' style='border:0px'><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></button>
+                            <label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+						</form>
 					</td>
 					<td id='delete_'. $list->id><img src='../../Assets/Images/delete.png' onclick='supprimerListe()' style='width:20px;height:20px;' /></td>
 					<td id='membre_'. $list->id>
