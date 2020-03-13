@@ -44,6 +44,10 @@ if (!isset($_POST['tname'])) {
 
 $tname = SQLite3::escapeString(strval($_POST['tname']));
 
+if (trim($tname) == "") {
+	header("location: ../Lists/View/index.php?id=" . $liste->id);
+}
+
 if (!is_string($tname)) {
 	// TODO: - Afficher une erreur
 	die("Le nom de tâche n'est pas valide");
