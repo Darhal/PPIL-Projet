@@ -64,7 +64,7 @@ class Systeme
      */
     private static $dao_notif = null;
 
-    private static $DEFAULT_DB_FILE = "db.sql";
+    private static $DEFAULT_DB_FILE = "db.sqlite";
 
     public static function Init()
     {
