@@ -48,7 +48,6 @@ include_once getenv('BASE')."Shared/navbar.php";
             <div class="form-group">
                 <h3> Nom </h3>
                 <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>"><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
-
             </div>
 
 
