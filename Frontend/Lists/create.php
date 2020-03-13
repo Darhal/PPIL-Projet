@@ -44,6 +44,11 @@ if (isset($_POST['listName'])) {
 	header("refresh:5;url=/Frontend/Lists/creer.php");
 }
 
+if (empty($nom)) {
+	echo "nom de liste vide";
+	header("refresh:5;url=/Frontend/Lists/creer.php");
+}
+
 if (isset($_POST['startingDate'])) {
 	$dateDebut = SQLite3::escapeString($_POST['startingDate']);
 	$dateDebut = trim($dateDebut);

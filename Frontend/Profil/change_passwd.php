@@ -22,8 +22,6 @@ if ($logged_user == null){
 	die("ERROR: Unable to find user by id");
 }
 
-print_r($_POST);
-
 if (!isset($_POST['old-password'])) {
 	die("old password non défini");
 }
@@ -47,5 +45,5 @@ if ($new_password == $conf_password) {
 }
 
 
-header("location: /Frontend/Login/logout.php");
+header("location: /Frontend/Profil/change_password.php?erreur=2");
 // TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification

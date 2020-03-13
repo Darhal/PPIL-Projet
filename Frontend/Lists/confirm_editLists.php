@@ -1,10 +1,11 @@
 <?php
 set_include_path(getenv('BASE'));
+
 include_once "Backend/Utilisateur/Systeme.php";
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
-//SQLITE3::escapeString(($_POST['nom']));
+
 if(Systeme::estConnecte()){
     $uid = $_SESSION["id"];
 } else {
@@ -17,7 +18,7 @@ include_once "Backend/Utilisateur/Utilisateur.php";
 
 Systeme::Init();
 
-$lid = intval($_POST['lid']);
+$lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
 
@@ -36,7 +37,7 @@ if (isset($_POST['debut'])) {
 
 
 if (isset($_POST['fin'])) {
-    $fin = SQLITE3::escapeString(($_POST['fin']));
+    $fin = SQLite3::escapeString($_POST['fin']);
 }
 
 
@@ -46,13 +47,14 @@ if (!isset($_POST['nom'])) {
 
 $nom = SQLITE3::escapeString(($_POST['nom']));
 
+$nom = trim(SQLite3::escapeString($_POST['nom']));
 
 if ($debut != "" && $debut != $list->dateDebut) {
     $list->dateDebut = $debut;
 }
 
-if ($nom != "" && $nom != $list->$nom) {
-    $list->nom = $nom;
+if (!empty($nom) && $nom != $list->$nom) {
+    $list->nom = trim($nom);
 }
 
 if ($fin != "" && $fin != $list->dateFin) {
@@ -61,6 +63,8 @@ if ($fin != "" && $fin != $list->dateFin) {
 
 
 
+echo "avant le si";
+echo "=".Systeme::updateList($list) ;
 if (Systeme::updateList($list)) {
     header("location: /Frontend/Lists");
     exit;

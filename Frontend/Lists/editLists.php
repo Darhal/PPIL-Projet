@@ -15,7 +15,7 @@ include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 Systeme::Init();
-$lid = intval($_POST['lid']);
+$lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
 

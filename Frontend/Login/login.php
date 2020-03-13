@@ -34,13 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
 		if (Systeme::seConnecter($email, $password)) {
 			header("location: ../Profil"); // Redirection vers la page d'accueil
 		} else {
-			$error = "Une erreur est survenue lors de la connexion (no user returned)";
+			//$error = "Une erreur est survenue lors de la connexion (no user returned)";
+            header("location: index.php?erreur=1");
 		}
 	} else {
-		$error = "Impossible de récupérer l'adresse mail et/ou le mot de passe saisis";
+		//$error = "Impossible de récupérer l'adresse mail et/ou le mot de passe saisis";
+        header("location: index.php?erreur=2");
 	}
 } else {
-	$error = "Méthode invalide, POST attendu";
+	//$error = "Méthode invalide, POST attendu";
+    header("location: index.php?erreur=2");
 }
 
 echo $error;

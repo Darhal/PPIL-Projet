@@ -69,7 +69,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 			echo "
             
-				<tr xmlns=\"http://www.w3.org/1999/html\">
+				<tr>
 					<th scope='row'>" . $list->id . "</th>
 					<td id='nom_'. $list->id ><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
 					<td id='proprio_'. $list->id >" . $np . "</td>
@@ -101,6 +101,23 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		<button onclick="window.location.href='creer.php'"> Ajouter une liste </button>
 	</div>
 </div>
+<script type="text/javascript">
+    function supprimerListe() {
+        //recupere la colonne
+        var td = event.target.parentNode;
+        console.log(td.rowIndex)
+        //test qu'on clique bien sur l'image
+        if (td.innerHTML.startsWith("<img")){
+            //recupere la ligne ou se situe la colonne
+            var tr = td.parentNode; // the row to be removed
+            tr.parentNode.removeChild(tr);
+        }
+        else{
+            console.log('dans le esle') ;
+        }
+    }
+
+</script>
 <?php include_once getenv('BASE') . "Shared/footer.php"; ?>
 </body>
 </html>

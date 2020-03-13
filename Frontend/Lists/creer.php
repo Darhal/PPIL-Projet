@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="d-flex justify-content-between">
-				<button class="float-right" type="button" onclick="window.location.href='../Tasks'"> Annuler </button>
+				<button class="float-right" type="button" onclick="window.location.href='index.php'"> Annuler </button>
 				<input type="submit" value="Créer!">
 			</div>
 		</div>
