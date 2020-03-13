@@ -737,7 +737,7 @@ class Systeme
      * @param int $idNotification
      * @return bool
      */
-    public static function supprimerNotification(int $idNotification) : bool {
+    public static function supprimerNotificationByID(int $idNotification) : bool {
         if (!isset($idNotification)) {
             return null;
         }
