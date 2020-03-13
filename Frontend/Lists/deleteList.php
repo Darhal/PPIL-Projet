@@ -6,14 +6,22 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 //  ne marche pas
+/*
 
-$id = $_POST['idList'] ;
 
+Systeme::Init();
+
+$lid = intval($_POST['lid']);
+
+if (!is_int($lid)) {
+    die("L'ID de liste n'est pas valide");
+}
 // Requête SQL
-if (Systeme::supprimerListeByID($id)) {
+
+if (Systeme::supprimerListeByID($lid)) {
     header("location: /Frontend/Lists");
 } else {
     // TODO: - Erreur
     echo "erreur";
 }
-
+*/

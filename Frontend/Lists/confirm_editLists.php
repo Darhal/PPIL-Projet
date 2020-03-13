@@ -4,7 +4,7 @@ include_once "Backend/Utilisateur/Systeme.php";
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 Systeme::start_session();
-
+//SQLITE3::escapeString(($_POST['nom']));
 if(Systeme::estConnecte()){
     $uid = $_SESSION["id"];
 } else {
@@ -30,13 +30,13 @@ if ($list == null) {
     die("Liste d'ID " . $lid . " inexistante");
 }
 
-if (!isset($_POST['debut'])) {
-    $debut = $_POST['debut'];
+if (isset($_POST['debut'])) {
+    $debut = SQLITE3::escapeString(($_POST['debut']));
 }
 
 
 if (isset($_POST['fin'])) {
-    $fin = $_POST['fin'];
+    $fin = SQLITE3::escapeString(($_POST['fin']));
 }
 
 
@@ -44,7 +44,7 @@ if (!isset($_POST['nom'])) {
     die("nom non défini");
 }
 
-$nom = $_POST['nom'];
+$nom = SQLITE3::escapeString(($_POST['nom']));
 
 
 if ($debut != "" && $debut != $list->dateDebut) {
@@ -61,15 +61,11 @@ if ($fin != "" && $fin != $list->dateFin) {
 
 
 
-echo "avant le si";
-echo "=".Systeme::updateList($list) ;
 if (Systeme::updateList($list)) {
-    echo 'dans si' ;
     header("location: /Frontend/Lists");
     exit;
 } else {
-    echo 'dans sinon' ;
-    header("location: edit.php?erreur=3");
+    header("location: editLists.php?erreur=1");
     exit;
 }
 

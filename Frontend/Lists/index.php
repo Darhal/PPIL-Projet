@@ -69,7 +69,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 			echo "
             
-				<tr>
+				<tr xmlns=\"http://www.w3.org/1999/html\">
 					<th scope='row'>" . $list->id . "</th>
 					<td id='nom_'. $list->id ><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
 					<td id='proprio_'. $list->id >" . $np . "</td>
@@ -77,13 +77,17 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>
 					<td id='edit_'. $list->id>
 					<form action='./editLists.php' method='post'>
-                        <button type='submit' name='edit' style='border:0px'><img src='../../Assets/Images/edit.png' style='width:20px;height:20px;' /></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+                        <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 					</form>
 					</td>
-					<td id='delete_'. $list->id><img src='../../Assets/Images/delete.png' onclick='supprimerListe()' style='width:20px;height:20px;' /></td>
+					<td id='delete_'. $list->id>
+					<form action='./deleteList.php.php' method='post'>
+					    <input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+					</form>
+					</td>
 					<td id='membre_'. $list->id>
 					<form action='./View/membres.php' method='post'>
-					    <button type='submit' name='member' style='border:0px'><img src='../../Assets/Images/member.png' style='width:20px;height:20px;'/></button><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
+					    <input type='image' name='member' img src='../../Assets/Images/member.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
 				    </form>
 
 				</tr>" ;
@@ -97,23 +101,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		<button onclick="window.location.href='creer.php'"> Ajouter une liste </button>
 	</div>
 </div>
-<script type="text/javascript">
-    function supprimerListe() {
-        //recupere la colonne
-        var td = event.target.parentNode;
-        console.log(td.rowIndex)
-        //test qu'on clique bien sur l'image
-        if (td.innerHTML.startsWith("<img")){
-            //recupere la ligne ou se situe la colonne
-            var tr = td.parentNode; // the row to be removed
-            tr.parentNode.removeChild(tr);
-        }
-        else{
-            console.log('dans le esle') ;
-        }
-    }
-
-</script>
 <?php include_once getenv('BASE') . "Shared/footer.php"; ?>
 </body>
 </html>

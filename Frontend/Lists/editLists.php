@@ -47,7 +47,7 @@ include_once getenv('BASE')."Shared/navbar.php";
 
             <div class="form-group">
                 <h3> Nom </h3>
-                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>"><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
+                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>" required><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
             </div>
 
 
@@ -68,7 +68,16 @@ include_once getenv('BASE')."Shared/navbar.php";
             </div>
         </form>
 
-        <div class="spacer"></div>
+        <!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
+
+        <?php
+        if(isset($_GET['erreur'])){
+            $err = $_GET['erreur'];
+            if($err==1) {
+                echo "<p style='color:red'>Echec de l'update</p>";
+            }
+        }
+        ?>
 
     </div>
 </div>
