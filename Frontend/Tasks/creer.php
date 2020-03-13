@@ -65,7 +65,7 @@ if ($liste == null) {
 
 			<div class="form-group">
 				<h3> Nom de la tâche </h3>
-				<label for="tname"></label><input class="form-control" type="text" id="tname" name="tname">
+				<label for="tname"></label><input class="form-control" type="text" id="tname" name="tname" required>
 			</div>
 
 			<div class="d-flex justify-content-between">
