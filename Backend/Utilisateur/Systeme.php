@@ -698,6 +698,15 @@ class Systeme
 
     }
 
+    public static function supprimerNotification(Notification $notif) : bool {
+        if (!isset($notif)) {
+            return false;
+        }
+
+        return self::$dao_notif->supprimerDeBDD($notif);
+    }
+
+
     /**
      * Retourne un tableau contenant des Obj Not
      * @param int $idUtilisateur
