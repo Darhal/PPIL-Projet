@@ -22,8 +22,6 @@ if ($logged_user == null){
 	die("ERROR: Unable to find user by id");
 }
 
-print_r($_POST);
-
 if (!isset($_POST['old-password'])) {
 	die("old password non défini");
 }

@@ -15,7 +15,7 @@ include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
 include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
 
 Systeme::Init();
-$lid = intval($_POST['lid']);
+$lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
 
@@ -47,7 +47,8 @@ include_once getenv('BASE')."Shared/navbar.php";
 
             <div class="form-group">
                 <h3> Nom </h3>
-                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>"><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
+                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>">
+	            <input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
             </div>
 
 
