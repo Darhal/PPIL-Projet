@@ -23,14 +23,12 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     }
 }
 else if ($_POST['password'] != $_POST['conf-password']) {
-    echo "REDIR: ";
     header("location: ../Signup/index.php?erreur=3");
 }
-//a revoir ici 
-else if($_POST['password'] != $_POST['conf-password'] AND ($_POST['pseudo'] = '' OR $_POST['prenom'] = '' OR $_POST['nom'] = '' OR $_POST['email'] = '' OR $_POST['password'] = '' OR $_POST['conf-password']='')){
+//a revoir ici quand un champ est vide et mot de passe sont differents
+else if(($_POST['password'] != $_POST['conf-password']) AND ($_POST['pseudo'] = '' OR $_POST['prenom'] = '' OR $_POST['nom'] = '' OR $_POST['email'] = '' OR $_POST['password'] = '' OR $_POST['conf-password']='')){
     echo "REDIR: ";
-    header("location: ../Signup/index.php?erreur=3");
-    header("location: ../Signup/index.php?erreur=2");
+    header("location: ../Signup/index.php?erreur=4");
 }
 else{
     //Si les informations ne sont pas remplies

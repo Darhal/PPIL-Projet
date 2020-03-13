@@ -61,6 +61,9 @@
 			if($err==3){
                 echo "<p style='color:red'>Les deux mots de passe ne sont pas identiques</p>";
             }
+            if($err==4){
+                echo "<p style='color:red'>Les deux mots de passe ne sont pas identiques et les champs obligatoires ne sont pas tous remplis</p>";
+            }
 		}
 		?>
 
