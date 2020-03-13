@@ -40,17 +40,17 @@ if ($user == null){
 
 			<div class="form-group">
 				<h3> Mot de passe actuel </h3>
-				<label for="old-password"></label><input class="form-control" type="password" id="old-password" name="old-password">
+				<label for="old-password"></label><input class="form-control" type="password" id="old-password" name="old-password" required>
 			</div>
 
 			<div class="form-group">
 				<h3> Nouveau mot de passe </h3>
-				<label for="new-password"></label><input class="form-control" type="password" id="new-password" name="new-password">
+				<label for="new-password"></label><input class="form-control" type="password" id="new-password" name="new-password" required>
 			</div>
 
 			<div class="form-group">
 				<h3> Confirmer votre nouveau mot de passe </h3>
-				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password">
+				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password" required>
 			</div>
 			<input type="submit" value="Modifier son mot de passe">
 		</form>
