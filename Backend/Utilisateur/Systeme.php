@@ -675,6 +675,29 @@ class Systeme
     //---------------------------- FIN Invitations ---------------------------------
 
     //---------------------------- Notifications ---------------------------------
+
+    public static function createNotificationTache(string $message, int $idListe, int $idTache, int $idDestinataire) : bool {
+        if (!isset($message) || !isset($idListe) || ! isset($idTache) || !isset($idDestinataire)) {
+            return false;
+        }
+
+        $notifTache = new NotificationTache($message, false, $idListe, $idTache, $idDestinataire);
+
+        return self::$dao_notif->ajouterDansBDD($notifTache);
+
+    }
+
+    public static function createNotificationListeTaches(string $message, int $idListe, int $idDestinataire) : bool {
+        if (!isset($message) || !isset($idListe)  || !isset($idDestinataire)) {
+            return false;
+        }
+
+        $notifListeTache = new NotificationListeTaches($message, false, $idListe, $idDestinataire);
+
+        return self::$dao_notif->ajouterDansBDD($notifListeTache);
+
+    }
+
     /**
      * Retourne un tableau contenant des Obj Not
      * @param int $idUtilisateur
