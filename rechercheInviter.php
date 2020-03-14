@@ -28,6 +28,11 @@ $unwanted_array = array(
             bottom: 0;
             right: 0;
         }
+        .champ{
+            border-style: solid;   /* Style de la bordure  */
+            border-width: 1px;   /* Epaisseur de la bordure  */
+            border-color: #dddddd;   /* Couleur de la bordure  */
+        }
     </style>
 </head>
 
