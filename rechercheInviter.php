@@ -32,6 +32,11 @@ $unwanted_array = array(
             border-style: solid;   /* Style de la bordure  */
             border-width: 1px;   /* Epaisseur de la bordure  */
             border-color: #dddddd;   /* Couleur de la bordure  */
+            background-color: #eeeeee;   /* Couleur de fond */
+            border-style: solid;   /* Style de la bordure  */
+            border-width: 1px;   /* Epaisseur de la bordure  */
+            border-color: #dddddd;   /* Couleur de la bordure  */
+            padding: 10px 10px 10px 10px;   /* Espace entre les bords et le contenu : haut droite bas gauche  */
         }
     </style>
 </head>
@@ -54,7 +59,13 @@ $unwanted_array = array(
 </div>
 <div id="personne">
 </div>
-<script>
+<script type="application/javascript">
+    /*function f() {
+    $.ajax({
+        type:"GET",
+        url"http/ppil.ugocottin.fr/
+    })
+}*/
     function afficher() {
         var personne=document.createElement("div");
         var content=document.createTextNode("personne1");
