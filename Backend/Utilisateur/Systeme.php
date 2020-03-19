@@ -132,9 +132,7 @@ class Systeme
         }
 
         $req = $req[0];
-        if (session_status() != PHP_SESSION_ACTIVE) {
-            session_start();
-        }
+        self::start_session();
 
         // On stocke les données dans la session
         $_SESSION["logged_in"] = true;
@@ -164,7 +162,7 @@ class Systeme
      * @param $email
      * @return Utilisateur|null
      */
-    public static function getUserByEmail($email) : Utilisateur
+    public static function getUserByEmail($email)
     {
         if (isset($email)) {
             $email = SQLite3::escapeString($email);
@@ -246,11 +244,18 @@ class Systeme
             return false;
         }
 
+	    if (!filter_var($utilisateur->email, FILTER_VALIDATE_EMAIL)) {
+		    return false;
+	    }
+
         self::$dao_user->updateBDD($utilisateur, "idUtilisateur = $utilisateur->id AND mdp = '$utilisateur->mdp'");
         return true;
     }
 
 	public static function changePassword(Utilisateur $user, string $old_password, string $new_password) {
+
+    	$old_password = SQLite3::escapeString($old_password);
+		$new_password = SQLite3::escapeString($new_password);
 
     	if (!isset($user) || !isset($old_password) || !isset($new_password)) {
     		return false;
@@ -396,6 +401,8 @@ class Systeme
     public static function createTask(string $nom, ListeTaches $listeTaches) : bool {
         //  TODO: en fait ici il faudrait déclencher une erreur plutôt qu'un return false;
         if(!isset($listeTaches) || !isset($nom)) return false;
+
+	    $nom = SQLite3::escapeString($nom);
 
         $tache = new Tache($nom, $listeTaches->id);
 
@@ -695,7 +702,7 @@ class Systeme
             return false;
         }
 
-        $notifTache = new NotificationTache($message, false, $idListe, $idTache, $idDestinataire);
+        $notifTache = new NotificationTache(SQLite3::escapeString($message), false, $idListe, $idTache, $idDestinataire);
 
         return self::$dao_notif->ajouterDansBDD($notifTache);
     }
@@ -712,7 +719,7 @@ class Systeme
             return false;
         }
 
-        $notifListeTache = new NotificationListeTaches($message, false, $idListe, $idDestinataire);
+        $notifListeTache = new NotificationListeTaches(SQLite3::escapeString($message), false, $idListe, $idDestinataire);
 
         return self::$dao_notif->ajouterDansBDD($notifListeTache);
 
@@ -774,7 +781,7 @@ class Systeme
      * @param $idUtilisateur
      * @return int|null
      */
-    public static function getNbNotifications($idUtilisateur) : int{
+    public static function getNbNotifications(int $idUtilisateur) : int{
         if (!isset($idUtilisateur)) {
             return null;
         }
@@ -791,5 +798,3 @@ class Systeme
 
 
 }
-
-?>
