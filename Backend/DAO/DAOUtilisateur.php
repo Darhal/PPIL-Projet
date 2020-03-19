@@ -77,8 +77,8 @@ class DAOUtilisateur extends DAO
             "email" => $utilisateur->email,
             "mdp" => $utilisateur->mdp
         );
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+
+        return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 
     function getUsersByPseudo($pseudo) : array {

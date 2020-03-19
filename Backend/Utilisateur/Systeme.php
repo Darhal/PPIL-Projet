@@ -242,7 +242,7 @@ class Systeme
             return false;
         }
 
-        self::$dao_user->updateBDD($utilisateur, "idUtilisateur == $utilisateur->id AND mdp == '$utilisateur->mdp'");
+        self::$dao_user->updateBDD($utilisateur, "idUtilisateur = $utilisateur->id AND mdp = '$utilisateur->mdp'");
         return true;
     }
 
@@ -252,16 +252,18 @@ class Systeme
     		return false;
 	    }
 
+    	// le nouveau mot de passe doit être différent de l'ancien
     	if ($old_password == $new_password) {
     		return false;
 	    }
 
+    	// si l'utilisateur n'a pas donné le bon mdp avant le changement
     	if ($user->mdp != $old_password) {
     		return false;
 	    }
 
     	$user->mdp = $new_password;
-    	self::$dao_user->updateBDD($user, "idUtilisateur == $user->id");
+    	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
 	}
 
     //---------------------------- FIN Utilisateur ---------------------------------
