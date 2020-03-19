@@ -65,8 +65,11 @@ if ($user == null){
 				echo "<p style='color:red'>email déjà utilisé, veuillez changer </p>";
 			}
 			if($err==2) {
-				echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
-			}
+                echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
+            }
+            if($err==3) {
+                echo "<p style='color:red'>Le mot de passe n'a pas pu être modifié </p>";
+            }
 		}
 		?>
 
