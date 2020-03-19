@@ -109,14 +109,12 @@ class Systeme
     public static function seConnecter(string $email, string $mdp) : bool {
         if (isset($email)) {
             $email = SQLite3::escapeString($email);
-            $email = trim($email);
         }else{
             return false;
         }
     
         if (isset($mdp)) {
             $mdp = SQLite3::escapeString($mdp);
-            $mdp = trim($mdp);
         }else{
             return false;
         }
@@ -164,7 +162,6 @@ class Systeme
     {
         if (isset($email)) {
             $email = SQLite3::escapeString($email);
-            $email = trim($email);
         }else{
             return null;
         }
