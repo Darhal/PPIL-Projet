@@ -19,12 +19,12 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     $passwd_conf = SQLite3::escapeString($_POST['conf-password']);
 
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		header("location: ../Signup/index.php?erreur=4");
+		header("location: ./index.php?erreur=4");
 		exit;
 	}
 
 	if($passwd != $passwd_conf){
-		header("location: ../Signup/index.php?erreur=3?");
+		header("location: ./index.php?erreur=3?");
 		exit;
 	}
 
@@ -33,7 +33,7 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     $err_code = Systeme::ajouterUtilisateur($user);
 
     if ($err_code) {
-        header("location: ../Signup/index.php?erreur=1");
+        header("location: ./index.php?erreur=1");
         exit;
     }
 
@@ -44,6 +44,6 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     }
 } else {
     //Si les informations ne sont pas remplies
-    header("location: ../Signup/index.php?erreur=2");
+    header("location: ./index.php?erreur=2");
     exit;
 }

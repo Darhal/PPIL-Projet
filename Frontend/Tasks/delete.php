@@ -26,12 +26,15 @@ if (!isset($_GET['id'])) {
 	die("ID de tâche non défini");
 }
 
+
+//id de la liste
 $id = intval(SQLite3::escapeString($_GET['id']));
 
 if (!is_int($id)) {
 	// TODO: - Afficher une erreur
 	die("L'ID de la tache n'est pas valide");
 }
+
 
 $task = Systeme::getTaskById($id);
 
@@ -56,6 +59,9 @@ if ($list == null) {
 if ($list->proprietaire == $user->id) {
 	// L'utilisateur est le propriétaire de la liste, il peut donc supprimer
 	if (Systeme::supprimerTache($task->id)) {
+	    //envoie notif pour avertir de la suppression
+
+        //redirection
 		header("location: ../Lists/View/index.php?id=" . $lid);
 	}
 }

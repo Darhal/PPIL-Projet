@@ -81,7 +81,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					</form>
 					</td>
 					<td id='delete_'. $list->id>
-					<form action='./deleteList.php.php' method='post'>
+					<form action='./deleteList.php' method='post'>
 					    <input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 					</form>
 					</td>
