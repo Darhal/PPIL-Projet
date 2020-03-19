@@ -7,7 +7,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
     $uid = $_SESSION["id"];
 } else {
     // Redirection vers la page d'accueil
-    header("location: /Frontend/Lists");
+    header("location: ./");
     exit;
 }
 
