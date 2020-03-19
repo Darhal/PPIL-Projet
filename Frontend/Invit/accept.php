@@ -8,7 +8,7 @@ Systeme::start_session();
 
 if (!Systeme::estConnecte()) {
 	// TODO: - Afficher une erreur
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 }
 
 Systeme::Init();

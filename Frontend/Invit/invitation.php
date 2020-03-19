@@ -12,7 +12,7 @@ if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 
@@ -22,7 +22,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/Frontend/CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 	<title> Invitations </title>
 </head>
 <body>
