@@ -66,6 +66,8 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 				$np = "Inconnu?";
 			}
 
+			$edate = $list->dateFin === "NULL" ? "Aucune" : date("d/m/y", intval($list->dateFin));
+
 
 			echo "
             
@@ -74,7 +76,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 					<td id='nom_'. $list->id ><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
 					<td id='proprio_'. $list->id >" . $np . "</td>
 					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
-					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>
+					<td id='fin_'. $list->id>" . $edate  . "</td>
 					<td id='edit_'. $list->id>
 					<form action='./editLists.php' method='post'>
                         <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
