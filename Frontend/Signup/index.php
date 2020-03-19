@@ -48,7 +48,7 @@
 			</div>
 
             <div class="d-flex justify-content-between">
-                <button onclick="window.location.href='/'"> Retour </button>
+                <button onclick="window.location.href='<?php echo $real_base; ?>'"> Retour </button>
                 <input type="submit" value="S'inscrire">
             </div>
 
