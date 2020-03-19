@@ -7,7 +7,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 
@@ -42,18 +42,18 @@ $conf_password = $_POST['conf-password'];
 
 if ($new_password == $conf_password) {
 	Systeme::changePassword($logged_user, $old_password, $new_password);
-    header("location: /Frontend/Profil/index.php");
+    header("location: ../Profil/index.php");
 
 }
 
 
 if(!isset($_POST['old-password']) || !isset($_POST['new-password']) || !isset($_POST['conf-password'])){
-    header("location: /Frontend/Profil/change_password.php?erreur=2");
+    header("location: ../Profil/change_password.php?erreur=2");
     exit;
 }
 else{
     if(Systeme::changePassword($logged_user, $old_password, $new_password) == false){
-        header("location: /Frontend/Profil/change_password.php?erreur=3");
+        header("location: ../Profil/change_password.php?erreur=3");
         exit;
     }
 }
