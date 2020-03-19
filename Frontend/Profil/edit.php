@@ -36,7 +36,7 @@ if ($user == null){
 	<div class="spacer"></div>
 	<h1 class="text-center"> Modifier ses informations </h1>
 	<div class="container align-center">
-		<form method="post" action="confirm_edit.php">
+		<form method="post" action="confirm_edit.php" onsubmit="return confirm('Confirmer ?')">
 
 			<div class="form-group">
 				<h3> Pseudo </h3>
