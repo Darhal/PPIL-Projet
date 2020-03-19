@@ -793,6 +793,30 @@ class Systeme
     }
 
 
+    /**
+     * Cette fonction notifie tous les membres d'une liste que la tâche a été supprimée
+     * @param String $msg
+     * @param int $idTask
+     * @param int $idListe
+     * @return bool
+     */
+    public static function notifierSuppTache(String $msg, int $idTask,int $idListe) : bool{
+
+
+    }
+
+
+//    /**
+//     * Notifie tous les membres d'un
+//     * @param String $msg
+//     * @param int $idListe
+//     */
+//    public static function notifierTacheTousMembresListe(String $msg, int $idListe){
+//
+//         createNotificationTache(string $message, int $idListe, int $idTache, int $idDestinataire)
+//
+//    }
+
     //---------------------------- FIN Notifications ---------------------------------
 
 
