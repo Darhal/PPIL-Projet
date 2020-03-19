@@ -264,13 +264,14 @@ class Systeme
 	    }
 
     	// si l'utilisateur n'a pas donné le bon mdp avant le changement
-    	if ($user->mdp != $old_password) {
-    		return false;
-	    }
+        // BUG : pb ici
+//    	if ($user->mdp != $old_password) {
+//    		return false;
+//	    }
 
         $user->mdp = $new_password;
-        self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
-    	return true;
+
+    	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
 	}
 
     //---------------------------- FIN Utilisateur ---------------------------------
