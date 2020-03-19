@@ -56,6 +56,10 @@ if (!isset($_POST['conf-password'])) {
 
 $password = $_POST['conf-password'];
 
+if (empty($password)) {
+	header("location: edit.php?erreur=2");
+	exit;
+}
 
 if ($password != $logged_user->mdp) {
 	header("location: edit.php?erreur=3");
