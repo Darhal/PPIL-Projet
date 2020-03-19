@@ -8,7 +8,7 @@ if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 
@@ -94,7 +94,7 @@ if ($email != "" && $email != $logged_user->email) {
 }
 
 if (Systeme::updateUser($logged_user)) {
-	header("location: /Frontend/Profil");
+	header("location: ../Profil");
 	$_SESSION["username"] = $logged_user->pseudo;
 	exit;
 } else {

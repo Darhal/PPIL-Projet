@@ -11,7 +11,7 @@ if(Systeme::estConnecte()) {
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 
@@ -20,7 +20,7 @@ $user = Systeme::getUserByID($uid);
 
 if ($user == null){
 	echo "ERROR: Unable to find user by ID";
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 

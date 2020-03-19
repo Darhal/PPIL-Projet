@@ -9,7 +9,7 @@ Systeme::start_session();
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
-	//header("location: /Frontend/Login");
+	//header("location: ../Login");
 	exit;
 }
 
