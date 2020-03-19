@@ -268,8 +268,9 @@ class Systeme
     		return false;
 	    }
 
-    	$user->mdp = $new_password;
-    	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
+        $user->mdp = $new_password;
+        self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
+    	return true;
 	}
 
     //---------------------------- FIN Utilisateur ---------------------------------
