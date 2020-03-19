@@ -63,8 +63,6 @@ if ($fin != "" && $fin != $list->dateFin) {
 
 
 
-echo "avant le si";
-echo "=".Systeme::updateList($list) ;
 if (Systeme::updateList($list)) {
     header("location: /Frontend/Lists");
     exit;
