@@ -5,19 +5,19 @@ include_once "Backend/Utilisateur/Systeme.php";
 Systeme::start_session();
 
 $text = "Connexion";
-$target = "/Frontend/Login/";
+$target = "../Frontend/Login/";
 $account = $target;
 $tasks = $target;
 $lists = $target;
 $invit = $target;
 if (Systeme::estConnecte()) {
     $text = "Déconnexion";
-    $target = "/Frontend/Login/logout.php";
-    $account = "/Frontend/Profil";
-    $tasks = "/Frontend/Tasks";
-    $lists = "/Frontend/Lists";
-    $notification = "/Frontend/Notification/notification.php";
-    $invit = "/Frontend/Invit/invitation.php";
+    $target = "../Frontend/Login/logout.php";
+    $account = "../Frontend/Profil";
+    $tasks = "../Frontend/Tasks";
+    $lists = "../Frontend/Lists";
+    $notification = "../Frontend/Notification/notification.php";
+    $invit = "../Frontend/Invit/invitation.php";
 }
 
 echo '
