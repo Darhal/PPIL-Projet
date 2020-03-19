@@ -91,7 +91,7 @@ if ($liste == null) {
 	</table>
 
 	<form method="post" action="add_member.php">
-		<select name="user" id="user">
+		<label for="user"></label><select name="user" id="user">
 			<?php
 			$users = Systeme::getUsersByPseudo("");
 			foreach ($users as $u) {
