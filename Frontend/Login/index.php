@@ -51,6 +51,9 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
             if($err==2) {
                 echo "<p style='color:red'>Vous devez remplir les champs obligatoires</p>";
             }
+            if($err==3) {
+                echo "<p style='color:red'>Le mot de passe rentré est mauvais</p>";
+            }
         }
 
         ?>
