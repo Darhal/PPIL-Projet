@@ -51,5 +51,11 @@ if(!isset($_POST['old-password']) || !isset($_POST['new-password']) || !isset($_
     header("location: /Frontend/Profil/change_password.php?erreur=2");
     exit;
 }
+else{
+    if(Systeme::changePassword($logged_user, $old_password, $new_password) == false){
+        header("location: /Frontend/Profil/change_password.php?erreur=3");
+        exit;
+    }
+}
 
 // TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification
