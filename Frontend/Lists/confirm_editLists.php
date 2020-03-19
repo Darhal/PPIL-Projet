@@ -1,69 +1,129 @@
 <?php
+// Affichage des erreurs
 set_include_path(getenv('BASE'));
 
 include_once "Backend/Utilisateur/Systeme.php";
-include_once "Backend/Utilisateur/Systeme.php";
 
+// Démarrage de la session
 Systeme::start_session();
 
-if(Systeme::estConnecte()){
-    $uid = $_SESSION["id"];
-} else {
-    // Redirection vers la page d'accueil
-    header("location: /Frontend/Lists");
-    exit;
+Systeme::Init();
+
+// Vérification si un utilisateur est connecté
+if(!Systeme::estConnecte()) {
+	// Redirection vers la page d'accueil
+	header("location: ../Login");
+	exit;
 }
+
+// Si la requête est de type POST
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+	error_log("Type de requête invalide");
+	header("location: index.php");
+	exit;
+}
+
+$uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
 
-Systeme::Init();
+if (!isset($_POST['lid'])){
+	error_log("Aucun ID de liste");
+	header("location: index.php");
+	exit;
+}
 
 $lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
-
-    die("L'ID de liste n'est pas valide");
+    error_log("L'ID de liste n'est pas valide");
+	//header("location: index.php");
+	echo 1;
+	exit;
 }
 
 $list = Systeme::getListeTachesByID($lid);
 
 if ($list == null) {
-    die("Liste d'ID " . $lid . " inexistante");
+    error_log("Liste d'ID " . $lid . " inexistante");
+	//header("location: index.php");
+	echo 2;
+	exit;
 }
 
-if (isset($_POST['debut'])) {
-    $debut = SQLITE3::escapeString(($_POST['debut']));
+if (!isset($_POST['debut'])){
+	error_log("Aucune date de debut de liste");
+	//header("location: index.php");
+	echo 3;
+	exit;
 }
 
+$debut = SQLITE3::escapeString(($_POST['debut']));
+$debut = trim($debut);
 
-if (isset($_POST['fin'])) {
-    $fin = SQLite3::escapeString($_POST['fin']);
+if (!isset($_POST['fin'])){
+	error_log("Aucune date de fin de liste");
+	//header("location: index.php");
+	echo 4;
+	exit;
 }
 
+$fin = SQLITE3::escapeString(($_POST['fin']));
+$fin = trim($fin);
 
-if (!isset($_POST['nom'])) {
-    die("nom non défini");
+if ($fin === "") {
+	$fin = null;
+}
+
+if (!isset($_POST['nom'])){
+	error_log("Aucun nom de liste");
+	//header("location: index.php");
+	echo 5;
+	exit;
 }
 
 $nom = SQLITE3::escapeString(($_POST['nom']));
+$nom = trim($nom);
 
-$nom = trim(SQLite3::escapeString($_POST['nom']));
-
-if ($debut != "" && $debut != $list->dateDebut) {
-    $list->dateDebut = $debut;
+$sdate = strtotime($debut);
+if ($sdate == false) {
+	error_log("Date de début au format invalide");
+	//header("location: index.php");
+	echo 6;
+	exit;
 }
 
-if (!empty($nom) && $nom != $list->$nom) {
+if ($fin != null) {
+	$edate = strtotime($fin);
+	if ($edate == false) {
+		error_log("Date de fin au format invalide");
+		//header("location: index.php");
+		echo 7;
+		exit;
+	}
+} else {
+	$edate = null;
+}
+
+
+if ($sdate != $list->dateDebut) {
+    $list->dateDebut = $sdate;
+}
+
+if (!empty($nom) && $nom != $list->nom) {
     $list->nom = trim($nom);
 }
 
-if ($fin != "" && $fin != $list->dateFin) {
-    $list->dateFin = $fin;
+if ($list->dateFin == "NULL") {
+	if ($fin != null) {
+		$list->dateFin = $edate;
+	}
+} else {
+	$list->dateFin = $edate;
 }
 
-
-
 if (Systeme::updateList($list)) {
+	echo 8;
     header("location: /Frontend/Lists");
     exit;
 } else {

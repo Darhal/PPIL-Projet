@@ -482,7 +482,7 @@ class Systeme
     }
 
     public static function updateList(ListeTaches $liste) : bool {
-        echo "dans le update" ;
+        var_dump($liste);
         return self::$dao_listeTaches->update($liste);
     }
 
