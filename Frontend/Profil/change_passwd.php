@@ -42,7 +42,7 @@ $conf_password = $_POST['conf-password'];
 
 if ($new_password == $conf_password) {
 	Systeme::changePassword($logged_user, $old_password, $new_password);
-    header("location: /Frontend/Profil/edit.php");
+    header("location: /Frontend/Profil/index.php");
 
 }
 
