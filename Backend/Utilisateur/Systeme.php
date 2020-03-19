@@ -121,7 +121,7 @@ class Systeme
             return false;
         }
 
-        $req = self::$dao_user->getByRequete("email LIKE '".$email."' AND mdp LIKE '".$mdp."'");
+        $req = self::$dao_user->getByRequete("email = '".$email."' AND mdp = '".$mdp."'");
 
         if (sizeof($req) != 1){
             return false;
