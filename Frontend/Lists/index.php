@@ -71,7 +71,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
             
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
-					<td id='nom_'. $list->id ><a href='/Frontend/Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
+					<td id='nom_'. $list->id ><a href='../Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
 					<td id='proprio_'. $list->id >" . $np . "</td>
 					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
 					<td id='fin_'. $list->id>" . date("d/m/y", intval($list->dateFin)) . "</td>

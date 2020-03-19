@@ -1,4 +1,8 @@
-<?php set_include_path(getenv('BASE')); ?>
+<?php 
+	set_include_path(getenv('BASE')); 
+	$real_base = str_replace($_SERVER["DOCUMENT_ROOT"], "", getenv('BASE'));
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

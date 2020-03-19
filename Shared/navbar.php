@@ -3,21 +3,22 @@ set_include_path(getenv('BASE'));
 include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
+$real_base = str_replace($_SERVER["DOCUMENT_ROOT"], "", getenv('BASE'));
 
 $text = "Connexion";
-$target = "../Frontend/Login/";
+$target = $real_base."Frontend/Login/";
 $account = $target;
 $tasks = $target;
 $lists = $target;
 $invit = $target;
 if (Systeme::estConnecte()) {
     $text = "Déconnexion";
-    $target = "../Frontend/Login/logout.php";
-    $account = "../Frontend/Profil";
-    $tasks = "../Frontend/Tasks";
-    $lists = "../Frontend/Lists";
-    $notification = "../Frontend/Notification/notification.php";
-    $invit = "../Frontend/Invit/invitation.php";
+    $target = $real_base."Frontend/Login/logout.php";
+    $account = $real_base."Frontend/Profil";
+    $tasks = $real_base."Frontend/Tasks";
+    $lists = $real_base."Frontend/Lists";
+    $notification = $real_base."Frontend/Notification/notification.php";
+    $invit = $real_base."Frontend/Invit/invitation.php";
 }
 
 echo '
