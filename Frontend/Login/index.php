@@ -60,6 +60,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
         </div>
     </div>
     <div>
+        <div class="spacer"></div>
         <h5><a href="../Signup/">Pas encore inscrit? C'est par ici.</a></h5>
     </div>
 </form>
