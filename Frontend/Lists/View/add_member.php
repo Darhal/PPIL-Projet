@@ -48,4 +48,4 @@ $liste = Systeme::getListeTachesByID($lid);
 
 Systeme::inviterUtilisateur($liste, $current_user, $user);
 
-header("location: /Frontend/Lists/");
+header("location: ../");

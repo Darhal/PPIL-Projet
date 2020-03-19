@@ -13,7 +13,7 @@ if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
 } else {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 

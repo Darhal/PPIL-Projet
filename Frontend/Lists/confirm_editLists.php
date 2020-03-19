@@ -10,7 +10,7 @@ if(Systeme::estConnecte()){
     $uid = $_SESSION["id"];
 } else {
     // Redirection vers la page d'accueil
-    header("location: /Frontend/Lists");
+    header("location: ./");
     exit;
 }
 
@@ -64,7 +64,7 @@ if ($fin != "" && $fin != $list->dateFin) {
 
 
 if (Systeme::updateList($list)) {
-    header("location: /Frontend/Lists");
+    header("location: ./");
     exit;
 } else {
     header("location: editLists.php?erreur=1");

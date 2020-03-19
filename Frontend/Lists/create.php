@@ -18,7 +18,7 @@ Systeme::Init();
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
-	header("location: /Frontend/Login");
+	header("location: ../Login");
 	exit;
 }
 
@@ -67,7 +67,7 @@ if (isset($_POST['endingDate'])) {
 
 // Requête SQL
 if (Systeme::createList($nom, $dateDebut, $dateFin, $uid)) {
-	header("location: /Frontend/Lists");
+	header("location: ./");
 } else {
 	// TODO: - Erreur
 	echo "erreur";
