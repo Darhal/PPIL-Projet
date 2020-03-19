@@ -89,7 +89,11 @@ class Systeme
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
         Systeme::ajouterUtilisateur($utilisateur);
     }
-    
+
+	/**
+	 * @param Utilisateur $utilisateur Un utilisateur
+	 * @return int 1 si un utilisateur possède déjà le mail passé, 0 si tout va bien
+	 */
     public static function ajouterUtilisateur($utilisateur) {
         $res = self::$dao_user->getUserByEmail($utilisateur->email);
         

@@ -40,7 +40,7 @@
 
 			<div class="form-group">
 				<h3> Confirmer le mot de passe </h3>
-				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" required>
+				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password" required>
 			</div>
 
             <div class="d-flex justify-content-between">
