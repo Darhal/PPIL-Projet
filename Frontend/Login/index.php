@@ -24,9 +24,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
     </style>
 </head>
 <body>
-<?php
-include_once getenv('BASE')."Shared/navarbaraccueil.php";
-?>
+
 <div class="spacer"></div>
 <h1 class="text-center"> Connexion </h1>
 <div class="spacer"></div>

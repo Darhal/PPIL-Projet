@@ -13,7 +13,11 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
     $err_code = Systeme::ajouterUtilisateur($user);
 
     if ($err_code) {
-        header("location: ../Signup/index.php?erreur=".$err_code);
+        header("location: ../Signup/index.php?erreur=".$err_code);  //email existe déjà code erreur 1
+        exit;
+    }
+    if ($_POST['password'] != $_POST['conf-password']) {
+        header("location: ../Signup/index.php?erreur=3");
         exit;
     }
 
@@ -22,16 +26,8 @@ if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AN
 		header("location: ../Profil");   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
     }
 }
-else if ($_POST['password'] != $_POST['conf-password']) {
-    header("location: ../Signup/index.php?erreur=3");
-}
-//a revoir ici quand un champ est vide et mot de passe sont differents
-else if(($_POST['password'] != $_POST['conf-password']) AND ($_POST['pseudo'] = '' OR $_POST['prenom'] = '' OR $_POST['nom'] = '' OR $_POST['email'] = '' OR $_POST['password'] = '' OR $_POST['conf-password']='')){
-    echo "REDIR: ";
-    header("location: ../Signup/index.php?erreur=4");
-}
-else{
-    //Si les informations ne sont pas remplies
-    echo "REDIR: ";
-	header("location: ../Signup/index.php?erreur=2");
+
+else{   //Si les informations ne sont pas remplies
+    header("location: ../Signup/index.php?erreur=2");
+	exit;
 }
