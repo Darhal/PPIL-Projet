@@ -22,29 +22,50 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	header( "location: ../Lists/View/index.php?id=$task->idListe" );
 }
 
-if (!isset($_POST['tid'])) {
-	// TODO: - Afficher une erreur
-	die("ID de tâche non défini");
-}
+$tid = Systeme::_POST('tid');
 
-$tid = $_POST['tid'];
-
-if (intval($tid) == null) {
-	// TODO: - Afficher une erreur
-	die("Format de l'ID invalide");
+if ($tid == false) {
+	error_log("ID de tâche non défini");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=1" );
+	exit;
 }
 
 $tid = intval($tid);
 
+if ($tid == null) {
+	error_log("Format de l'ID invalide");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=2" );
+	exit;
+}
+
+
 $task = Systeme::getTaskById($tid);
 
 if($task == null) {
-	// TODO: - Afficher une erreur
-	die("Aucune tache d'ID " . $tid);
+	error_log("Aucune tache d'ID $tid");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=3" );
+	exit;
 }
 
 if (!$task->aUnResponsable()) {
-	die("Aucun responsable n'est déjà assigné à cette tâche");
+	error_log("Aucun responsable n'est déjà assigné à cette tâche");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=4" );
+	exit;
+}
+
+$liste = Systeme::getListeTachesByID($task->idListe);
+
+if ($liste == null) {
+	error_log("Tache $task->id associée à une liste $task->idListe inexistante");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=5" );
+	exit;
+}
+
+// Seuls l'assigné à la tâche et le propriétaire de la liste peuvent supprimer le responsable de la tâche
+if ($liste->proprietaire != $user->id and $task->responsable != $user->id) {
+	error_log("Utilisateur $user->pseudo n'a pas le droit de retirer le responsable de la tâche $task->id");
+	header( "location: ../Lists/View/index.php?id=$task->idListe?erreur=6" );
+	exit;
 }
 
 Systeme::retirerResponsable($task);

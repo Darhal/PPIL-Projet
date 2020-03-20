@@ -97,7 +97,7 @@ if ($liste == null) {
 			echo "<tr>";
 			ID($tache);
 			Item($tache);
-			Responsable($tache, $utilisateur);
+			Responsable($listeTaches, $tache, $utilisateur);
 			Completee($listeTaches, $tache, $utilisateur);
 
 			if ($listeTaches->proprietaire == $utilisateur->id) {
@@ -116,7 +116,7 @@ if ($liste == null) {
 			echo "<td> $tache->nom </td>";
 		}
 
-		function Responsable(Tache $tache, Utilisateur $utilisateur) {
+		function Responsable(ListeTaches $listeTaches, Tache $tache, Utilisateur $utilisateur) {
 			if (empty($tache->responsable)) {
 				// Pas de responsable
 				echo "
@@ -129,14 +129,23 @@ if ($liste == null) {
 				if ($tache->responsable != $utilisateur->id) {
 					// Pas moi
 					$res_user = Systeme::getUserByID($tache->responsable);
-
+					echo "<td class='d-flex justify-content-between'>";
 					if ($res_user == null) {
 						// Utilisateur inexistant
-						echo "<td><p class='text-muted'> Ancien utilisateur </p></td>";
+						echo "<p class='text-muted'> Ancien utilisateur </p>";
 					} else {
 						// Utilisateur existant
-						echo "<td><p> $res_user->pseudo </p></td>";
+						echo "<p> $res_user->pseudo </p>";
 					}
+
+					if ($listeTaches->proprietaire == $utilisateur->id) {
+						echo "
+							<form action='../../Tasks/leave.php' method='post'>
+								<input type='submit' value='Remercier'>
+								<input type='hidden' value='$tache->id' name='tid' id='tid'> 
+							</form>";
+					}
+					echo "<td>";
 				} else {
 					// Moi
 					if ($tache->finie) {
