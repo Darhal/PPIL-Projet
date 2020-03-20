@@ -1,24 +1,24 @@
 <?php
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+set_include_path(getenv('BASE'));
 
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
-	$uid = $_SESSION["id"];
-} else {
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
+
+Systeme::Init();
+
+if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
 	header("location: ../../Login");
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Taches/ListeTaches.php");
-include_once (getenv('BASE')."Backend/Taches/Tache.php");
+$uid = $_SESSION["id"];
 
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
-
-Systeme::Init();
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Taches/ListeTaches.php";
+include_once "Backend/Taches/Tache.php";
 
 $user = Systeme::getUserByEmail($_SESSION['email']);
 
@@ -38,6 +38,8 @@ $liste = Systeme::getListeTachesByID($lid);
 if ($liste == null) {
 	die("Liste d'ID " . $lid . " inexistante");
 }
+
+$owner = Systeme::getUserByID($liste->proprietaire);
 
 ?>
 <!DOCTYPE html>
@@ -63,50 +65,57 @@ if ($liste == null) {
 			<th scope="col"> ID </th>
 			<th scope="col"> Pseudo </th>
 			<th scope="col"> Mail </th>
-			<th scope="col"> Supprimer </th>
+			<?php if ($user->id == $owner->id) {
+				echo "<th scope='col'> Supprimer </th>";
+			}
+			?>
 		</tr>
 		</thead>
 		<tbody>
 		<?php
 		$membres = Systeme::getMembresInvites($liste);
-		$owner = Systeme::getUserByID($liste->proprietaire);
 
 		array_unshift( $membres, $owner);
 
 		foreach ($membres as $membre) {
 			$dis = '';
-			if ($membre == $owner) {
-				$dis = 'disabled';
-			}
+
 			echo "
 				<tr>
 					<th scope='row'>" . $membre->id . "</th>
 					<td>" . $membre->pseudo . "</td>
-					<td>" . $membre->email . "</td>
-					<td><a class='$dis' href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>
-				</tr>";
+					<td>" . $membre->email . "</td>";
+
+			if ($user->id == $owner->id) {
+				echo "<td><a href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>";
+			}
+
+			echo "</tr>";
 		}
 		?>
 		</tbody>
 	</table>
 
-	<form method="post" action="add_member.php">
-		<label for="user"></label><select name="user" id="user">
-			<?php
-			$users = Systeme::getUsersByPseudo("");
-			foreach ($users as $u) {
-				if ($u->email != $user->email) {
-				echo "<option value='$u->email'> $u->pseudo </option>";
-				}
-			}
-			?>
-		</select>
-		<input type="hidden" value="<?php echo $liste->id; ?>" name="lid" id="lid">
-		<input type="submit" value="Ajouter!">
-	</form>
+	<?php
 
+	if ($user->id == $liste->proprietaire) {
+		echo "
+			<form method='post' action='add_member.php'>
+				<label for='user'></label><select name='user' id='user'>";
+		$users = Systeme::getUsersNonMembresByPseudo("", $liste);
+
+		foreach ($users as $u) {
+			echo "<option value='$u->email'> $u->pseudo </option>";
+		}
+
+		echo "</select>
+		<input type='hidden' value='$liste->id' name='lid' id='lid'>
+		<input type='submit' value='Ajouter!'>
+		</form>";
+	}
+	?>
 </div>
 
-<?php include_once getenv("BASE") . "Shared/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>

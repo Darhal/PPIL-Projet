@@ -91,7 +91,7 @@ if ($liste == null) {
 			// 1
 			$responsable = "
 <form action='../../Tasks/enroll.php' method='post'>
-	<input type='submit' value='Volontaire'>
+	<input type='submit' value='Se porter volontaire'>
 	<input type='hidden' value='$task->id' name='tid' id='tid'> 
 </form>";
 
@@ -100,7 +100,7 @@ if ($liste == null) {
 
 				$resp_user = Systeme::getUserByID(intval($task->responsable));
 
-				if ($resp_user == $user) {
+				if ($resp_user->id == $user->id) {
 
 					// A
 					$responsable = "

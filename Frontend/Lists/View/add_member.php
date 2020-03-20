@@ -1,15 +1,10 @@
 <?php
-// Affichage des erreurs
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-// Démarrage de la session
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+set_include_path(getenv('BASE'));
 
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
 
 Systeme::Init();
 
@@ -22,29 +17,48 @@ $current_user = Systeme::getUserByID($current_userID);
 
 // Si la requête est de type POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	echo "Type de requête invalide";
-	header( "refresh:5;url=/Frontend/Lists" );
+	error_log("Type de requête invalide");
+	header("location: ../Lists");
 }
 
-if (isset($_POST['lid'])) {
-	$lid = SQLite3::escapeString($_POST['lid']);
-	$lid = trim($lid);
-} else {
-	echo "ID de liste non défini";
+if (!isset($_POST['lid'])) {
+	error_log("ID de liste non défini");
+	header("location: ../Lists");
+}
+
+$lid = SQLite3::escapeString($_POST['lid']);
+$lid = trim($lid);
+$lid = intval($lid);
+
+$liste = Systeme::getListeTachesByID($lid);
+
+if ($liste == null) {
+	error_log("Aucune liste d'ID $lid");
+	header("location: ../Lists");
+}
+
+if ($liste->proprietaire != $current_user->id) {
+	error_log("L'utilisateur $current_user->pseudo n'est pas propriétaire de la liste $lid");
+	header("location: ../Lists");
+}
+
+if (!isset($_POST['user'])) {
+	error_log("Utilisateur à ajouter non défini");
 	header("refresh:5;url=/Frontend/Lists/");
 }
 
-if (isset($_POST['user'])) {
-	$umail = SQLite3::escapeString($_POST['user']);
-	$umail = trim($umail);
-} else {
-	echo "Utilisateur à ajouter non défini";
-	header("refresh:5;url=/Frontend/Lists/");
-}
+$umail = SQLite3::escapeString($_POST['user']);
+$umail = trim($umail);
 
 $user = Systeme::getUserByEmail($umail);
 
-$liste = Systeme::getListeTachesByID($lid);
+$invitations = Systeme::getInvitations($user);
+
+foreach ($invitations as $invitation) {
+	if ($invitation->liste == $liste->id) {
+		Systeme::refuserInvitation($invitation);
+	}
+}
 
 Systeme::inviterUtilisateur($liste, $current_user, $user);
 

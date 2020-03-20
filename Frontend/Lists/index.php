@@ -91,7 +91,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 				} else {
 					echo "
 						<form action='./leaveList.php' method='post'>
-							<input type='image' name='leave' src='../../Assets/Images/SVG/exit.svg' style='width:2rem;' disabled alt='Quitter'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+							<input type='image' name='leave' src='../../Assets/Images/SVG/exit.svg' style='width:2rem;' alt='Quitter'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
 				}
 					echo "</form>
 					</td>

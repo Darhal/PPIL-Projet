@@ -219,7 +219,7 @@ class Systeme
     	$res_array = array();
 
 	    foreach ($req as $user) {
-	        //TODO: pourquoi il remplit pas prenom et non ?
+	        //TODO: pourquoi il remplit pas prenom et non ? -> par sécurité
 		    $u = new Utilisateur($user["pseudo"], "", "", $user["email"], "");
 		    $u->setId($user["idutilisateur"]);
 
@@ -487,6 +487,32 @@ class Systeme
         var_dump($liste);
         return self::$dao_listeTaches->update($liste);
     }
+
+	public static function quitterListe(Utilisateur $utilisateur, ListeTaches $listeTaches) : bool {
+		return self::$dao_membre->delete($utilisateur, $listeTaches);
+	}
+
+	public static function getUsersNonMembresByPseudo(string $pseudo, ListeTaches $listeTaches) : array {
+
+    	$membres = self::getMembres($listeTaches);
+    	$utilisateurs = self::getUsersByPseudo($pseudo);
+
+    	$membres_email = array();
+    	foreach ($membres as $membre) {
+    		array_push($membres_email, $membre->email);
+	    }
+
+    	$res = array();
+    	foreach ($utilisateurs as $utilisateur) {
+    		if (!in_array($utilisateur->email, $membres_email)) {
+    			array_push($res, $utilisateur);
+		    }
+	    }
+
+    	return $res;
+	}
+
+
 
     //---------------------------- FIN ListeTaches---------------------------------
 
