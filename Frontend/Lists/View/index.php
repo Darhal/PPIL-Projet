@@ -98,7 +98,7 @@ if ($liste == null) {
 			ID($tache);
 			Item($tache);
 			Responsable($tache, $utilisateur);
-			Completee($tache, $utilisateur);
+			Completee($listeTaches, $tache, $utilisateur);
 
 			if ($listeTaches->proprietaire == $utilisateur->id) {
 				Editer($tache);
@@ -152,8 +152,8 @@ if ($liste == null) {
 			}
 		}
 
-		function Completee(Tache $tache, Utilisateur $utilisateur) {
-			if ($tache->responsable != $utilisateur->id) {
+		function Completee(ListeTaches $listeTaches, Tache $tache, Utilisateur $utilisateur) {
+			if ($tache->responsable != $utilisateur->id and $listeTaches->proprietaire != $utilisateur->id) {
 				// Pas responsable
 				$res = $tache->finie ? 'oui' : 'non';
 				echo "<td><p> $res </p></td>";
