@@ -82,8 +82,7 @@ if (empty($fin)) {
 }
 
 $nom = Systeme::_POST('nom');
-
-if ($nom == false){
+if ($nom == false && !empty($nom)){
 	error_log("Aucun nom de liste");
 	header("location: index.php");
 	exit;
@@ -125,7 +124,6 @@ if ($list->dateFin == "NULL") {
 } else {
 	$list->dateFin = $edate;
 }
-
 if (Systeme::updateList($list)) {
     header("location: ./");
     exit;
