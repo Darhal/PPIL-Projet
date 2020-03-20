@@ -477,7 +477,7 @@ class Systeme
         if (!isset($idListe)) {
             return false;
         }
-        $liste = self::$dao_listeTaches->getListeTachesByID($idListe);
+        $liste = self::getListeTachesByID($idListe);
 
         return self::supprimerListe($liste);
 

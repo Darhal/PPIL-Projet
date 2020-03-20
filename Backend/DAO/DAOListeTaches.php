@@ -53,7 +53,7 @@ class DAOListeTaches extends DAO
 
     public function supprimerDeBDD($liste) : bool {
         // Incomplet (ne supprime pas les tâches)
-        return $this->BDD->deleteRow($this->tab_name, "idListe = ".$liste->id);
+        return $this->BDD->deleteRow(self::$tab_name, "idListe = $liste->id");
     }
 
     public function getByRequete($requete) : array {
