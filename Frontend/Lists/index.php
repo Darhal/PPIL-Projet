@@ -45,7 +45,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 			<th scope="col"> Date de début </th>
 			<th scope="col"> Date de fin </th>
             <th scope="col">Editer</th>
-            <th scope="col">Supprimer</th>
+            <th scope="col"> Supprimer / Quitter </th>
             <th scope="col">Membres</th>
 		</tr>
 		</thead>
@@ -82,10 +82,17 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
                         <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 					</form>
 					</td>
-					<td id='delete_'. $list->id>
-					<form action='./deleteList.php' method='post'>
-					    <input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-					</form>
+					<td id='delete_'. $list->id>";
+				if ($proprietaire->id == $user->id) {
+					echo "
+						<form action='./deleteList.php' method='post'>
+							<input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+				} else {
+					echo "
+						<form action='./leaveList.php' method='post'>
+							<input type='image' name='leave' src='../../Assets/Images/SVG/exit.svg' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+				}
+					echo "</form>
 					</td>
 					<td id='membre_'. $list->id>
 					<form action='./View/membres.php' method='post'>
