@@ -9,7 +9,7 @@ Systeme::start_session();
 Systeme::Init();
 
 if (!Systeme::estConnecte()) {
-	header("location: ../Lists");
+	header("location: ../");
 }
 
 $current_userID = $_SESSION['id'];
@@ -18,15 +18,16 @@ $current_user = Systeme::getUserByID($current_userID);
 // Si la requête est de type POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	error_log("Type de requête invalide");
-	header("location: ../Lists");
+	header("location: ../");
 }
 
-if (!isset($_POST['lid'])) {
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
 	error_log("ID de liste non défini");
-	header("location: ../Lists");
+	header("location: ../");
 }
 
-$lid = SQLite3::escapeString($_POST['lid']);
 $lid = trim($lid);
 $lid = intval($lid);
 
@@ -34,20 +35,21 @@ $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
 	error_log("Aucune liste d'ID $lid");
-	header("location: ../Lists");
+	header("location: ../");
 }
 
 if ($liste->proprietaire != $current_user->id) {
 	error_log("L'utilisateur $current_user->pseudo n'est pas propriétaire de la liste $lid");
-	header("location: ../Lists");
+	header("location: ../");
 }
 
-if (!isset($_POST['user'])) {
+$umail = Systeme::_POST('user');
+
+if ($umail == false) {
 	error_log("Utilisateur à ajouter non défini");
-	header("refresh:5;url=/Frontend/Lists/");
+	header("location: ../");
 }
 
-$umail = SQLite3::escapeString($_POST['user']);
 $umail = trim($umail);
 
 $user = Systeme::getUserByEmail($umail);

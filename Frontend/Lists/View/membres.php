@@ -20,23 +20,30 @@ include_once "Backend/Utilisateur/Utilisateur.php";
 include_once "Backend/Taches/ListeTaches.php";
 include_once "Backend/Taches/Tache.php";
 
-$user = Systeme::getUserByEmail($_SESSION['email']);
+$user = Systeme::getUserByID($uid);
 
-if (!isset($_POST['lid'])) {
-	die("ID de liste non défini");
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
+	error_log("ID de liste non défini");
+	header("location: ../");
+	exit;
 }
 
-$lid = intval($_POST['lid']);
+$lid = intval($lid);
 
 if (!is_int($lid)) {
-
-	die("L'ID de liste n'est pas valide");
+	error_log("L'ID de liste n'est pas valide");
+	header("location: ../");
+	exit;
 }
 
 $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
-	die("Liste d'ID " . $lid . " inexistante");
+	error_log("Liste d'ID " . $lid . " inexistante");
+	header("location: ../");
+	exit;
 }
 
 $owner = Systeme::getUserByID($liste->proprietaire);
@@ -50,7 +57,7 @@ $owner = Systeme::getUserByID($liste->proprietaire);
 	<title>Procrast - <?php echo $liste->nom; ?></title>
 </head>
 <body>
-<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Membres </h1>
 <div class="spacer"></div>

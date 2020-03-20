@@ -15,7 +15,7 @@ if(Systeme::estConnecte()){
 	exit;
 }
 
-$user = Systeme::getUserByEmail($_SESSION['email']);
+$user = Systeme::getUserByID($_SESSION['id']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">

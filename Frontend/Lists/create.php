@@ -9,8 +9,6 @@ Systeme::start_session();
 
 Systeme::Init();
 
-
-
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
@@ -27,38 +25,40 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 $uid = $_SESSION["id"];
 
-if (isset($_POST['listName'])) {
-	$nom = SQLite3::escapeString($_POST['listName']);
-	$nom = trim($nom);
-} else {
+$nom = Systeme::_POST('listName');
+
+if ($nom == false) {
 	error_log("Aucun nom de liste");
 	header("location: ../Lists/creer.php");
 	exit;
 }
+
+$nom = trim($nom);
 
 if (empty($nom)) {
 	error_log("Nom de liste vide");
 	header("location: ../Lists/creer.php");
 }
 
+$dateDebut = Systeme::_POST('startingDate');
+
 if (isset($_POST['startingDate'])) {
-	$dateDebut = SQLite3::escapeString($_POST['startingDate']);
-	$dateDebut = trim($dateDebut);
-} else {
 	error_log("Aucune date de début");
 	header("location: ../Lists/creer.php");
 }
 
-if (isset($_POST['endingDate'])) {
-	$dateFin = SQLite3::escapeString($_POST['endingDate']);
-	$dateFin = trim($dateFin);
+$dateDebut = trim($dateDebut);
 
-	if ($dateFin === "") {
-		$dateFin = null;
-	}
-} else {
+$dateFin = Systeme::_POST('endingDate');
+
+if ($dateFin == false) {
 	error_log("Aucune date de fin");
 	header("location: ../Lists/creer.php");
+}
+
+$dateFin = trim($dateFin);
+if (empty($dateFin)) {
+	$dateFin = null;
 }
 
 // Requête SQL
@@ -80,10 +80,11 @@ if ($dateFin != null) {
 }
 
 if (Systeme::createList($nom, $sdate, $edate, $uid)) {
-	header("location: /Frontend/Lists");
+	header("location: ./");
 } else {
-	// TODO: - Erreur
 	error_log("erreur");
+	// TODO: - Erreur
+	header("location: ./");
 	exit;
 }
 

@@ -6,17 +6,17 @@ Systeme::start_session();
 
 Systeme::Init();
 
-if(Systeme::estConnecte()){
-	$uid = $_SESSION["id"];
-} else {
+if(!Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
 	header("location: ../Login");
 	exit;
 }
 
+$uid = $_SESSION["id"];
+
 include_once "Backend/Utilisateur/Utilisateur.php";
 
-$user = Systeme::getUserByEmail($_SESSION['email']);
+$user = Systeme::getUserByID($uid);
 
 if ($user == null) {
 	error_log("Aucun utilisateur d'ID $uid");
@@ -29,13 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	exit;
 }
 
-if (!isset($_POST['lid'])) {
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
 	error_log("Aucun ID de liste");
 	header("location: ./");
 	exit;
 }
 
-$lid = SQLite3::escapeString($_POST['lid']);
 $lid = trim($lid);
 $lid = intval($lid);
 

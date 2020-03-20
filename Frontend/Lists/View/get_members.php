@@ -1,32 +1,29 @@
 <?php
-// Affichage des erreurs
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+set_include_path(getenv('BASE'));
+
+include_once "Backend/Utilisateur/Systeme.php";
 
 // Démarrage de la session
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+Systeme::start_session();
 
 Systeme::Init();
 
 // Si la requête est de type POST
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	echo "Type de requête invalide";
-	header( "refresh:5;url=/Frontend/Lists/creer.php" );
+	error_log("Type de requête invalide");
+	echo "{}";
+	exit;
 }
 
-if (isset($_POST['pseudo'])) {
-	$pseudo = SQLite3::escapeString($_POST['pseudo']);
-	$pseudo = trim($pseudo);
-} else {
-	echo "Aucun pseudo défini";
-	header("refresh:5;url=/Frontend/Lists/");
+$pseudo = Systeme::_POST('pseudo');
+
+if ($pseudo == false) {
+	error_log("Aucun pseudo défini");
+	echo "{}";
+	exit;
 }
 
+$pseudo = trim($pseudo);
 $list = Systeme::getUsersByPseudo($pseudo);
 
 echo json_encode($list);

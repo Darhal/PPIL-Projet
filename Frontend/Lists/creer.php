@@ -1,3 +1,4 @@
+<?php set_include_path(getenv("BASE")); ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +12,7 @@
 	<title>Créer une tâche</title>
 </head>
 <body>
-<?php include_once getenv("BASE") . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Créer une liste de tâches </h1>
 <div class="spacer"></div>
@@ -84,5 +85,5 @@
 	}
 
 </script>
-<?php include_once getenv("BASE") . "Shared/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>

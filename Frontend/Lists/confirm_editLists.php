@@ -27,18 +27,20 @@ $uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
 
-if (!isset($_POST['lid'])){
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
 	error_log("Aucun ID de liste");
 	header("location: index.php");
 	exit;
 }
 
-$lid = intval(SQLite3::escapeString($_POST['lid']));
+$lid = intval($lid);
 
 if (!is_int($lid)) {
     error_log("L'ID de liste n'est pas valide");
-	//header("location: index.php");
-	echo 1;
+    // TODO: - Retourner une erreur
+	header("location: index.php");
 	exit;
 }
 
@@ -46,8 +48,7 @@ $list = Systeme::getListeTachesByID($lid);
 
 if ($list == null) {
     error_log("Liste d'ID " . $lid . " inexistante");
-	//header("location: index.php");
-	echo 2;
+	header("location: index.php");
 	exit;
 }
 
@@ -56,46 +57,44 @@ if ($list->proprietaire != $uid) {
 	header("location: ./");
 }
 
-if (!isset($_POST['debut'])){
+$debut = Systeme::_POST('debut');
+
+if ($debut == false){
 	error_log("Aucune date de debut de liste");
-	//header("location: index.php");
-	echo 3;
+	header("location: index.php");
 	exit;
 }
 
-$debut = SQLITE3::escapeString(($_POST['debut']));
 $debut = trim($debut);
 
-if (!isset($_POST['fin'])){
+$fin = Systeme::_POST('fin');
+
+if ($fin == false){
 	error_log("Aucune date de fin de liste");
-	//header("location: index.php");
-	echo 4;
+	header("location: index.php");
 	exit;
 }
 
-$fin = SQLITE3::escapeString(($_POST['fin']));
 $fin = trim($fin);
 
-if ($fin === "") {
+if (empty($fin)) {
 	$fin = null;
 }
 
+$nom = Systeme::_POST('nom');
 
-if (!isset($_POST['nom'])){
+if ($nom == false){
 	error_log("Aucun nom de liste");
-	//header("location: index.php");
-	echo 5;
+	header("location: index.php");
 	exit;
 }
 
-$nom = SQLITE3::escapeString(($_POST['nom']));
 $nom = trim($nom);
 
 $sdate = strtotime($debut);
 if ($sdate == false) {
 	error_log("Date de début au format invalide");
-	//header("location: index.php");
-	echo 6;
+	header("location: index.php");
 	exit;
 }
 
@@ -103,8 +102,7 @@ if ($fin != null) {
 	$edate = strtotime($fin);
 	if ($edate == false) {
 		error_log("Date de fin au format invalide");
-		//header("location: index.php");
-		echo 7;
+		header("location: index.php");
 		exit;
 	}
 } else {
@@ -128,8 +126,6 @@ if ($list->dateFin == "NULL") {
 	$list->dateFin = $edate;
 }
 
-
-
 if (Systeme::updateList($list)) {
     header("location: ./");
     exit;
@@ -137,5 +133,3 @@ if (Systeme::updateList($list)) {
     header("location: editLists.php?erreur=1");
     exit;
 }
-
-// TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification

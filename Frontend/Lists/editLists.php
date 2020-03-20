@@ -16,7 +16,14 @@ if(Systeme::estConnecte()){
 
 include_once "Backend/Utilisateur/Utilisateur.php";
 
-$lid = intval(SQLite3::escapeString($_POST['lid']));
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
+	error_log("ID de liste non défini");
+	header("location: ../Frontend/Lists");
+}
+
+$lid = intval($lid);
 
 if (!is_int($lid)) {
     error_log("ID $lid invalide");
@@ -78,8 +85,10 @@ include_once "Shared/navbar.php";
         <!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
 
         <?php
-        if(isset($_GET['erreur'])){
-            $err = $_GET['erreur'];
+
+        $err = Systeme::_GET('erreur');
+
+        if($err != false){
             if($err==1) {
                 echo "<p style='color:red'>Echec de l'update</p>";
             }
@@ -124,7 +133,7 @@ include_once "Shared/navbar.php";
 </script>
 
 <?php
-include_once getenv('BASE')."Shared/footer.php";
+include_once "Shared/footer.php";
 ?>
 </body>
 </html>

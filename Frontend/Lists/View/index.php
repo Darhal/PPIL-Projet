@@ -17,7 +17,7 @@ include_once "Backend/Taches/Tache.php";
 
 Systeme::Init();
 
-$user = Systeme::getUserByEmail($_SESSION['email']);
+$user = Systeme::getUserByID($uid);
 
 $lid = Systeme::_GET('id');
 
