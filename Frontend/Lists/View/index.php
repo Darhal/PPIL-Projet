@@ -1,41 +1,44 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+Systeme::start_session();
 
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
-	$uid = $_SESSION["id"];
-} else {
-	// Redirection vers la page d'accueil
+if(!Systeme::estConnecte()){
 	header("location: ../../Login");
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Taches/ListeTaches.php");
-include_once (getenv('BASE')."Backend/Taches/Tache.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+$uid = $_SESSION["id"];
+
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Taches/ListeTaches.php";
+include_once "Backend/Taches/Tache.php";
 
 Systeme::Init();
 
 $user = Systeme::getUserByEmail($_SESSION['email']);
 
-if (!isset($_GET['id'])) {
-	die("ID de liste non défini");
+$lid = Systeme::_GET('id');
+
+if ($lid == false) {
+	error_log("ID de liste non défini");
+	header("location: ../");
+	exit;
 }
 
-$lid = intval($_GET['id']);
+$lid = intval($lid);
 
 if (!is_int($lid)) {
-
-	die("L'ID de liste n'est pas valide");
+	error_log("L'ID de liste n'est pas valide");
+	header("location: ../");
 }
 
 $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
-	die("Liste d'ID " . $lid . " inexistante");
+	error_log("Liste d'ID " . $lid . " inexistante");
+	header("location: ../");
 }
 
 ?>
@@ -47,7 +50,7 @@ if ($liste == null) {
 	<title>Procrast - <?php echo $liste->nom; ?></title>
 </head>
 <body>
-<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Liste des tâches </h1>
 <div class="spacer"></div>
@@ -62,102 +65,129 @@ if ($liste == null) {
 		</form>
 	</div>
 
-	<table class="table">
-		<thead>
-		<tr>
-			<th scope="col"> ID </th>
-			<th scope="col"> Item </th>
-			<th scope="col"> Responsable </th>
-			<th scope="col"> Complétée </th>
-			<th scope="col"> Editer </th>
-			<th scope="col"> Suppression </th>
-		</tr>
-		</thead>
-		<tbody>
 		<?php
-		$tasks = Systeme::getTasks($liste);
 
-		foreach ($tasks as $task) {
+		function Liste(ListeTaches $listeTaches, Utilisateur $utilisateur) {
+			echo "<table class='table'><thead><tr>";
 
-			// Reponsable, trois cas
-			// 1 - Personne n'est responsable
-			//  -> Tout le monde peut se proproser pour être responsable
-			// 2 - Un utilisateur est responsable
-			//  A - L'utilisateur connecté est responsable de la tâche
-			//      -> Il peut se retirer de sa qualité de responsable
-			//  B - L'utilsiateur connecté n'est pas responsable de la tâche
-			//      -> Le nom du responsable lui est alors affiché
+			echo "
+				<th scope='col'> ID </th>
+				<th scope='col'> Item </th>
+				<th scope='col'> Responsable </th>
+				<th scope='col'> Complétée </th>
+			";
 
-			// 1
-			$responsable = "
-<form action='../../Tasks/enroll.php' method='post'>
-	<input type='submit' value='Se porter volontaire'>
-	<input type='hidden' value='$task->id' name='tid' id='tid'> 
-</form>";
+			if ($listeTaches->proprietaire == $utilisateur->id) {
+				echo "
+					<th scope='col'> Editer </th>
+					<th scope='col'> Supprimer </th>";
+			}
+			echo "</tr></thead><tbody>";
 
-			// 2
-			if ($task->responsable != "") {
+			$tasks = Systeme::getTasks($listeTaches);
 
-				$resp_user = Systeme::getUserByID(intval($task->responsable));
-
-				if ($resp_user->id == $user->id) {
-
-					// A
-					$responsable = "
-						<form action='../../Tasks/leave.php' method='post'>
-							<input type='submit' value='Ne plus être responsable'>
-							<input type='hidden' value='$task->id' name='tid' id='tid'> 
-						</form>";
-				} else {
-					// B
-					$responsable = $resp_user->pseudo;
-				}
+			foreach ($tasks as $task) {
+				Row($listeTaches, $task, $utilisateur);
 			}
 
-			// Statut de la tâche
-			// 1 - L'utilisateur n'est pas responsable de la tâche
-			//  -> Le statut de la tâche est affiché
-			// 2 - L'utilisateur est responsable de la tâche
-			//  A - La tâche n'est pas finie
-			//      -> Il peut définir la tâche comme finie
-			//  B - La tâche est finie
-			//      -> Il peut invalider le statut de la tâche
+			echo "</tbody></table>";
+		}
 
-			if ($task->responsable != $user->id) {
-				// 1
-				$finie = $task->finie ? "oui" : "non";
+		function Row(ListeTaches $listeTaches, Tache $tache, Utilisateur $utilisateur) {
+			echo "<tr>";
+			ID($tache);
+			Item($tache);
+			Responsable($tache, $utilisateur);
+			Completee($tache, $utilisateur);
+
+			if ($listeTaches->proprietaire == $utilisateur->id) {
+				Editer($tache);
+				Supprimer($tache);
+			}
+
+			echo "</tr>";
+		}
+
+		function ID(Tache $tache) {
+			echo "<th scope='row'> $tache->id </th>";
+		}
+
+		function Item(Tache $tache) {
+			echo "<td> $tache->nom </td>";
+		}
+
+		function Responsable(Tache $tache, Utilisateur $utilisateur) {
+			if (empty($tache->responsable)) {
+				// Pas de responsable
+				echo "
+					<td><form action='../../Tasks/enroll.php' method='post'>
+						<input type='submit' value='Se porter volontaire'>
+						<input type='hidden' value='$tache->id' name='tid' id='tid'> 
+					</form></td>";
 			} else {
-				// 2
-				if (!$task->finie) {
-					// A
+				// Un responsable
+				if ($tache->responsable != $utilisateur->id) {
+					// Pas moi
+					$res_user = Systeme::getUserByID($tache->responsable);
+
+					if ($res_user == null) {
+						// Utilisateur inexistant
+						echo "<td><p class='text-muted'> Ancien utilisateur </p></td>";
+					} else {
+						// Utilisateur existant
+						echo "<td><p> $res_user->pseudo </p></td>";
+					}
+				} else {
+					// Moi
+					if ($tache->finie) {
+						echo "<td><p> Moi </p></td>";
+					} else {
+						echo "
+						<td><form action='../../Tasks/leave.php' method='post'>
+							<input type='submit' value='Ne plus être responsable'>
+							<input type='hidden' value='$tache->id' name='tid' id='tid'> 
+						</form></td>";
+					}
+				}
+			}
+		}
+
+		function Completee(Tache $tache, Utilisateur $utilisateur) {
+			if ($tache->responsable != $utilisateur->id) {
+				// Pas responsable
+				$res = $tache->finie ? 'oui' : 'non';
+				echo "<td><p> $res </p></td>";
+			} else {
+				// Responsable
+				if (!$tache->finie) {
+					// Pas finie
 					$finie = "
 						<form action='../../Tasks/setDone.php' method='post'>
 							<input type='submit' value='Marquer comme finie'>
-							<input type='hidden' value='$task->id' name='tid' id='tid'> 
+							<input type='hidden' value='$tache->id' name='tid' id='tid'> 
 						</form>";
 				} else {
-					// B
+					// Finie
 					$finie = "
 						<form action='../../Tasks/setNotDone.php' method='post'>
 							<input type='submit' value='Marquer comme non finie'>
-							<input type='hidden' value='$task->id' name='tid' id='tid'> 
+							<input type='hidden' value='$tache->id' name='tid' id='tid'> 
 						</form>";
 				}
+				echo "<td> $finie </td>";
 			}
-
-			echo "
-				<tr>
-					<th scope='row'>" . $task->id . "</th>
-					<td>" . $task->nom . "</td>
-					<td>" . $responsable . "</td>
-					<td>" . $finie . "</td>
-					<td><a href='/Frontend/Tasks/edit.php?id=" . $task->id . "' class='disabled d-none'> (bientôt disponible) </a></td>
-					<td><a href='/Frontend/Tasks/delete.php?id=" . $task->id ."'><img name='delete' src='../../../Assets/Images/delete.png' style='width:2rem;' ></a></td>
-				</tr>";
 		}
+
+		function Editer(Tache $tache) {
+			echo "<td><a href='/Frontend/Tasks/edit.php?id=" . $tache->id . "' class='disabled d-none'> (bientôt disponible) </a></td>";
+		}
+
+		function Supprimer(Tache $tache) {
+			echo "<td><a href='/Frontend/Tasks/delete.php?id=" . $tache->id ."'><img src='../../../Assets/Images/delete.png' style='width:2rem;'  alt='Supprimer'></a></td>";
+		}
+
+		Liste($liste, $user);
 		?>
-		</tbody>
-	</table>
 
     <div class="float-right">
 	    <form action="../../Tasks/creer.php" method="post">
@@ -168,6 +198,6 @@ if ($liste == null) {
 
 </div>
 
-<?php include_once getenv("BASE") . "Shared/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>

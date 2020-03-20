@@ -83,6 +83,44 @@ class Systeme
 	    }
     }
 
+	/**
+	 * Permet de récupérer, en toute sécurité, une valeur dans le POST
+	 * @param $key string la clé de la valeur à récupérer
+	 * @return bool | string
+	 */
+    public static function _POST(string $key) {
+
+    	if (!isset($_POST[$key])) {
+    		error_log("La clé '$key'' n'est pas définie dans le POST");
+    	    return false;
+	    }
+
+    	$rawValue = $_POST[$key];
+	    /** @noinspection PhpUnnecessaryLocalVariableInspection */
+	    $escapedValue = SQLite3::escapeString($rawValue);
+
+    	return $escapedValue;
+    }
+
+	/**
+	 * Permet de récupérer, en toute sécurité, une valeur dans le GET
+	 * @param $key string la clé de la valeur à récupérer
+	 * @return bool | string
+	 */
+	public static function _GET(string $key) {
+
+		if (!isset($_GET[$key])) {
+			error_log("La clé '$key'' n'est pas définie dans le GET");
+			return false;
+		}
+
+		$rawValue = $_GET[$key];
+		/** @noinspection PhpUnnecessaryLocalVariableInspection */
+		$escapedValue = SQLite3::escapeString($rawValue);
+
+		return $escapedValue;
+	}
+
     //---------------------------- Utilisateur ---------------------------------
 
 
