@@ -29,6 +29,11 @@ if ($list == null) {
 	header("location: ./");
 }
 
+if ($list->proprietaire != $uid) {
+	error_log("Utilisateur non propriétaire de la liste");
+	header("location: ./");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

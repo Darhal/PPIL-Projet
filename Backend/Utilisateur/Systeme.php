@@ -650,7 +650,7 @@ class Systeme
             return false;
         }
 
-        $invitation = new InvitationListeTache("Je t'invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
+        $invitation = new InvitationListeTache("Je t‘invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
         echo "<pre>";
         var_dump($invitation);
         echo "</pre>";

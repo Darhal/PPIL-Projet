@@ -63,22 +63,25 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 			} else {
 				$np = "Inconnu?";
 			}
-
-			$edate = $list->dateFin === "NULL" ? "Aucune" : date("d/m/y", intval($list->dateFin));
-
-
 			echo "
             
 				<tr>
-					<th scope='row'>" . $list->id . "</th>
-					<td><a href='../Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
-					<td>" . $np . "</td>
-					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
-					<td>" . $edate  . "</td>
-					<td>
-					<form action='./editLists.php' method='post'>
-                        <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;' alt='Editer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
-					</form>
+					<th scope='row'> $list->id </th>
+					<td><a href='../Lists/View/index.php?id=$list->id'> $list->nom </a></td>
+					<td> $np </td>
+					<td>" . $list->formattedDebut() . "</td>
+					<td>" . $list->formattedFin() . "</td>
+					<td>";
+					if ($proprietaire->id == $user->id) {
+						echo "
+						<form action='./editLists.php' method='post'>
+							<input type='image' name='edit' src='../../Assets/Images/SVG/pencil.svg' style='width:2rem;' alt='Editer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+					} else {
+						echo "
+						<form action='#' method='post'>
+							<input type='image' name='edit' src='../../Assets/Images/SVG/pencil.slash.svg' style='width:2rem;' alt='Editer désactivé' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+					}
+					echo "</form>
 					</td>
 					<td>";
 				if ($proprietaire->id == $user->id) {

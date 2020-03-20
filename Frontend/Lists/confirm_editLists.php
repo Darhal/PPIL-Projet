@@ -51,6 +51,11 @@ if ($list == null) {
 	exit;
 }
 
+if ($list->proprietaire != $uid) {
+	error_log("Utilisateur non propriétaire de la liste");
+	header("location: ./");
+}
+
 if (!isset($_POST['debut'])){
 	error_log("Aucune date de debut de liste");
 	//header("location: index.php");
