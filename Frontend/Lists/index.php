@@ -1,13 +1,11 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Utilisateur/Systeme.php";
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+Systeme::start_session();
 
 Systeme::Init();
-
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
 
 if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
@@ -27,7 +25,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<title>Procrast - Mes Listes</title>
 </head>
 <body>
-<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Mes listes </h1>
 <div class="spacer"></div>
@@ -73,30 +71,30 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
             
 				<tr>
 					<th scope='row'>" . $list->id . "</th>
-					<td id='nom_'. $list->id ><a href='../Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
-					<td id='proprio_'. $list->id >" . $np . "</td>
-					<td id='debut_'. $list->id>" . date("d/m/y", intval($list->dateDebut)) . "</td>
-					<td id='fin_'. $list->id>" . $edate  . "</td>
-					<td id='edit_'. $list->id>
+					<td><a href='../Lists/View/index.php?id=" . $list->id . "'>" . $list->nom . "</a></td>
+					<td>" . $np . "</td>
+					<td>" . date("d/m/y", intval($list->dateDebut)) . "</td>
+					<td>" . $edate  . "</td>
+					<td>
 					<form action='./editLists.php' method='post'>
-                        <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
+                        <input type='image' name='edit' src='../../Assets/Images/edit.png' style='width:2rem;' alt='Editer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>
 					</form>
 					</td>
-					<td id='delete_'. $list->id>";
+					<td>";
 				if ($proprietaire->id == $user->id) {
 					echo "
 						<form action='./deleteList.php' method='post'>
-							<input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+							<input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled alt='Supprimer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
 				} else {
 					echo "
 						<form action='./leaveList.php' method='post'>
-							<input type='image' name='leave' src='../../Assets/Images/SVG/exit.svg' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+							<input type='image' name='leave' src='../../Assets/Images/SVG/exit.svg' style='width:2rem;' disabled alt='Quitter'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
 				}
 					echo "</form>
 					</td>
-					<td id='membre_'. $list->id>
+					<td>
 					<form action='./View/membres.php' method='post'>
-					    <input type='image' name='member' img src='../../Assets/Images/member.png' style='width:2rem;'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
+					    <input type='image' name='member' src='../../Assets/Images/member.png' style='width:2rem;' alt='Membres'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'></td>
 				    </form>
 
 				</tr>" ;
@@ -110,23 +108,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 		<button onclick="window.location.href='creer.php'"> Ajouter une liste </button>
 	</div>
 </div>
-<script type="text/javascript">
-    function supprimerListe() {
-        //recupere la colonne
-        var td = event.target.parentNode;
-        console.log(td.rowIndex)
-        //test qu'on clique bien sur l'image
-        if (td.innerHTML.startsWith("<img")){
-            //recupere la ligne ou se situe la colonne
-            var tr = td.parentNode; // the row to be removed
-            tr.parentNode.removeChild(tr);
-        }
-        else{
-            console.log('dans le esle') ;
-        }
-    }
-
-</script>
-<?php include_once getenv('BASE') . "Shared/footer.php"; ?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>

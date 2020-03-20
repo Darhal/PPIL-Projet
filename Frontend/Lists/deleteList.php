@@ -1,10 +1,12 @@
 <?php
-echo "dans delete de list" ;
 set_include_path(getenv('BASE'));
-include_once "Backend/Utilisateur/Utilisateur.php";
 include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
+
+
+include_once "Backend/Utilisateur/Utilisateur.php";
+
 //  ne marche pas
 /*
 
