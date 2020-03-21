@@ -20,12 +20,13 @@ if (!isset($_GET['id'])) {
 	header( "location: notification.php");
 }
 
-$invID = intval($_GET['id']);
+$notifID = intval($_GET['lid']);
 
 $notifications = Systeme::getNotifications($utilisateur);
 
 foreach ($notifications as $notification) {
-	if ($notification->id == $invID) {
+	echo "$notification->id | $notifID";
+	if ($notification->id == $notifID) {
 		if(Systeme::supprimerNotification($notification)){
             header( "location: notification.php");
         }
