@@ -111,6 +111,7 @@ class DAONotif extends DAO
                 array_push($res_array, $notif);
             }
         }
+        return $res_array;
     }
 
 
