@@ -24,8 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 }
 
 $uid = $_SESSION["id"];
+$user = Systeme::getUserByID($_SESSION['id']);
 
 include_once "Backend/Utilisateur/Utilisateur.php";
+
+$user = Systeme::getUserByID($uid);
 
 $tid = Systeme::_POST('tid');
 
@@ -79,9 +82,10 @@ if (!empty($nom) && $nom != $list->nom) {
 }
 
 if (Systeme::updateTask($task)) {
-    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de modifier la tache $task->nom de $list->nom", $lid, $task->id)){
-        error_log("Une erreur est survenue lors de la notification de la suppression de liste $lid avec tache $task->id");
 
+    //notification de modificatio
+    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de modifier la tache $task->nom de $list->nom", $list->id, $task->id)){
+        error_log("Une erreur est survenue lors de la notification de la modificatio de liste $list->id avec tache $task->id");
     }
     header("location: ../Lists/View/index.php?id=$list->id");
     exit;
