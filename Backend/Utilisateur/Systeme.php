@@ -940,7 +940,7 @@ class Systeme
         $membres = self::getMembres($liste);
         foreach ($membres as $utilisateur){
             $idutil=$utilisateur->id;
-            $res = $res && self::createNotificationListeTaches($msg,$idListe,$idListe);
+            $res = $res && self::createNotificationListeTaches($msg,$idListe,$idutil);
         }
 
         return $res;
