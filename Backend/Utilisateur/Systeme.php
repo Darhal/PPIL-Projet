@@ -963,7 +963,7 @@ class Systeme
      */
     function verifierToutesTachesComplete(int $idListeTache):bool {
         $res = true;
-        $liste = self::$dao_listeTaches->getListeTachesByID($idListeTache);
+        $liste = self::getListeTachesByID($idListeTache);
         $listeDeTaches = self::getTasks($liste);
         foreach ($listeDeTaches as $tache){
             $res=$res && $tache->finie;
