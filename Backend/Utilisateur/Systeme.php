@@ -123,6 +123,10 @@ class Systeme
     //---------------------------- Utilisateur ---------------------------------
 
 
+    /**
+     * Permet d'ajouter une instance d'un Utilisateur
+     * @param Utilisateur $utilisateur
+     */
     public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
         Systeme::ajouterUtilisateur($utilisateur);
     }
@@ -147,6 +151,12 @@ class Systeme
 
     }
 
+    /**
+     * Permet qu'un Utilisateur se connecte
+     * @param string $email
+     * @param string $mdp
+     * @return bool
+     */
     public static function seConnecter(string $email, string $mdp) : bool {
         if (isset($email)) {
             $email = SQLite3::escapeString($email);
@@ -178,11 +188,18 @@ class Systeme
         return true;
     }
 
+    /**
+     * Permet de vérifier si un Utilisateur est connecté
+     * @return bool
+     */
     public static function estConnecte()
     {
         return isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true;
     }
 
+    /**
+     * Permet de deconnecter un Utilisateur
+     */
     public static function seDeconnecter(){
         if (session_status() == PHP_SESSION_ACTIVE) {
             $_SESSION["logged_in"] = false;
@@ -286,6 +303,13 @@ class Systeme
         return true;
     }
 
+    /**
+     * Permet de modifier le mdp d'un Utilisateur
+     * @param Utilisateur $user
+     * @param string $old_password
+     * @param string $new_password
+     * @return bool
+     */
 	public static function changePassword(Utilisateur $user, string $old_password, string $new_password) {
 
     	$old_password = SQLite3::escapeString($old_password);
@@ -520,15 +544,32 @@ class Systeme
 
     }
 
+    /**
+     * Met à jour une liste dans la BDD
+     * @param ListeTaches $liste
+     * @return bool
+     */
     public static function updateList(ListeTaches $liste) : bool {
         var_dump($liste);
         return self::$dao_listeTaches->update($liste);
     }
 
+    /**
+     * Permet de retirer un Utilisateur d'une liste
+     * @param Utilisateur $utilisateur
+     * @param ListeTaches $listeTaches
+     * @return bool
+     */
 	public static function quitterListe(Utilisateur $utilisateur, ListeTaches $listeTaches) : bool {
 		return self::$dao_membre->delete($utilisateur, $listeTaches);
 	}
 
+    /**
+     * Permet de rechercher en donnant un pseudo les membres qui n'appartiennent pas à une liste
+     * @param string $pseudo
+     * @param ListeTaches $listeTaches
+     * @return array
+     */
 	public static function getUsersNonMembresByPseudo(string $pseudo, ListeTaches $listeTaches) : array {
 
     	$membres = self::getMembres($listeTaches);
@@ -554,6 +595,11 @@ class Systeme
     //---------------------------- FIN ListeTaches---------------------------------
 
     //---------------------------- Taches -------------------------------------
+    /**
+     * Indique que la tache est complétée
+     * @param Tache $task
+     * @return bool
+     */
     public static function setDone(Tache $task) {
 
         if (!isset($task)) {
@@ -568,6 +614,11 @@ class Systeme
         return self::$dao_tache->update($task);
     }
 
+    /**
+     * Indique que la tâche n'est pas complétée
+     * @param Tache $task
+     * @return bool
+     */
     public static function setNotDone(Tache $task) {
 
         if (!isset($task)) {
