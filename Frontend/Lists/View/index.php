@@ -188,7 +188,7 @@ if ($liste == null) {
 		}
 
 		function Editer(Tache $tache) {
-			echo "<td><a href='/Frontend/Tasks/edit.php?id=" . $tache->id . "' class='disabled d-none'> (bientôt disponible) </a></td>";
+			echo "<td><a href='/Frontend/Tasks/edit.php?id=" . $tache->id . "' class='d-none'><input type='image' name='edit' src='../../../Assets/Images/SVG/pencil.svg' style='width:2rem;' alt='Editer'></td>";
 		}
 
 		function Supprimer(Tache $tache) {
