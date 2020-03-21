@@ -102,6 +102,7 @@ $owner = Systeme::getUserByID($liste->proprietaire);
 							<input type='image' name='delete' src='../../../Assets/Images/delete.png' style='width:2rem;' alt='Supprimer'>
 							<label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$liste->id'>
 							<label for='udeleteid'></label><input hidden type='text' id='udeleteid' name='udeleteid' value='$membre->id'>
+							<input type='submit' src='../../../Assets/Images/delete.png'>
 						</form> </td> ";
 
             }
