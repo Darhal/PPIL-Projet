@@ -69,7 +69,7 @@ $debut = trim($debut);
 
 $fin = Systeme::_POST('fin');
 
-if ($fin == false){
+if ($fin == false && !empty($fin)){
 	error_log("Aucune date de fin de liste");
 	header("location: index.php");
 	exit;
