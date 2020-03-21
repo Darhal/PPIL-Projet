@@ -122,7 +122,7 @@ if ($liste == null) {
 				echo "
 					<td><form action='../../Tasks/enroll.php' method='post'>
 						<input type='submit' value='Se porter volontaire'>
-						<input type='hidden' value='$tache->id' name='tid' id='tid'> 
+						<input type='hidden' value='$tache->id' name='tid' id='tid'>
 					</form></td>";
 			} else {
 				// Un responsable
@@ -145,7 +145,7 @@ if ($liste == null) {
 								<input type='hidden' value='$tache->id' name='tid' id='tid'> 
 							</form>";
 					}
-					echo "<td>";
+					echo "</td>";
 				} else {
 					// Moi
 					if ($tache->finie) {

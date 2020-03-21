@@ -27,6 +27,8 @@ $uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
 
+$user = Systeme::getUserByID($uid);
+
 $tid = Systeme::_POST('tid');
 
 if ($tid == false) {
