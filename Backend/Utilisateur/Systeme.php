@@ -958,7 +958,29 @@ class Systeme
         return $res;
     }
 
-
+    /**
+     * cette fonction verifie si toutes les taches d'une liste est marquer comme finie
+     * @param int $idListeTache
+     * @return bool
+     */
+    function verifierToutesTachesComplete(int $idListeTache):bool {
+        $res = true;
+        $liste = self::$dao_listeTaches->getListeTachesByID($idListeTache);
+        $listeDeTaches = self::getTasks($liste);
+        foreach ($listeDeTaches as $tache){
+            $res=$res && $tache->finie;
+        }
+        return $res;
+    }
+    /**
+     * cette fonction verifie si toutes les autres taches dans la même liste est marquer comme finie
+     * @param int $idTache
+     * @return bool
+     */
+    function verifierToutesAutresTachesComplete(int $idTache):bool {
+        $tache = self::getTaskById($idTache);
+        return self::verifierToutesTachesComplete($tache->idListe);
+    }
 
     //---------------------------- FIN Notifications ---------------------------------
 
