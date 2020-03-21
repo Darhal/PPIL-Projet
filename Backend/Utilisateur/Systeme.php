@@ -898,7 +898,7 @@ class Systeme
      * @return array
     */
     public static function getNotifications(int $idUser) : array {
-        if (!isset($idUtilisateur)) {
+        if (!isset($idUser)) {
             return null;
         }
 
