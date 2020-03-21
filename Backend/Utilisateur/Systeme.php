@@ -957,7 +957,7 @@ class Systeme
     }
 
     /**
-     * cette fonction verifie si toutes les taches d'une liste est marquer comme finie
+     * cette fonction verifie si toutes les taches d'une liste sont marquées comme finie/complétée
      * @param int $idListeTache
      * @return bool
      */
@@ -971,7 +971,7 @@ class Systeme
         return $res;
     }
     /**
-     * cette fonction verifie si toutes les autres taches dans la même liste est marquer comme finie
+     * cette fonction verifie si toutes les autres taches dans la même liste sont marquéées comme finie/complétée
      * @param int $idTache
      * @return bool
      */
