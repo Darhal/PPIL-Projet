@@ -107,7 +107,7 @@ $owner = Systeme::getUserByID($liste->proprietaire);
 
 	if ($user->id == $liste->proprietaire) {
 		echo "
-			<form method='post' action='add_member.php'>
+			<form method='post' action='add_member.php' onsubmit='return confirm(\"Confirmer l‘invitation ?\")'>
 				<label for='user'></label><select name='user' id='user'>";
 		$users = Systeme::getUsersNonMembresByPseudo("", $liste);
 
