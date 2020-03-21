@@ -46,7 +46,6 @@ class DAONotif extends DAO
             $nature = "tache";
         }
         $attribs = array(
-            "idNotif" => $notif->idNotif,
             "msg" => $notif->msg,
             "statut" => ($notif->dejaLu)?"1":"0",
             "nature" => $nature,

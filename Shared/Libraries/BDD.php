@@ -72,7 +72,6 @@
             $attribs = rtrim($attribs, ",");
             $values = rtrim($values, ",");
             $ret = $this->exec("INSERT INTO $tab_name ($attribs) VALUES($values);");
-            // $this->handleErrors($ret);
             return !$ret ? false : true;
         }
 

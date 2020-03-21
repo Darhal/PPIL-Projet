@@ -50,7 +50,6 @@ if(Systeme::estConnecte()){
 
             $notifs = array_merge($notifTache, $notifList); //fusion des notifs
 
-
         foreach ($notifs as $notifT) {
 
             echo "
