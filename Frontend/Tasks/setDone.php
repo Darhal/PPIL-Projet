@@ -37,6 +37,7 @@ if (intval($tid) == null) {
 $tid = intval($tid);
 
 $task = Systeme::getTaskById($tid);
+$list = Systeme::getListeTachesByID($task->idListe);
 
 if($task == null) {
 	// TODO: - Afficher une erreur
@@ -52,5 +53,18 @@ if ($task->estFinie()) {
 }
 
 Systeme::setDone($task);
+
+if(Systeme::verifierToutesAutresTachesComplete($task->id)){
+    //notifiication liste de tache termine notifierListeTousMembresListe(String $msg, int $idListe)
+    if(!Systeme::notifierListeTousMembresListe("Toutes les taches de la liste $list->nom sont complétées",$list->id)){
+        error_log("Une erreur est survenue lors de la notification de la liste terminee de liste $list->id avec tache $task->id");
+    }
+}
+else{
+    //notification tache finie
+    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de compléter la tache $task->nom de $list->nom", $list->id, $task->id)){
+        error_log("Une erreur est survenue lors de la notification de la tache terminee de liste $list->id avec tache $task->id");
+    }
+}
 
 header("location: ../Lists/View/index.php?id=$task->idListe");

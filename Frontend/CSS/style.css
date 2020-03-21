@@ -203,3 +203,8 @@ a.disabled {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
 }
+
+.no-inter {
+    pointer-events: none;
+    cursor: none;
+}
