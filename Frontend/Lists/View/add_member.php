@@ -64,4 +64,4 @@ foreach ($invitations as $invitation) {
 
 Systeme::inviterUtilisateur($liste, $current_user, $user);
 
-header("location: ../index.php?id=$liste->id");
+header("location: index.php?id=$liste->id");
