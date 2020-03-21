@@ -10,16 +10,30 @@ Systeme::start_session();
 if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AND $_POST['email'] != '' AND $_POST['password'] != '' AND $_POST['conf-password'] != '') { //Si les champs ne sont pas vides
     Systeme::Init();
 
+    $pseudo = SQLite3::escapeString($_POST['pseudo']);
+    $prenom = SQLite3::escapeString($_POST['prenom']);
+    $nom = SQLite3::escapeString($_POST['nom']);
+    $email = SQLite3::escapeString($_POST['email']);
+
+    $passwd = SQLite3::escapeString($_POST['password']);
+    $passwd_conf = SQLite3::escapeString($_POST['conf-password']);
+
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		header("location: ../Signup/index.php?erreur=4");
+		exit;
+	}
+
+	if($passwd != $passwd_conf){
+		header("location: ../Signup/index.php?erreur=3?");
+		exit;
+	}
 
     // TODO: - Protéger contre l'injection SQL
-    $user = new Utilisateur($_POST['pseudo'], $_POST['prenom'], $_POST['nom'], $_POST['email'], $_POST['password']);
+    $user = new Utilisateur($pseudo, $prenom, $nom, $email, $passwd);
     $err_code = Systeme::ajouterUtilisateur($user);
 
     if ($err_code) {
         header("location: ../Signup/index.php?erreur=1");
-        exit;
-    } else if($_POST['password'] != $_POST['conf-password']){
-        header("location: ../Signup/index.php?erreur=3?");
         exit;
     }
 

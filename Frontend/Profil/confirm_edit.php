@@ -56,6 +56,10 @@ if (!isset($_POST['conf-password'])) {
 
 $password = $_POST['conf-password'];
 
+if (empty($password)) {
+	header("location: edit.php?erreur=2");
+	exit;
+}
 
 if ($password != $logged_user->mdp) {
 	header("location: edit.php?erreur=3");
@@ -64,23 +68,23 @@ if ($password != $logged_user->mdp) {
 
 
 if ($pseudo != "" && $pseudo != $logged_user->pseudo) {
-	$logged_user->pseudo = $pseudo;
+	$logged_user->pseudo = SQLite3::escapeString($pseudo);
 }
 
 if ($prenom != "" && $prenom != $logged_user->prenom) {
-	$logged_user->prenom = $prenom;
+	$logged_user->prenom = SQLite3::escapeString($prenom);
 }
 
 if ($nom != "" && $nom != $logged_user->nom) {
-	$logged_user->nom = $nom;
+	$logged_user->nom = SQLite3::escapeString($nom);
 }
 
 
 if ($email != "" && $email != $logged_user->email) {
 
-    $val = Systeme::getUserByEmail($email); //Test si l'email est déjà utilisée par un autre compte
+    $val = Systeme::getUserByEmail(SQLite3::escapeString($email)); //Test si l'email est déjà utilisée par un autre compte
     if ($val == null)
-        $logged_user->email = $email;
+        $logged_user->email = SQLite3::escapeString($email);
     else {
         //die("email deja existant");
         header("location: edit.php?erreur=1");
@@ -97,5 +101,3 @@ if (Systeme::updateUser($logged_user)) {
 	header("location: edit.php?erreur=3");
 	exit;
 }
-
-// TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification

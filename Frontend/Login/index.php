@@ -55,11 +55,12 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 
         ?>
         <div class="d-flex justify-content-between">
-            <input type="submit" value="Se connecter">
             <input type="button" value="Retour" onclick="window.location.href='../../index.php'">
+            <input type="submit" value="Se connecter">
         </div>
     </div>
     <div>
+        <div class="spacer"></div>
         <h5><a href="../Signup/">Pas encore inscrit? C'est par ici.</a></h5>
     </div>
 </form>

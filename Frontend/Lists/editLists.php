@@ -1,30 +1,32 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
+Systeme::start_session();
+
+Systeme::Init();
+
+if(Systeme::estConnecte()){
     $uid = $_SESSION["id"];
 } else {
     // Redirection vers la page d'accueil
-    header("location: /Frontend/Lists");
+    header("location: ../Frontend/Lists");
     exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+include_once "Backend/Utilisateur/Utilisateur.php";
 
-Systeme::Init();
 $lid = intval(SQLite3::escapeString($_POST['lid']));
 
 if (!is_int($lid)) {
-
-    die("L'ID de liste n'est pas valide");
+    error_log("ID $lid invalide");
+	header("location: ../Frontend/Lists");
 }
 
 $list = Systeme::getListeTachesByID($lid);
 if ($list == null) {
-    die("Liste d'ID " . $lid . " inexistante");
+    error_log("Liste d'ID " . $lid . " inexistante");
+	header("location: ../Frontend/Lists");
 }
 
 ?>
@@ -37,28 +39,28 @@ if ($list == null) {
 </head>
 <body>
 <?php
-include_once getenv('BASE')."Shared/navbar.php";
+include_once "Shared/navbar.php";
 ?>
 <div class="container align-center">
     <div class="spacer"></div>
     <h1 class="text-center"> Modifier les informations </h1>
     <div class="container align-center">
-        <form method="post" action="confirm_editLists.php">
+        <form method="post" action="confirm_editLists.php" onsubmit="return verifyForm()">
 
             <div class="form-group">
                 <h3> Nom </h3>
-                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>" required><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
+                <label for="nom"></label><input class="form-control" type="text" id="nom" name="nom" placeholder="<?php echo $list->nom?>"><input type="hidden" value="<?php echo $list->id; ?>" name="lid" id="lid">
             </div>
 
 
             <div class="form-group">
                 <h3> Date de debut </h3>
-                <label for="debut"></label><input class="form-control" type="date" id="debut" name="debut" placeholder="<?php echo $list->dateDebut?>">
+                <label for="debut"></label><input class="form-control" type="date" id="debut" name="debut" value="<?php echo $list->placeholderDebut()?>">
             </div>
 
             <div class="form-group">
                 <h3> (Date de fin) </h3>
-                <label for="fin"></label><input class="form-control" type="date" id="fin" name="fin" placeholder="<?php echo $list->dateFin?>">
+                <label for="fin"></label><input class="form-control" type="date" id="fin" name="fin" value="<?php echo $list->placeholderFin()?>">
             </div>
 
 
@@ -81,6 +83,41 @@ include_once getenv('BASE')."Shared/navbar.php";
 
     </div>
 </div>
+<script type="text/javascript">
+
+    function verifyForm() {
+
+        let sdate = document.getElementById('debut');
+        let startingDate = Date.parse(sdate.value);
+
+        if (isNaN(startingDate)) {
+            alert("Date de début invalide");
+            return false;
+        }
+
+        let edate = document.getElementById('fin');
+
+        if (edate.value === "") {
+            return true;
+        }
+
+        let endingDate = Date.parse(edate.value);
+
+        if (isNaN(endingDate)) {
+            alert("Date de fin invalide");
+            return false;
+        }
+
+        if (startingDate > endingDate) {
+            alert("La date de fin ne peut précéder la date de début");
+            return false;
+        }
+
+        return true;
+    }
+
+</script>
+
 <?php
 include_once getenv('BASE')."Shared/footer.php";
 ?>

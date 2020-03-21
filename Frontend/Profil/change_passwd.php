@@ -42,8 +42,20 @@ $conf_password = $_POST['conf-password'];
 
 if ($new_password == $conf_password) {
 	Systeme::changePassword($logged_user, $old_password, $new_password);
+    header("location: /Frontend/Profil/index.php");
+
 }
 
 
-header("location: /Frontend/Profil/change_password.php?erreur=2");
+if(!isset($_POST['old-password']) || !isset($_POST['new-password']) || !isset($_POST['conf-password'])){
+    header("location: /Frontend/Profil/change_password.php?erreur=2");
+    exit;
+}
+else{
+    if(Systeme::changePassword($logged_user, $old_password, $new_password) == false){
+        header("location: /Frontend/Profil/change_password.php?erreur=3");
+        exit;
+    }
+}
+
 // TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification

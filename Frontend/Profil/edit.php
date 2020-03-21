@@ -36,7 +36,7 @@ if ($user == null){
 	<div class="spacer"></div>
 	<h1 class="text-center"> Modifier ses informations </h1>
 	<div class="container align-center">
-		<form method="post" action="confirm_edit.php">
+		<form method="post" action="confirm_edit.php" onsubmit="return confirm('Confirmer ?')">
 
 			<div class="form-group">
 				<h3> Pseudo </h3>
@@ -80,13 +80,13 @@ if ($user == null){
 		if(isset($_GET['erreur'])){
 			$err = $_GET['erreur'];
 			if($err==1) {
-				echo "<p style='color:red'>email déjà utilisée, veuillez changer </p>";
+				echo "<p style='color:red'> Impossible d'utiliser l'adresse email entré </p>";
 			}
 			if($err==2) {
-				echo "<p style='color:red'>Vous devez rentrer votre mot de passe</p>";
+				echo "<p style='color:red'> Vous devez rentrer votre mot de passe </p>";
 			}
             if($err==3) {
-                echo "<p style='color:red'>Mauvais mot de passe</p>";
+                echo "<p style='color:red'> Mot de passe invalide </p>";
             }
 		}
 		?>

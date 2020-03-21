@@ -7,12 +7,11 @@
 	<link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
-
 <div class="container align-center">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Inscription </h1>
 	<div class="container align-center">
-		<form method="post" action="signup.php">
+		<form method="post" action="signup.php" onsubmit="return validateEmail(document.getElementById('email').value)">
 
 			<div class="form-group">
 				<h3> Pseudo </h3>
@@ -45,8 +44,8 @@
 			</div>
 
             <div class="d-flex justify-content-between">
-                <input type="submit" value="S'inscrire">
                 <button onclick="window.location.href='/'"> Retour </button>
+                <input type="submit" value="S'inscrire">
             </div>
 
 		</form>
@@ -63,15 +62,32 @@
 			if($err==3){
                 echo "<p style='color:red'>Les deux mots de passe ne sont pas identiques</p>";
             }
+            if($err==4){
+                echo "<p style='color:red'>L'adresse email est invalide</p>";
+            }
 
 		}
 		?>
-
-
 	</div>
 </div>
 <?php 
 	include_once "Shared/footer.php";
 ?>
+
+<script>
+
+    function validateEmail(email) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let res = re.test(String(email).toLowerCase());
+
+        if (!res) {
+            alert("Le format de l'email n'est pas valide");
+        }
+
+        return res;
+    }
+
+
+</script>
 </body>
 </html>
