@@ -50,24 +50,20 @@ if(Systeme::estConnecte()){
 
             $notifs = array_merge($notifTache, $notifList); //fusion des notifs
 
-        foreach ($notifs as $notifT) {
-
-            echo "
-            
-				<tr>
-					<th scope='row'>" . $notifT->idNotif . "</th>
-					<td>" . $notifT->msg . "</td>
-					</td>
-					<td id='delete_'. $notifT->idNotif>
-					<form action='./supprimer.php' method='post'>
-					    <input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
-					</form>
-					</td>
-					
-
-				</tr>" ;
-        }
-
+            foreach ($notifs as $notifT) {
+                echo "<tr>
+                        <th scope='row'>" . $notifT->idNotif . "</th>
+                        <td>" . $notifT->msg . "</td>
+                        </td>
+                        <td id='delete_'. $notifT->idNotif>
+                        <form action='./supprimer.php' method='post'>
+                            <input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;' disabled>
+                            <label for='lid'></label>
+                            <input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
+                        </form>
+                        </td>
+                    </tr>" ;
+            }
         ?>
         </tbody>
     </table>

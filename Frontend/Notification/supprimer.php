@@ -17,7 +17,6 @@ $uid = $_SESSION['id'];
 $utilisateur = Systeme::getUserByID($uid);
 
 if (!isset($_GET['id'])) {
-
 	header( "location: notification.php");
 }
 
