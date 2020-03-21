@@ -68,50 +68,20 @@ if ($list->proprietaire != $uid) {
 $nom = Systeme::_POST('nom');
 if ($nom == false && !empty($nom)){
 	error_log("Aucun nom de tâche");
-	header("location: index.php");
+	header("location: ../Lists/View/index.php?id=$list->id");
 	exit;
 }
 
 $nom = trim($nom);
 
-$sdate = strtotime($debut);
-if ($sdate == false) {
-	error_log("Date de début au format invalide");
-	header("location: index.php");
-	exit;
-}
-
-if ($fin != null) {
-	$edate = strtotime($fin);
-	if ($edate == false) {
-		error_log("Date de fin au format invalide");
-		header("location: index.php");
-		exit;
-	}
-} else {
-	$edate = null;
-}
-
-
-if ($sdate != $list->dateDebut) {
-    $list->dateDebut = $sdate;
-}
-
 if (!empty($nom) && $nom != $list->nom) {
-    $list->nom = trim($nom);
+    $task->nom = $nom;
 }
 
-if ($list->dateFin == "NULL") {
-	if ($fin != null) {
-		$list->dateFin = $edate;
-	}
-} else {
-	$list->dateFin = $edate;
-}
-if (Systeme::updateList($list)) {
-    header("location: ./");
+if (Systeme::updateTask($task)) {
+    header("location: ../Lists/View/index.php?id=$list->id");
     exit;
 } else {
-    header("location: editLists.php?erreur=1");
+    header("location: ../Lists/View/index.php?id=$list->id?erreur=1");
     exit;
 }

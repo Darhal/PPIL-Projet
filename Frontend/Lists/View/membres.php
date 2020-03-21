@@ -94,8 +94,17 @@ $owner = Systeme::getUserByID($liste->proprietaire);
 					<td>" . $membre->email . "</td>";
 
 			if ($user->id == $owner->id) {
-				echo "<td><a href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>";
-			}
+				//echo "<td><a href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>";
+
+
+                echo "<td>
+						<form action='/Frontend/Lists/deleteUser.php' method='post'>
+							<input type='image' name='delete' src='../../../Assets/Images/delete.png' style='width:2rem;' alt='Supprimer'>
+							<label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$liste->id'>
+							<label for='udeleteid'></label><input hidden type='text' id='udeleteid' name='udeleteid' value='$membre->id'>
+						</form> </td> ";
+
+            }
 
 			echo "</tr>";
 		}
