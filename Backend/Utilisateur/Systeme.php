@@ -924,7 +924,8 @@ class Systeme
             $idutil=$utilisateur->id;
             $res = $res && self::createNotificationTache($msg,$idListe,$idTask,$idutil);
         }
-
+        // on notifie aussi le propriétaire
+        $res = $res && self::createNotificationTache($msg,$idListe, $idTask, $liste->proprietaire);
         return $res;
     }
 
@@ -942,13 +943,15 @@ class Systeme
             $idutil=$utilisateur->id;
             $res = $res && self::createNotificationListeTaches($msg,$idListe,$idutil);
         }
+        // on notifie aussi le propriétaire
+        $res = $res && self::createNotificationListeTaches($msg,$idListe, $liste->proprietaire);
 
         return $res;
     }
 
 
 
-        //---------------------------- FIN Notifications ---------------------------------
+    //---------------------------- FIN Notifications ---------------------------------
 
 
 }
