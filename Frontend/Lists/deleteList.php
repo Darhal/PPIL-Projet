@@ -64,5 +64,6 @@ if (!Systeme::supprimerListeByID($liste->id)) {
     error_log("Une erreur est survenue lors de la suppression de la liste $lid par $user->pseudo");
 }
 
+
 header("location: ./");
 exit;
