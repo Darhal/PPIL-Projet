@@ -863,6 +863,7 @@ class Systeme
 
         return self::$dao_notif->supprimerDeBDDByID($idNotification);
     }
+
     /**
      * Retourne un tableau contenant des Obj Not
      * @param int $idUtilisateur
@@ -927,7 +928,14 @@ class Systeme
      */
     public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask){
 
-//         createNotificationTache(string $message, int $idListe, int $idTache, int $idDestinataire)
+        $res = false;
+        $liste = self::getListeTachesByID($idListe);
+        $membres = self::getMembres($liste);
+        foreach ($membres as $utilisateur){
+            $idutil=$utilisateur->id;
+            self::createNotificationListeTaches($msg,$idListe,$idListe);
+
+        }
 
     }
 
