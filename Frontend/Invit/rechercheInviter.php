@@ -65,7 +65,7 @@ $unwanted_array = array(
         $.ajax({
             type:"GET",
             url"http/ppil.ugocottin.fr/Fontend/Invit/pseudoR.php",
-            data:"pseudo="+p,
+            data:"Pseudo="+p,
             success: function (d) {
                 afficher(d)
             }
