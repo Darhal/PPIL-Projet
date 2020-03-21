@@ -920,16 +920,16 @@ class Systeme
     }
 
 
-//    /**
-//     * Notifie tous les membres d'un
-//     * @param String $msg
-//     * @param int $idListe
-//     */
-//    public static function notifierTacheTousMembresListe(String $msg, int $idListe){
-//
+    /**
+     * Notifie tous les membres d'un
+     * @param String $msg
+     * @param int $idListe
+     */
+    public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask){
+
 //         createNotificationTache(string $message, int $idListe, int $idTache, int $idDestinataire)
-//
-//    }
+
+    }
 
     //---------------------------- FIN Notifications ---------------------------------
 
