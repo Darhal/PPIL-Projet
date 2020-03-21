@@ -908,35 +908,24 @@ class Systeme
     }
 
 
+
     /**
-     * Cette fonction notifie tous les membres d'une liste que la tâche a été supprimée
+     * Crée une NotificationTache pour tous les membres d'une ListeTaches
      * @param String $msg
-     * @param int $idTask
      * @param int $idListe
+     * @param int $idTask
      * @return bool
      */
-    public static function notifierSuppTache(String $msg, int $idTask,int $idListe) : bool{
-
-
-    }
-
-
-    /**
-     * Notifie tous les membres d'un
-     * @param String $msg
-     * @param int $idListe
-     */
-    public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask){
-
-        $res = false;
+    public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask) {
+        $res = true;
         $liste = self::getListeTachesByID($idListe);
         $membres = self::getMembres($liste);
         foreach ($membres as $utilisateur){
             $idutil=$utilisateur->id;
-            self::createNotificationListeTaches($msg,$idListe,$idListe);
-
+            $res = $res && self::createNotificationListeTaches($msg,$idListe,$idListe);
         }
 
+        return $res;
     }
 
     //---------------------------- FIN Notifications ---------------------------------
