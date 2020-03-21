@@ -44,11 +44,7 @@ if(Systeme::estConnecte()){
 
         <?php
             $user = Systeme::getUserByEmail($_SESSION['email']);
-
-            $notifTache = Systeme::getNotificationsTache($user->id) ;
-            $notifList = Systeme::getNotificationsListe($user->id);
-
-            $notifs = array_merge($notifTache, $notifList); //fusion des notifs
+            $notifs = Systeme::getNotifications($user->id) ;
 
             foreach ($notifs as $notifT) {
                 echo "<tr>

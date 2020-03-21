@@ -22,16 +22,13 @@ if (!isset($_GET['lid'])) {
 
 $notifID = intval($_GET['lid']);
 
-$notifTache = Systeme::getNotificationsTache($utilisateur->id) ;
-$notifList = Systeme::getNotificationsListe($utilisateur->id);
-
-$notifications = array_merge($notifTache, $notifList); //fusion des notifs
+$notifTache = Systeme::getNotifications($utilisateur->id);
 
 foreach ($notifications as $notification) {
 	echo "$notification->id | $notifID";
 	if ($notification->id == $notifID) {
 		if(Systeme::supprimerNotification($notification)){
-            // header( "location: notification.php");
+            header( "location: notification.php");
         }else{
 		    echo "erreur" ;
         }

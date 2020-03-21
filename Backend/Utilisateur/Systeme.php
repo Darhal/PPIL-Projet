@@ -892,6 +892,21 @@ class Systeme
         return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
     }
 
+    /**
+     * Récupère de la BDD toutes les Notifications de l'user
+     * @param int $idUtilisateur
+     * @return array
+    */
+    public static function getNotifications(int $idUser) : array {
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+
+        $notifTache = Systeme::getNotificationsTache($idUser) ;
+        $notifList = Systeme::getNotificationsListe($idUser);
+        $notifications = array_merge($notifTache, $notifList); //fusion des notifs
+        return $notifications;
+    }
 
     /**
      * Retourne le nombre de notifications
