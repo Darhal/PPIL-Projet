@@ -1,22 +1,21 @@
 <?php
+set_include_path(getenv('BASE'));
 
 include_once "Utilisateur.php"; // This is okay they share the same folder
 
-include_once getenv('BASE')."Backend/DAO/DAOUtilisateur.php";
-include_once getenv('BASE')."Backend/DAO/DAOListeTaches.php";
-include_once getenv('BASE')."Backend/DAO/DAOTache.php";
-include_once getenv('BASE')."Backend/DAO/DAOMembre.php";
-include_once getenv('BASE')."Backend/DAO/DAOInvit.php";
-include_once getenv('BASE')."Backend/DAO/DAONotif.php";
+include_once "Backend/DAO/DAOUtilisateur.php";
+include_once "Backend/DAO/DAOListeTaches.php";
+include_once "Backend/DAO/DAOTache.php";
+include_once "Backend/DAO/DAOMembre.php";
+include_once "Backend/DAO/DAOInvit.php";
+include_once "Backend/DAO/DAONotif.php";
 
-include_once getenv('BASE')."Backend/Invitation/InvitationListeTache.php";
-include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
-include_once getenv('BASE')."Backend/Taches/Tache.php";
-include_once getenv('BASE')."Backend/Membre.php";
+include_once "Backend/Invitation/InvitationListeTache.php";
+include_once "Backend/Taches/ListeTaches.php";
+include_once "Backend/Taches/Tache.php";
+include_once "Backend/Membre.php";
 
-
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
+include_once "Shared/Libraries/BDD.php";
 
 /**
  * Projet Procrast
