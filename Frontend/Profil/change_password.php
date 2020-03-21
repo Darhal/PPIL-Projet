@@ -70,6 +70,9 @@ if ($user == null){
             if($err==3) {
                 echo "<p style='color:red'>Le mot de passe n'a pas pu être modifié </p>";
             }
+            if($err==4) {
+                echo "<p style='color:red'>Le mot de passe actuel est faux </p>";
+            }
 		}
 		?>
 
