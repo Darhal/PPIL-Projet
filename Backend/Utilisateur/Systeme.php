@@ -950,8 +950,6 @@ class Systeme
             $idutil=$utilisateur->id;
             $res = $res && self::createNotificationListeTaches($msg,$idListe,$idutil);
         }
-        // on notifie aussi le propriétaire
-        $res = $res && self::createNotificationListeTaches($msg,$idListe, $liste->proprietaire);
 
         return $res;
     }
