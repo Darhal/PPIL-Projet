@@ -2,15 +2,20 @@
 
 ## Reste à implémenter
 
-- Modifier son mot de passe ?
-- Supprimer son compte
-- Demande de mot de passe oublié
-- Demande de transfert de propriété
+### Sprint4
+
 - Propriétaire retire un membre
 - Modifier une tâche
-- Répondre à un transfert de propriété
 - Consulter ses notifications
 - Supprimer une notification
+- Modifier son mot de passe ?
+
+### Sprint5
+
+- Demande de transfert de propriété
+- Répondre à un transfert de propriété
+- Supprimer son compte
+- Demande de mot de passe oublié
 
 ## Reste à fixer
 
