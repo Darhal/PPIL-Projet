@@ -86,7 +86,7 @@ class DAONotif extends DAO
 
         foreach ($resSQL as $item) {
             if($item['nature'] == "tache"){
-                $notif = new NotificationTache($item['msg'], $item['statut'], $item['idListe'], $item['destinataire']);
+                $notif = new NotificationTache($item['msg'], $item['statut'], $item['idListe'], $item['idTache'], $item['destinataire']);
                 $notif->idNotif = $item['idNotif'];
                 $notif->idTache = $item['idTache'];
 
