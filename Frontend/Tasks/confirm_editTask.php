@@ -84,7 +84,7 @@ if (!empty($nom) && $nom != $list->nom) {
 if (Systeme::updateTask($task)) {
 
     //notification de modificatio
-    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de modifier la tache $task->nom de $list->nom", $list->id, $task->id)){
+    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de modifier le nom la tache $task->nom de $list->nom", $list->id, $task->id)){
         error_log("Une erreur est survenue lors de la notification de la modificatio de liste $list->id avec tache $task->id");
     }
     header("location: ../Lists/View/index.php?id=$list->id");
