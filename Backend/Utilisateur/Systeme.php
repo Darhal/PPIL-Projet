@@ -916,7 +916,7 @@ class Systeme
      * @param int $idTask
      * @return bool
      */
-    public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask) {
+    public static function notifierTacheTousMembresListe(String $msg, int $idListe, int $idTask) : bool {
         $res = true;
         $liste = self::getListeTachesByID($idListe);
         $membres = self::getMembres($liste);
@@ -928,7 +928,27 @@ class Systeme
         return $res;
     }
 
-    //---------------------------- FIN Notifications ---------------------------------
+    /**
+     * Crée une notificationListe pour tous les membres d'une ListeTaches
+     * @param String $msg
+     * @param int $idListe
+     * @return bool
+     */
+    public static function notifierListeTousMembresListe(String $msg, int $idListe) : bool {
+        $res = true;
+        $liste = self::getListeTachesByID($idListe);
+        $membres = self::getMembres($liste);
+        foreach ($membres as $utilisateur){
+            $idutil=$utilisateur->id;
+            $res = $res && self::createNotificationListeTaches($msg,$idListe,$idListe);
+        }
+
+        return $res;
+    }
+
+
+
+        //---------------------------- FIN Notifications ---------------------------------
 
 
 }
