@@ -926,9 +926,15 @@ class Systeme
         foreach ($membres as $utilisateur){
             $idutil=$utilisateur->id;
             $res = $res && self::createNotificationTache($msg,$idListe,$idTask,$idutil);
+            if(!$res){
+                error_log("err lors de la execution createNotificationTache pour: msg=".$msg." idliste=".$idListe." idTask=".$idTask." idUtil=".$idutil);
+            }
         }
         // on notifie aussi le propriétaire
         $res = $res && self::createNotificationTache($msg,$idListe, $idTask, $liste->proprietaire);
+        if(!$res){
+            error_log("err lors de la execution createNotificationTache pour: msg=".$msg." idliste=".$idListe." idTask=".$idTask." idUtil=".$liste->proprietaire);
+        }
         return $res;
     }
 
