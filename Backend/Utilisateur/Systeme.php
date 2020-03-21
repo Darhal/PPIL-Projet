@@ -550,7 +550,6 @@ class Systeme
      * @return bool
      */
     public static function updateList(ListeTaches $liste) : bool {
-        var_dump($liste);
         return self::$dao_listeTaches->update($liste);
     }
 
@@ -715,6 +714,10 @@ class Systeme
 
         return $tache;
     }
+
+	public static function updateTask(Tache $task): bool {
+		return self::$dao_tache->update($task);
+	}
 
 
     //---------------------------- FIN Taches ---------------------------------
