@@ -125,7 +125,7 @@ class DAONotif extends DAO
         $attribs = array(
             "idNotif" => $notif->idNotif,
             "msg" => $notif->msg,
-            "statut" => ($notif->dejaLu)?1:0,
+            "statut" => ($notif->dejaLu)?"1":"0",
             "nature" => $nature,
             "idListe" =>$notif->listeTaches,
             "idTache" =>($notif instanceof NotificationTache)? $notif->tache : "null",
