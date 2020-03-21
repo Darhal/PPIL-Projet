@@ -22,7 +22,7 @@ if (!isset($_GET['lid'])) {
 
 $notifID = intval($_GET['lid']);
 
-$notifTache = Systeme::getNotifications($utilisateur->id);
+$notifications = Systeme::getNotifications($utilisateur->id);
 
 foreach ($notifications as $notification) {
 	echo "$notification->id | $notifID";
