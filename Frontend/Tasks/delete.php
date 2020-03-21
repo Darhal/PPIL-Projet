@@ -61,6 +61,12 @@ if ($list->proprietaire == $user->id) {
 	if (Systeme::supprimerTache($task->id)) {
 	    //envoie notif pour avertir de la suppression
 
+        //envoie une notification
+
+        if(!Systeme::notifierTacheTousMembresListe("tache supprime", $lid, $task->id)){
+            error_log("Une erreur est survenue lors de la notification de la suppression de liste $lid");
+
+        }
         //redirection
 		header("location: ../Lists/View/index.php?id=" . $lid);
 	}
