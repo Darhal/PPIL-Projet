@@ -51,7 +51,7 @@ class DAONotif extends DAO
             "statut" => ($notif->dejaLu)?"1":"0",
             "nature" => $nature,
             "idListe" =>$notif->listeTaches,
-            "idTache" =>($notif instanceof NotificationTache)? $notif->tache : "null",
+            "idTache" =>($notif instanceof NotificationTache)? strval($notif->tache) : "null",
             "destinataire" => $notif->destinataire
         );
 
