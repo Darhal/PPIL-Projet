@@ -87,7 +87,7 @@ $user = Systeme::getUserByID($_SESSION['id']);
 				if ($proprietaire->id == $user->id) {
 					echo "
 						<form action='./deleteList.php' method='post'>
-							<input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' alt='Supprimer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
+							<input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;' alt='Supprimer'><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$list->id'>";
 				} else {
 					echo "
 						<form action='./leaveList.php' method='post'>

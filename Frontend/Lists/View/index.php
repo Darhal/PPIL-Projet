@@ -192,7 +192,7 @@ if ($liste == null) {
 		}
 
 		function Supprimer(Tache $tache) {
-			echo "<td><a href='/Frontend/Tasks/delete.php?id=" . $tache->id ."'><img src='../../../Assets/Images/delete.png' style='width:2rem;'  alt='Supprimer'></a></td>";
+			echo "<td><a href='/Frontend/Tasks/delete.php?id=" . $tache->id ."'><img src='../../../Assets/Images/SVG/trash.svg' style='width:2rem;'  alt='Supprimer'></a></td>";
 		}
 
 		Liste($liste, $user);
