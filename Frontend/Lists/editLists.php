@@ -20,14 +20,14 @@ $lid = Systeme::_POST('lid');
 
 if ($lid == false) {
 	error_log("ID de liste non défini");
-	header("location: ../Frontend/Lists");
+	header("location: ./");
 }
 
 $lid = intval($lid);
 
 if (!is_int($lid)) {
     error_log("ID $lid invalide");
-	header("location: ../Frontend/Lists");
+	header("location: ./");
 }
 
 $list = Systeme::getListeTachesByID($lid);
