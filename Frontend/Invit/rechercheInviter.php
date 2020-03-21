@@ -61,17 +61,23 @@ $unwanted_array = array(
 <div id="personne">
 </div>
 <script type="application/javascript">
-    /*function f() {
-    $.ajax({
-        type:"GET",
-        url"http/ppil.ugocottin.fr/
-    })
-}*/
-    function afficher() {
-        var personne=document.createElement("div");
-        var content=document.createTextNode("personne1");
-        personne.appendChild(content);
-        var divElement=document.getElementById("personne");
-        document.body.insertBefore(personne,divElement);
+    function f(p) {
+        $.ajax({
+            type:"GET",
+            url"http/ppil.ugocottin.fr/Fontend/Invit/pseudoR.php",
+            data:"pseudo="+p,
+            success: function (d) {
+                afficher(d)
+            }
+        })
     }
+    function afficher(p) {
+        var json=JSON.parse(p)
+        var divElement=document.getElementById("personne");
+        json.forEach(element=>{
+            var personne=document.createElement("div");
+            var content=document.createTextNode(element);
+            personne.appendChild(content);
+            document.body.insertBefore(personne,divElement);
+        })
 </script>

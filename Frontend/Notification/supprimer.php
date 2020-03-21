@@ -27,8 +27,12 @@ $notifications = Systeme::getNotifications($utilisateur);
 
 foreach ($notifications as $notification) {
 	if ($notification->id == $invID) {
-		Systeme::supprimerNotification($notification);
+		if(Systeme::supprimerNotification($notification)){
+            header( "location: notification.php");
+        }
+		else{
+		    echo "erreur" ;
+        }
 	}
 }
 
-header( "location: notification.php");
