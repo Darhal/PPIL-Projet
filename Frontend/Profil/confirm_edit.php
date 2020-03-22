@@ -4,13 +4,12 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 
-if(Systeme::estConnecte()){
-	$uid = $_SESSION["id"];
-} else {
-	// Redirection vers la page d'accueil
+if(!Systeme::estConnecte()){
 	header("location: ../Login");
 	exit;
 }
+
+$uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
 
@@ -19,49 +18,27 @@ Systeme::Init();
 $logged_user = Systeme::getUserByID($uid);
 
 if ($logged_user == null){
-	die("ERROR: Unable to find user by email");
+	header("location: ../Login");
+	exit;
 }
 
-if (!isset($_POST['pseudo'])) {
-	die("pseudo non défini");
-}
+$pseudo = Systeme::_POST('pseudo');
 
-$pseudo = $_POST['pseudo'];
+$prenom = Systeme::_POST('prenom');
 
-if (!isset($_POST['prenom'])) {
-	die("prenom non défini");
-}
+$nom = Systeme::_POST('nom');
 
-$prenom = $_POST['prenom'];
+$email = Systeme::_POST('email');
 
-if (!isset($_POST['nom'])) {
-	die("nom non défini");
-}
+$conf_password = Systeme::_POST('conf-password');
 
-$nom = $_POST['nom'];
-
-if (!isset($_POST['email'])) {
-	die("email non défini");
-}
-
-$email = $_POST['email'];
-
-
-
-if (!isset($_POST['conf-password'])) {
+if ($conf_password == false) {
     //die("veuillez entrer votre mot de passe");
     header("location: edit.php?erreur=2");
     exit;
 }
 
-$password = $_POST['conf-password'];
-
-if (empty($password)) {
-	header("location: edit.php?erreur=2");
-	exit;
-}
-
-if ($password != $logged_user->mdp) {
+if ($conf_password != $logged_user->mdp) {
 	header("location: edit.php?erreur=3");
     exit;
 }
@@ -94,7 +71,7 @@ if ($email != "" && $email != $logged_user->email) {
 }
 
 if (Systeme::updateUser($logged_user)) {
-	header("location: ../Profil");
+	header("location: .");
 	$_SESSION["username"] = $logged_user->pseudo;
 	exit;
 } else {
