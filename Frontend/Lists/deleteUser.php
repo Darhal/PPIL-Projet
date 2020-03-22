@@ -97,5 +97,10 @@ if (!Systeme::quitterListe($membre, $liste)) {
     error_log("Une erreur est survenue lors de la suppression de l'utilisateur $udeleteid");
 }
 
+
+if(!Systeme::notifierListeTousMembresListe("$membre->pseudo a été supprimé.e de la liste $liste->nom", $liste->id)){
+    error_log("Une erreur est survenue lors de la suppression de $membre->pseudo de la liste $liste->nom");
+}
+
 header("location: ./");
 exit;
