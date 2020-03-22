@@ -1,24 +1,25 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
-	$uid = $_SESSION["id"];
-} else {
+Systeme::start_session();
+
+if(!Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
 	header("location: ../Login");
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+$uid = $_SESSION["id"];
+
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::Init();
 $user = Systeme::getUserByID($uid);
 
 if ($user == null){
-	die("ERROR: Unable to find user by ID");
+	header("location: ../Login/logout.php");
 }
 ?>
 <!DOCTYPE html>
@@ -30,7 +31,7 @@ if ($user == null){
 </head>
 <body>
 <?php 
-	include_once getenv('BASE')."Shared/navbar.php";
+	include_once "Shared/navbar.php";
 ?>
 <div class="container align-center">
 	<div class="spacer"></div>
@@ -52,27 +53,34 @@ if ($user == null){
 				<h3> Confirmer votre nouveau mot de passe </h3>
 				<label for="conf-password"></label><input class="form-control" type="password" id="conf-password" name="conf-password" required>
 			</div>
-			<input type="submit" value="Modifier son mot de passe">
+			<div class="d-flex justify-content-between">
+				<button onclick="window.location.href='./edit.php'"> Retour </button>
+				<input type="submit" value="Modifier son mot de passe">
+			</div>
 		</form>
-		<button onclick="window.location.href='./edit.php'"> Retour </button>
 
 		<!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
 
 		<?php
 		if(isset($_GET['erreur'])){
 			$err = $_GET['erreur'];
-			if($err==1) {
-				echo "<p style='color:red'>email déjà utilisé, veuillez changer </p>";
+			switch ($err) {
+				case 1:
+					echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
+					break;
+				case 2:
+					echo "<p style='color:red'>Le mot de passe actuel est faux </p>";
+					break;
+				case 3:
+					echo "<p style='color:red'> Une erreur est survenue lors de la modification de votre mot de passe </p>";
+					break;
+				case 4:
+					echo "<p style='color:red'> Les mots de passe saisis en correspondent pas </p>";
+					break;
+				default:
+					echo "<p style='color:red'> Une erreur inconnue est survenue </p>";
+					break;
 			}
-			if($err==2) {
-                echo "<p style='color:red'>Vous devez remplir les champs obligatoires </p>";
-            }
-            if($err==3) {
-                echo "<p style='color:red'>Le mot de passe n'a pas pu être modifié </p>";
-            }
-            if($err==4) {
-                echo "<p style='color:red'>Le mot de passe actuel est faux </p>";
-            }
 		}
 		?>
 
@@ -80,7 +88,7 @@ if ($user == null){
 	</div>
 </div>
 <?php 
-	include_once getenv('BASE')."Shared/footer.php";
+	include_once "Shared/footer.php";
 ?>
 </body>
 </html>
