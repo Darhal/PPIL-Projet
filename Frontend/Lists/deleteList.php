@@ -68,11 +68,11 @@ if(!Systeme::createNotificationListeTaches("Vous venez de supprimer la liste $li
 
 
 //Ne marche pas
-/*
+
 if(!Systeme::notifierListeTousMembresListe("La liste $liste->nom a été supprimée", $liste->id)){
     error_log("Une erreur est survenue lors de la suppression de la liste $liste->nom");
 
-}*/
+}
 
 if (!Systeme::supprimerListeByID($liste->id)) {
     error_log("Une erreur est survenue lors de la suppression de la liste $lid par $user->pseudo");
