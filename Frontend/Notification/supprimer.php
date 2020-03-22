@@ -28,6 +28,8 @@ if (!is_int($notifID)) {
     die("L'ID de la notification n'est pas valide $notifID");
 }
 
+// TODO: - Protéger la suppression des notifications
+
 if(Systeme::supprimerNotificationByID($notifID)){
     header( "location: notification.php");
 }else{

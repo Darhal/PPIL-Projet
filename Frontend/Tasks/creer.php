@@ -43,6 +43,12 @@ if ($liste == null) {
 	die("Liste d'ID " . $lid . " inexistante");
 }
 
+if ($liste->proprietaire != $user->id) {
+	error_log("L'utilisateur $user->pseudo n'est pas propriétaire de la liste $liste->id");
+	header("location: ../Lists/View/index.php?id=$liste->id");
+	exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

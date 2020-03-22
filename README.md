@@ -2,6 +2,12 @@
 
 ## Reste à implémenter
 
+
+
+### Sprint3
+
+- Debuggage
+
 ### Sprint4
 
 - Propriétaire retire un membre

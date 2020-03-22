@@ -41,6 +41,14 @@ if ($liste == null) {
 	header("location: ../");
 }
 
+$membres = Systeme::getMembres($liste);
+
+if (!in_array($user, $membres)) {
+	error_log("L'utilisateur $user->pseudo n'est pas membre de la liste $liste->id");
+	header("location: ../");
+	exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
