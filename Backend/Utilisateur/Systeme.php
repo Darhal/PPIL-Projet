@@ -861,7 +861,7 @@ class Systeme
      */
     public static function supprimerNotificationByID(int $idNotification) : bool {
         if (!isset($idNotification)) {
-            return null;
+            return false;   //return null ou flase ?
         }
 
         return self::$dao_notif->supprimerDeBDDByID($idNotification);
