@@ -20,13 +20,21 @@ include_once "Backend/Utilisateur/Utilisateur.php";
 
 $utilisateur = Systeme::getUserByID($uid);
 
-$notifID = intval(SQLite3::escapeString($_GET['lid']));
 
-if (!is_int($id)) {
+$notifID = Systeme::_POST('lid');
+
+if ($notifID == false) {
+    error_log("ID de notification non défini");
+    header("location: ./notification.php");
+    exit;
+}
+
+$notifID = intval($notifID);
+
+if (!is_int($notifID)) {
     // TODO: - Afficher une erreur
     die("L'ID de la notification n'est pas valide $notifID");
 }
-//$notifID = intval($_GET['lid']);
 
 
 
@@ -38,12 +46,4 @@ if(Systeme::supprimerNotificationByID($notifID)){
     //TODO redirection
     echo "erreur" ;
 }
-
-/*
-foreach ($notifications as $notification) {
-	echo "$notification->id | $notifID";
-	if ($notification->id == $notifID) {
-
-	}
-}*/
 
