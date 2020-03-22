@@ -801,6 +801,16 @@ class Systeme
         return $res_array;
     }
 
+    public static function getNbInvitationsByIDUser(int $idUtilisateur) : int{
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+
+
+        return count(self::$dao_invit->getInvitationsByID($idUtilisateur));
+    }
+
+
     //---------------------------- FIN Invitations ---------------------------------
 
     //---------------------------- Notifications ---------------------------------

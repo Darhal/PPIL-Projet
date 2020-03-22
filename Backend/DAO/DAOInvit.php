@@ -52,4 +52,9 @@ class DAOInvit extends DAO
     public function getInvitationsFor(Utilisateur $utilisateur) : array {
     	return $this->getByRequete("destinataire = $utilisateur->id");
     }
+
+    public function getInvitationsByID(int $idUser) : array {
+        return $this->getByRequete("destinataire = $idUser");
+    }
+
 }
