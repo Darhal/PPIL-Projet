@@ -72,7 +72,7 @@ class DAONotif extends DAO
 
     public function supprimerDeBDDByID($idNotif) : bool
     {
-        return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$idNotif);
+        return $this->BDD->deleteRow(self::$tab_name, "idNotif = ".$idNotif);
     }
 
     public function getByRequete($requete) : array {
