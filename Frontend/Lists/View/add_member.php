@@ -64,4 +64,8 @@ foreach ($invitations as $invitation) {
 
 Systeme::inviterUtilisateur($liste, $current_user, $user);
 
+if(!Systeme::createNotificationListeTaches("Vous venez d'inviter $user->pseudo sur la liste $liste->nom", $liste->id, $current_user->id)){
+    error_log("Une erreur est survenue lors de l'invitationsur la liste $liste->nom");
+}
+
 header("location: index.php?id=$liste->id");
