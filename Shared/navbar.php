@@ -27,7 +27,7 @@ if (Systeme::estConnecte()) {
 Systeme::Init();
 $user = Systeme::getUserByID($uid);
 $notif=Systeme::getNbNotifications($user->id);
-
+$nbinvit=Systeme::getNbInvitationsByIDUser($user->id);
 echo '
 <!DOCTYPE html>
 <html>
@@ -63,7 +63,7 @@ echo '
 		<a class="py-1 d-none" href="'.$account.'">Mon compte</a>
 		<a class="py-1 d-none" href="'.$lists.'">Mes listes</a>
 		<a class="notification "  href="'.$notification.'"><span>Notifications</span> <span class="badge">'.$notif.'</span></a>
-		<a class="notification " href="'.$invit.'">Invitations <span class="badge">'.$notif.'</span> </a>
+		<a class="notification " href="'.$invit.'">Invitations <span class="badge">'.$nbinvit.'</span> </a>
 		<a class="py-1 d-none" href="'.$target.'">'.$text . '</a>
 	</div>
 </nav>
