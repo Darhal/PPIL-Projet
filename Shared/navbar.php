@@ -29,13 +29,46 @@ $user = Systeme::getUserByID($uid);
 $notif=Systeme::getNbNotifications($user->id);
 
 echo '
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.notification {
+   text-decoration: none;
+  padding: 10px 20px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+</style>
+</head>
+<body>
 <nav class="site-header sticky-top py-1">
 	<div class="align-center d-flex flex-column flex-md-row justify-content-between" style="max-width: 80%">
 		<a class="py-1 d-none" href="'.$account.'">Mon compte</a>
 		<a class="py-1 d-none" href="'.$lists.'">Mes listes</a>
-		<a class="py-1 d-none "  href="'.$notification.'">Notifications <span class="badge">'.$notif.'</span></a>
-		<a class="py-1 d-none " href="'.$invit.'">Invitations</a>
+		<a class="notification "  href="'.$notification.'"><span>Notifications</span> <span class="badge">'.$notif.'</span></a>
+		<a class="notification " href="'.$invit.'">Invitations <span class="badge">'.$notif.'</span> </a>
 		<a class="py-1 d-none" href="'.$target.'">'.$text . '</a>
 	</div>
 </nav>
+
+</body>
+</html>
+
 ';
