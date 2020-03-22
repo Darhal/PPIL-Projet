@@ -37,7 +37,7 @@ if (intval($tid) == null) {
 $tid = intval($tid);
 
 $task = Systeme::getTaskById($tid);
-
+$liste = Systeme::getListeTachesByID($task->idListe) ;
 if($task == null) {
 	// TODO: - Afficher une erreur
 	die("Aucune tache d'ID " . $tid);
@@ -53,4 +53,7 @@ if (!$task->estFinie()) {
 
 Systeme::setNotDone($task);
 
+if(!Systeme::notifierTacheTousMembresListe("La tache $task->nom de $liste->nom a été marquée comme non finie", $task->idListe, $task->id)){
+    error_log("Une erreur est survenue lors de la non completion de la liste $liste->id avec tache $task->id");
+}
 header("location: ../Lists/View/index.php?id=$task->idListe");
