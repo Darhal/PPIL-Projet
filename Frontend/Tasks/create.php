@@ -5,6 +5,7 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 
+
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
 	// Redirection vers la page d'accueil
@@ -33,7 +34,10 @@ if (!is_int($lid)) {
 
 Systeme::Init();
 $liste = Systeme::getListeTachesByID($lid);
+include_once "Backend/Utilisateur/Utilisateur.php";
 
+$uid = $_SESSION["id"];
+$user = Systeme::getUserByID($uid) ;
 if ($liste == null) {
 	// TODO: - Afficher une erreur
 	die("Liste d'ID " . $lid . " inexistante");
@@ -65,6 +69,11 @@ include_once "Backend/Taches/Tache.php";
 
 $res = Systeme::createTask($tname, $liste);
 
+
+
+if(!Systeme::notifierListeTousMembresListe("La tache $tname vient d'etre ajoutée à $liste->nom", $liste->id)){
+    error_log("Une erreur est survenue lors de la creation de la tache $tname");
+}
 if ($res == true) {
 	header("location: ../Lists/View/index.php?id=" . $liste->id);
 } else {

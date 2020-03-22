@@ -15,6 +15,7 @@ $unwanted_array = array(
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
+    <script   src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../CSS/style.css">
     <style>
         .retour {
@@ -52,8 +53,8 @@ $unwanted_array = array(
 
     <h1>Tapez le nom de la personne que vous souhaitez rechercher </h1>
     <form action="" class="formulaire">
-        <input style="width: 300px" class="champ" type="text" value="Pseudo"/>
-        <input class="bouton" type="button" onclick="afficher()" value="recherche" />
+        <input style="width: 300px" class="form-control" onchange="f(this.value)" type="text" placeholder="Pseudo"/>
+        <input class="bouton" type="button"  value="rechercher" />
 
     </form>
 
@@ -64,20 +65,21 @@ $unwanted_array = array(
     function f(p) {
         $.ajax({
             type:"GET",
-            url"http/ppil.ugocottin.fr/Fontend/Invit/pseudoR.php",
-            data:"Pseudo="+p,
-            success: function (d) {
-                afficher(d)
+            url:"pseudoR.php",
+            data:"pseudo="+p,
+            success: function (data) {
+                afficher(data)
             }
+        });
+    }
+    function afficher(data) {
+        var json = JSON.parse(data);
+        var divElement = document.getElementById("personne");
+        json.forEach(element => {
+            var personne = document.createElement("div");
+            var content = document.createTextNode(element.pseudo);
+            personne.appendChild(content);
+            document.body.insertBefore(personne, divElement);
         })
     }
-    function afficher(p) {
-        var json=JSON.parse(p)
-        var divElement=document.getElementById("personne");
-        json.forEach(element=>{
-            var personne=document.createElement("div");
-            var content=document.createTextNode(element);
-            personne.appendChild(content);
-            document.body.insertBefore(personne,divElement);
-        })
 </script>

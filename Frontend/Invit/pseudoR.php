@@ -1,13 +1,16 @@
 <?php
-include "../../Backend/Utilisateur/Systeme.php";
-if (isset($_GET["pseudo"])) {
-    $pseuso = $_GET["pseudo"];
-} else {
-    $pseudo = "";
+set_include_path(getenv('BASE'));
+
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::Init();
+
+$pseudo = Systeme::_GET('pseudo');
+
+if ($pseudo == false) {
+	die("{}");
 }
-$systeme= new Systeme;
-$tab=$systeme::getUsersByPseudo($pseudo);
-foreach ($tab as $personne){
-    echo "$personne";
-}
-?>
+
+$utilisateurs = Systeme::getUsersByPseudo($pseudo);
+
+echo json_encode($utilisateurs);
