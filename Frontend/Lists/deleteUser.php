@@ -87,7 +87,7 @@ if ($liste->proprietaire != $user->id) {
     exit;
 }
 
-if ($membre->id == $liste->id) {
+if ($membre->id == $liste->proprietaire) {
     error_log("L'utilisateur $user->pseudo est propriétaire de la liste d'ID $lid et ne peut pas la supprimer");
     header("location: ./View/index.php?id=".$liste->id);
     exit;
@@ -95,6 +95,11 @@ if ($membre->id == $liste->id) {
 
 if (!Systeme::quitterListe($membre, $liste)) {
     error_log("Une erreur est survenue lors de la suppression de l'utilisateur $udeleteid");
+}
+
+
+if(!Systeme::notifierListeTousMembresListe("$membre->pseudo a été supprimé.e de la liste $liste->nom", $liste->id)){
+    error_log("Une erreur est survenue lors de la suppression de $membre->pseudo de la liste $liste->nom");
 }
 
 header("location: ./");

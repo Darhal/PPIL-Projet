@@ -43,31 +43,23 @@ if(Systeme::estConnecte()){
         <tbody>
 
         <?php
-            $user = Systeme::getUserByEmail($_SESSION['email']);
-
-            $notifTache = Systeme::getNotificationsTache($user->id) ;
-            $notifList = Systeme::getNotificationsListe($user->id);
-
-            $notifs = array_merge($notifTache, $notifList); //fusion des notifs
+        $user = Systeme::getUserByEmail($_SESSION['email']);
+        $notifs = Systeme::getNotifications($user->id) ;
 
         foreach ($notifs as $notifT) {
-
-            echo "
-            
-				<tr>
-					<th scope='row'>" . $notifT->idNotif . "</th>
-					<td>" . $notifT->msg . "</td>
-					</td>
-					<td id='delete_'. $notifT->idNotif>
-					<form action='./supprimer.php' method='post'>
-					    <input type='image' name='delete' src='../../Assets/Images/delete.png' style='width:2rem;' disabled><label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
-					</form>
-					</td>
-					
-
-				</tr>" ;
+            echo "<tr>
+                        <th scope='row'>" . $notifT->idNotif . "</th>
+                        <td>" . $notifT->msg . "</td>
+                        </td>
+                        <td id='delete_'. $notifT->idNotif>
+                        <form action='./supprimer.php' method='post'>
+                            <input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;'>
+                            <label for='lid'></label>
+                            <input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
+                        </form>
+                        </td>
+                    </tr>" ;
         }
-
         ?>
         </tbody>
     </table>

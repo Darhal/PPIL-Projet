@@ -62,7 +62,7 @@ if(Systeme::verifierToutesAutresTachesComplete($task->id)){
 }
 else{
     //notification tache finie
-    if(!Systeme::notifierTacheTousMembresListe("$user->prenom vient de compléter la tache $task->nom de $list->nom", $list->id, $task->id)){
+    if(!Systeme::notifierTacheTousMembresListe("$user->pseudo vient de compléter la tache $task->nom de $list->nom", $list->id, $task->id)){
         error_log("Une erreur est survenue lors de la notification de la tache terminee de liste $list->id avec tache $task->id");
     }
 }

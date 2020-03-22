@@ -66,54 +66,83 @@ $owner = Systeme::getUserByID($liste->proprietaire);
 
 	<h2><?php echo $liste->nom; ?></h2>
 
-	<table class="table">
-		<thead>
-		<tr>
-			<th scope="col"> ID </th>
-			<th scope="col"> Pseudo </th>
-			<th scope="col"> Mail </th>
-			<?php if ($user->id == $owner->id) {
-				echo "<th scope='col'> Supprimer </th>";
-			}
-			?>
-		</tr>
-		</thead>
-		<tbody>
-		<?php
-		$membres = Systeme::getMembresInvites($liste);
+	<?php
 
-		array_unshift( $membres, $owner);
+	function Liste(ListeTaches $listeTaches, Utilisateur $utilisateurConnecte, Utilisateur $proprietaire) {
+
+		$membres = Systeme::getMembres($listeTaches);
+		echo "
+		<table class='table'>
+			<thead>
+				<tr>
+					<th scope='col'> ID </th>
+					<th scope='col'> Pseudo </th>
+					<th scope='col'> Mail </th>
+		";
+
+		if ($proprietaire->id == $utilisateurConnecte->id) {
+			echo "<th scope='col'> Supprimer </th>";
+		}
+
+		echo "
+				</tr>
+			</thead>
+			<tbody>
+		";
 
 		foreach ($membres as $membre) {
-			$dis = '';
-
-			echo "
-				<tr>
-					<th scope='row'>" . $membre->id . "</th>
-					<td>" . $membre->pseudo . "</td>
-					<td>" . $membre->email . "</td>";
-
-			if ($user->id == $owner->id) {
-				//echo "<td><a href='/Frontend/Lists/View/delete.php?id=" . $membre->id . "'> Go </a></td>";
-
-
-                echo "<td>
-						<form action='/Frontend/Lists/deleteUser.php' method='post'>
-							<input type='image' name='delete' src='../../../Assets/Images/delete.png' style='width:2rem;' alt='Supprimer'>
-							<label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$liste->id'>
-							<label for='udeleteid'></label><input hidden type='text' id='udeleteid' name='udeleteid' value='$membre->id'>
-							
-						</form> </td> ";
-                        //<input type='submit' src='../../../Assets/Images/delete.png'>
-            }
-
+			echo "<tr>";
+			Row($listeTaches, $utilisateurConnecte, $membre, $proprietaire);
 			echo "</tr>";
 		}
-		?>
-		</tbody>
-	</table>
 
-	<?php
+		echo "
+			</tbody>
+		</table>
+		";
+	}
+
+	function Row(ListeTaches $listeTaches, Utilisateur $utilisateurConnecte, Utilisateur $utilisateur, Utilisateur $proprietaire) {
+		ID($utilisateur);
+		Pseudo($utilisateur);
+		EMail($utilisateur);
+
+		if ($utilisateurConnecte->id == $proprietaire->id) {
+			Supprimer($listeTaches, $utilisateur, $proprietaire);
+		}
+	}
+
+	function ID(Utilisateur $utilisateur) {
+		echo "<td scope='row'> $utilisateur->id </td>";
+	}
+
+	function Pseudo(Utilisateur $utilisateur) {
+		echo "<td> $utilisateur->pseudo </td>";
+	}
+
+	function EMail(Utilisateur $utilisateur) {
+		echo "<td> $utilisateur->email </td>";
+	}
+
+	function Supprimer(ListeTaches $listeTaches, Utilisateur $utilisateur, Utilisateur $proprietaire) {
+		echo "
+		<td>
+			<form action='/Frontend/Lists/deleteUser.php' method='post'>";
+
+		if ($utilisateur->id == $proprietaire->id) {
+			echo "<input class='no-inter' type='image' name='delete' src='../../../Assets/Images/SVG/trash.slash.svg' style='width:2rem;' alt='Supprimer'>";
+		} else {
+			echo "<input type='image' name='delete' src='../../../Assets/Images/SVG/trash.svg' style='width:2rem;' alt='Supprimer'>";
+		}
+
+		echo "
+				<label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$listeTaches->id'>
+				<label for='udeleteid'></label><input hidden type='text' id='udeleteid' name='udeleteid' value='$utilisateur->id'>
+			</form>
+		</td>";
+	}
+
+	Liste($liste, $user, $owner);
 
 	if ($user->id == $liste->proprietaire) {
 		echo "

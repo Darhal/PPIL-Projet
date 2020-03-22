@@ -1,66 +1,57 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
-	$uid = $_SESSION["id"];
-} else {
+Systeme::start_session();
+
+if(!Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
 	header("location: ../Login");
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+$uid = $_SESSION["id"];
+
+include_once "Backend/Utilisateur/Utilisateur.php";
 
 Systeme::Init();
 
 $logged_user = Systeme::getUserByID($uid);
 
 if ($logged_user == null){
-	die("ERROR: Unable to find user by id");
+	header("location: ../Login/logout.php");
 }
 
-if (!isset($_POST['old-password'])) {
-	die("old password non défini");
+$old_password = Systeme::_POST('old-password');
+
+if ($old_password == false) {
+	header("location: ./change_password.php?erreur=1");
 }
 
-$old_password = $_POST['old-password'];
+$new_password = Systeme::_POST('new-password');
 
-if (!isset($_POST['new-password'])) {
-	die("new password non défini");
+if($new_password == false) {
+	header("location: ./change_password.php?erreur=1");
 }
 
-$new_password = $_POST['new-password'];
+$conf_password = Systeme::_POST('conf-password');
 
-if (!isset($_POST['conf-password'])) {
-	die("conf password non défini");
+if($conf_password == false) {
+	header("location: ./change_password.php?erreur=1");
 }
 
-$conf_password = $_POST['conf-password'];
 if($logged_user->mdp != $old_password){
-    header("location: ../Profil/change_password.php?erreur=4");
+    header("location: ./change_password.php?erreur=2");
     exit;
 }
 
 if ($new_password == $conf_password) {
-    if(Systeme::changePassword($logged_user, $old_password, $new_password)){
-        header("location: ../Profil/index.php");
-    }
-    else{
-        header("location: ../Profil/change_password.php?erreur=3");
-        exit;
-    }
-
-
+	if (Systeme::changePassword($logged_user, $old_password, $new_password)) {
+		header("location: ./index.php");
+	} else {
+		header("location: ./change_password.php?erreur=3");
+		exit;
+	}
+} else {
+	header("location: ./change_password.php?erreur=4");
 }
-
-
-if(!isset($_POST['old-password']) || !isset($_POST['new-password']) || !isset($_POST['conf-password'])){
-    header("location: ../Profil/change_password.php?erreur=2");
-    exit;
-}
-
-
-// TODO: - Vérifier le mot de passe de l'utilisateur lors de la modification

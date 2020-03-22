@@ -801,6 +801,19 @@ class Systeme
         return $res_array;
     }
 
+    /**
+     * Donne le nombre d'invitation qu'un utilisateur possède
+     * @param int $idUtilisateur
+     * @return int
+     */
+    public static function getNbInvitationsByIDUser(int $idUtilisateur) : int{
+        if (!isset($idUtilisateur)) {
+            return null;
+        }
+        return count(self::$dao_invit->getInvitationsByID($idUtilisateur));
+    }
+
+
     //---------------------------- FIN Invitations ---------------------------------
 
     //---------------------------- Notifications ---------------------------------
@@ -861,7 +874,7 @@ class Systeme
      */
     public static function supprimerNotificationByID(int $idNotification) : bool {
         if (!isset($idNotification)) {
-            return null;
+            return false;   //return null ou flase ?
         }
 
         return self::$dao_notif->supprimerDeBDDByID($idNotification);
@@ -892,6 +905,21 @@ class Systeme
         return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
     }
 
+    /**
+     * Récupère de la BDD toutes les Notifications de l'user
+     * @param int $idUtilisateur
+     * @return array
+    */
+    public static function getNotifications(int $idUser) : array {
+        if (!isset($idUser)) {
+            return null;
+        }
+
+        $notifTache = Systeme::getNotificationsTache($idUser) ;
+        $notifList = Systeme::getNotificationsListe($idUser);
+        $notifications = array_merge($notifTache, $notifList); //fusion des notifs
+        return $notifications;
+    }
 
     /**
      * Retourne le nombre de notifications
@@ -950,8 +978,6 @@ class Systeme
             $idutil=$utilisateur->id;
             $res = $res && self::createNotificationListeTaches($msg,$idListe,$idutil);
         }
-        // on notifie aussi le propriétaire
-        $res = $res && self::createNotificationListeTaches($msg,$idListe, $liste->proprietaire);
 
         return $res;
     }
@@ -963,7 +989,7 @@ class Systeme
      */
     function verifierToutesTachesComplete(int $idListeTache):bool {
         $res = true;
-        $liste = self::$dao_listeTaches->getListeTachesByID($idListeTache);
+        $liste = self::getListeTachesByID($idListeTache);
         $listeDeTaches = self::getTasks($liste);
         foreach ($listeDeTaches as $tache){
             $res=$res && $tache->finie;

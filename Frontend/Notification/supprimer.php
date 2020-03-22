@@ -1,38 +1,38 @@
 <?php
-
 set_include_path(getenv('BASE'));
-
 include_once "Backend/Utilisateur/Systeme.php";
+include_once "Backend/Notifications/Notification.php";
 
 Systeme::start_session();
 
 if (!Systeme::estConnecte()) {
-	// TODO: - Afficher une erreur
-	header("location: ../Login");
+    header("location: ../Login");
 }
 
 Systeme::Init();
-
 $uid = $_SESSION['id'];
+include_once "Backend/Utilisateur/Utilisateur.php";
+
 $utilisateur = Systeme::getUserByID($uid);
+$notifID = Systeme::_POST('lid');
 
-if (!isset($_GET['id'])) {
-
-	header( "location: notification.php");
+if ($notifID == false) {
+    error_log("ID de notification non défini");
+    header("location: ./notification.php");
+    exit;
 }
 
-$invID = intval($_GET['id']);
+$notifID = intval($notifID);
 
-$notifications = Systeme::getNotifications($utilisateur);
-
-foreach ($notifications as $notification) {
-	if ($notification->id == $invID) {
-		if(Systeme::supprimerNotification($notification)){
-            header( "location: notification.php");
-        }
-		else{
-		    echo "erreur" ;
-        }
-	}
+if (!is_int($notifID)) {
+    die("L'ID de la notification n'est pas valide $notifID");
 }
+
+if(Systeme::supprimerNotificationByID($notifID)){
+    header( "location: notification.php");
+}else{
+    error_log("Erreur supprission notification");
+    echo "Erreur" ;
+}
+
 

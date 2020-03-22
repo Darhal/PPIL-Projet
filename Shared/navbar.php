@@ -11,6 +11,8 @@ $account = $target;
 $tasks = $target;
 $lists = $target;
 $invit = $target;
+
+
 if (Systeme::estConnecte()) {
     $text = "Déconnexion";
     $target = $real_base."Frontend/Login/logout.php";
@@ -19,15 +21,21 @@ if (Systeme::estConnecte()) {
     $lists = $real_base."Frontend/Lists";
     $notification = $real_base."Frontend/Notification/notification.php";
     $invit = $real_base."Frontend/Invit/invitation.php";
+    $uid = $_SESSION["id"];
+
 }
+Systeme::Init();
+$user = Systeme::getUserByID($uid);
+$notif=Systeme::getNbNotifications($user->id);
 
 echo '
 <nav class="site-header sticky-top py-1">
 	<div class="align-center d-flex flex-column flex-md-row justify-content-between" style="max-width: 80%">
 		<a class="py-1 d-none" href="'.$account.'">Mon compte</a>
 		<a class="py-1 d-none" href="'.$lists.'">Mes listes</a>
-		<a class="py-1 d-none " href="'.$notification.'">Notifications </a>
+		<a class="py-1 d-none "  href="'.$notification.'">Notifications <span class="badge">'.$notif.'</span></a>
 		<a class="py-1 d-none " href="'.$invit.'">Invitations</a>
 		<a class="py-1 d-none" href="'.$target.'">'.$text . '</a>
 	</div>
-</nav>';
+</nav>
+';

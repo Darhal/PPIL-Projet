@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 $uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
+$user = Systeme::getUserByID($_SESSION['id']);
+
 
 $lid = Systeme::_POST('lid');
 
@@ -69,7 +71,7 @@ $debut = trim($debut);
 
 $fin = Systeme::_POST('fin');
 
-if ($fin == false){
+if ($fin == false && !empty($fin)){
 	error_log("Aucune date de fin de liste");
 	header("location: index.php");
 	exit;
@@ -125,6 +127,11 @@ if ($list->dateFin == "NULL") {
 	$list->dateFin = $edate;
 }
 if (Systeme::updateList($list)) {
+
+    if(!Systeme::createNotificationListeTaches("Vous venez de modifier la liste $list->nom", $list->id, $user->id)){
+        error_log("Une erreur est survenue lors de la modification de la liste $list->nom");
+    }
+
     header("location: ./");
     exit;
 } else {

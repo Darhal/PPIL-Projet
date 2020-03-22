@@ -37,7 +37,7 @@ if (intval($tid) == null) {
 $tid = intval($tid);
 
 $task = Systeme::getTaskById($tid);
-
+$list = Systeme::getListeTachesByID($task->idListe) ;
 if($task == null) {
 	// TODO: - Afficher une erreur
 	die("Aucune tache d'ID " . $tid);
@@ -45,6 +45,10 @@ if($task == null) {
 
 if ($task->aUnResponsable()) {
 	die("Un responsable est déjà assigné à cette tâche");
+}
+
+if(!Systeme::notifierTacheTousMembresListe("$user->pseudo vient de se porter volontaire pour la tache $task->nom de $list->nom", $list->id, $task->id)){
+    error_log("Une erreur est survenue lors de la notification de volontaire de liste $list->id avec tache $task->id");
 }
 
 Systeme::ajouterResponsable($task, $user);

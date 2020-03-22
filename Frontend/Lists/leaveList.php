@@ -60,6 +60,10 @@ if (!in_array($user, $membres)) {
 	header("location: ./");
 }
 
+if(!Systeme::notifierListeTousMembresListe("$user->pseudo a quité la liste $liste->nom", $liste->id)){
+    error_log("Une erreur est survenue lors de la sortie de $user->pseudo de la liste $liste->nom");
+}
+
 if (!Systeme::quitterListe($user, $liste)) {
     error_log("Une erreur est survenue lors du retrait de $user->pseudo de la liste $lid");
 }

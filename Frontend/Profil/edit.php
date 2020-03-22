@@ -1,18 +1,17 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true){
-	$uid = $_SESSION["id"];
-} else {
-	// Redirection vers la page d'accueil
+Systeme::start_session();
+
+if(!Systeme::estConnecte()) {
 	header("location: ../Login");
 	exit;
 }
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+$uid = $_SESSION["id"];
+
+include_once "Backend/Utilisateur/Utilisateur.php";
 
 Systeme::Init();
 $user = Systeme::getUserByID($uid);
@@ -29,9 +28,7 @@ if ($user == null){
 	<link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body>
-<?php 
-	include_once getenv('BASE')."Shared/navbar.php";
-?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="container align-center">
 	<div class="spacer"></div>
 	<h1 class="text-center"> Modifier ses informations </h1>
@@ -94,8 +91,6 @@ if ($user == null){
 
 	</div>
 </div>
-<?php 
-	include_once getenv('BASE')."Shared/footer.php";
-?>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>
