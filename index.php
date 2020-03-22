@@ -35,7 +35,7 @@
         <button onclick="window.location.href='Frontend/Signup'"> S'inscrire </button>
     </div>
 
-	<iframe src="https://giphy.com/embed/J66zfcTxF3GRoEiBi9" width="480" height="480" class="giphy-embed" allowFullScreen style="border-width: 0; pointer-events: none"></iframe>
+	<iframe src="https://giphy.com/embed/J66zfcTxF3GRoEiBi9" width="48" height="48" class="giphy-embed" allowFullScreen style="border-width: 0; pointer-events: none"></iframe>
 </div>
 </div>
 <?php include_once getenv('BASE')."Shared/footer.php"; ?>
