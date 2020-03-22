@@ -80,6 +80,11 @@ if ($dateFin != null) {
 }
 
 if (Systeme::createList($nom, $sdate, $edate, $uid)) {
+
+    if(!Systeme::createNotificationListeTaches("Vous venez de creer une nouvelle liste $nom", -1, $uid)){
+        error_log("Une erreur est survenue lors de la creation de la liste $nom");
+    }
+
 	header("location: ./");
 } else {
 	error_log("erreur");

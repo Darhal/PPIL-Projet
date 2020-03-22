@@ -68,10 +68,12 @@ if ($liste->proprietaire != $user->id and $task->responsable != $user->id) {
 	exit;
 }
 
-Systeme::retirerResponsable($task);
-
 if(!Systeme::notifierTacheTousMembresListe("$task->responsable n'est plus responsable la tache $task->nom de $liste->nom", $liste->id, $task->id)){
     error_log("Une erreur est survenue lors de la suppresion du responsable  de la liste $liste->id avec tache $task->id");
 }
+
+Systeme::retirerResponsable($task);
+
+
 
 header("location: ../Lists/View/index.php?id=$task->idListe");
