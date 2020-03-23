@@ -151,19 +151,52 @@ if (!in_array($user, $membres)) {
 	Liste($liste, $user, $owner);
 
 	if ($user->id == $liste->proprietaire) {
+		//echo "
+		//	<form method='post' action='add_member.php' onsubmit='return confirm(\"Confirmer l‘invitation ?\")'>
+		//		<label for='user'></label>";
+		//$users = Systeme::getUsersNonMembresByPseudo("", $liste);
+
+
+
 		echo "
-			<form method='post' action='add_member.php' onsubmit='return confirm(\"Confirmer l‘invitation ?\")'>
-				<label for='user'></label><select name='user' id='user'>";
-		$users = Systeme::getUsersNonMembresByPseudo("", $liste);
+<div id=\"recherche\">
 
-		foreach ($users as $u) {
-			echo "<option value='$u->email'> $u->pseudo </option>";
-		}
+    <h5>Ajouter un membre ? C'est par là</h5>
+    <form action=\"\" class=\"formulaire\">
+        <input style=\"width: 300px\" class=\"form-control\" onchange=\"f(this.value)\" type=\"text\" placeholder=\"Pseudo\"/>
+    </form>
 
-		echo "</select>
-		<input type='hidden' value='$liste->id' name='lid' id='lid'>
-		<input type='submit' value='Ajouter!'>
-		</form>";
+</div>
+<div id=\"personne\">
+
+</div><div id=\"personne\">
+
+</div>
+<script type=\"application/javascript\">
+    function f(p) {
+        $.ajax({
+            type:\"GET\",
+            url:\"pseudoR.php\",
+            data:\"pseudo=\"+p,
+            success: function (data) {
+                afficher(data)
+            }
+        });
+    }
+    function afficher(data) {
+        var json = JSON.parse(data);
+        var divElement = document.getElementById(\"personne\");
+        json.forEach(element => {
+            var personne = document.createElement(\"div\");
+            var content = document.createTextNode(element.pseudo);
+            personne.appendChild(content);
+            document.body.insertBefore(personne, divElement);
+
+        })
+
+    }
+</script>
+	";
 	}
 	?>
 </div>
