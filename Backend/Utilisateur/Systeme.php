@@ -380,13 +380,7 @@ class Systeme
 
     }
 
-    /**
-     * Permet à un utilisateur de refuser une demande de transfert de propriété
-     * @param InvitationTransfererPropriete $invitationTransfererPropriete
-     */
-    public static function refuserDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
 
-    }
 
 
     //---------------------------- FIN Utilisateur ---------------------------------
