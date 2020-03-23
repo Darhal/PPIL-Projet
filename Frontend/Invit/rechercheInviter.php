@@ -30,7 +30,7 @@ $unwanted_array = array(
             bottom: 0;
             right: 0;
         }
-        .champ{
+        .form-control{
             border-style: solid;   /* Style de la bordure  */
             border-width: 1px;   /* Epaisseur de la bordure  */
             border-color: #dddddd;   /* Couleur de la bordure  */
@@ -54,12 +54,8 @@ $unwanted_array = array(
     <h1>Tapez le nom de la personne que vous souhaitez rechercher </h1>
     <form action="" class="formulaire">
         <input style="width: 300px" class="form-control" onchange="f(this.value)" type="text" placeholder="Pseudo"/>
-        <input class="bouton" type="button"  value="rechercher" />
-
     </form>
 
-</div>
-<div id="personne">
 </div>
 <script type="application/javascript">
     function f(p) {
@@ -74,12 +70,14 @@ $unwanted_array = array(
     }
     function afficher(data) {
         var json = JSON.parse(data);
-        var divElement = document.getElementById("personne");
+        var divElement = document.createElement("personne");
         json.forEach(element => {
             var personne = document.createElement("div");
             var content = document.createTextNode(element.pseudo);
             personne.appendChild(content);
             document.body.insertBefore(personne, divElement);
+
         })
+
     }
 </script>
