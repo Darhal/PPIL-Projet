@@ -373,12 +373,34 @@ class Systeme
 	    return true;
     }
 
-    /**
-     * Permet à un utilisateur d'aceepter une demande de transfert de propriété
-     * @param InvitationTransfererPropriete $invitationTransfererPropriete
-     */
-    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+	/**
+	 * Permet à un utilisateur d'aceepter une demande de transfert de propriété
+	 * @param InvitationTransfererPropriete $invitationTransfererPropriete
+	 * @return bool
+	 */
+    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete){
+		if (!isset($invitationTransfererPropriete)) {
+			return false;
+		}
 
+		$liste = self::getListeTachesByID($invitationTransfererPropriete->liste);
+		$membres = self::getMembresInvites($liste);
+
+		foreach ($membres as $membre) {
+			$invitations = self::getInvitations($membre);
+
+			foreach ($invitations as $invitation) {
+				if ($invitation->id < 0 && $invitation->liste == $invitationTransfererPropriete->liste) {
+					self::refuserInvitation($invitation);
+				}
+			}
+		}
+
+		self::$dao_invit->supprimerDeBDD($invitationTransfererPropriete);
+		$liste->proprietaire = $invitationTransfererPropriete->destinataire;
+		self::$dao_listeTaches->update($liste);
+
+		return true;
     }
 
 
@@ -839,8 +861,14 @@ class Systeme
         $res_array = array();
 
         foreach ($resSQL as $item) {
-            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
-            $invitation->id = $item['id'];
+        	$id = $item['id'];
+
+        	if ($id < 0) {
+                $invitation = new InvitationTransfererPropriete($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+	        } else {
+                $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+	        }
+        	$invitation->id = $item['id'];
 
             array_push($res_array, $invitation);
         }
