@@ -343,9 +343,32 @@ class Systeme
 
     }
 
+    /**
+     * Pertmet de créer une invitation pour une demande de transfert de propriété
+     * @param int $idDemandeur
+     * @param int $idDestinataire
+     * @param int $idListe
+     */
     public static function demandeTransfertPropriete(int $idDemandeur, int $idDestinataire, int $idListe){
 
     }
+
+    /**
+     * Permet à un utilisateur d'aceepter une demande de transfert de propriété
+     * @param InvitationTransfererPropriete $invitationTransfererPropriete
+     */
+    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+
+    }
+
+    /**
+     * Permet à un utilisateur de refuser une demande de transfert de propriété
+     * @param InvitationTransfererPropriete $invitationTransfererPropriete
+     */
+    public static function refuserDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+
+    }
+
 
     //---------------------------- FIN Utilisateur ---------------------------------
 
