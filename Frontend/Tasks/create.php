@@ -13,6 +13,8 @@ if(!Systeme::estConnecte()) {
 	exit;
 }
 
+$user = Systeme::getUserByID($_SESSION['id']);
+
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	// TODO: - Afficher une erreur
 	header( "location: ../Lists" );
@@ -39,6 +41,12 @@ $user = Systeme::getUserByID($uid) ;
 if ($liste == null) {
 	// TODO: - Afficher une erreur
 	die("Liste d'ID " . $lid . " inexistante");
+}
+
+if ($liste->proprietaire != $user->id) {
+	error_log("L'utilisateur $user->pseudo n'est pas propriétaire de la liste $liste->id");
+	header("location: ../Lists/View/index.php?id=$liste->id");
+	exit;
 }
 
 if (!isset($_POST['tname'])) {

@@ -703,6 +703,7 @@ class Systeme
 
         $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
 
+        // TODO: - Verifier que la requete retourne un resultat
         $req = $resSQL[0];
 
         $tache = new Tache($req['nom'], $req['idListe']);

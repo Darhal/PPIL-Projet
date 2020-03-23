@@ -1,5 +1,4 @@
 <?php
-
 set_include_path(getenv('BASE'));
 
 include_once "Backend/Utilisateur/Systeme.php";
@@ -27,14 +26,22 @@ if (!isset($_POST['tid'])) {
 	die("ID de tâche non défini");
 }
 
-$tid = $_POST['tid'];
+$tid = Systeme::_POST('tid');
 
-if (intval($tid) == null) {
-	// TODO: - Afficher une erreur
-	die("Format de l'ID invalide");
+if ($tid == false) {
+	error_log("Aucun id de tâche saisi");
+	header("location: ../Lists/View/index.php?id=$task->idListe");
+	exit;
 }
 
 $tid = intval($tid);
+
+if ($tid == null) {
+	// TODO: - Afficher une erreur
+	error_log("Aucun id de tâche saisi");
+	header("location: ../Lists/View/index.php?id=$task->idListe");
+	exit;
+}
 
 $task = Systeme::getTaskById($tid);
 $list = Systeme::getListeTachesByID($task->idListe);
@@ -45,7 +52,17 @@ if($task == null) {
 }
 
 if (!$task->aUnResponsable()) {
-	die("Aucun responsable n'est assigné pour la tâche $task->id");
+	if ($user->id != $list->proprietaire) {
+		error_log("La tâche $task->id n'a pas de responsable");
+		header("location: ../Lists/View/index.php?id=$task->idListe");
+		exit;
+	}
+} else {
+	if ($task->responsable != $user->id) {
+		error_log("L'utilisateur $user->pseudo n'est pas responsable de la tâche $task->id");
+		header("location: ../Lists/View/index.php?id=$task->idListe");
+		exit;
+	}
 }
 
 if ($task->estFinie()) {

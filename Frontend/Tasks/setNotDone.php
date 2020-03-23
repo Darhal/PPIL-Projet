@@ -43,8 +43,20 @@ if($task == null) {
 	die("Aucune tache d'ID " . $tid);
 }
 
+$list = Systeme::getListeTachesByID($task->idListe);
+
 if (!$task->aUnResponsable()) {
-	die("Aucun responsable n'est assigné pour la tâche $task->id");
+	if ($user->id != $list->proprietaire) {
+		error_log("La tâche $task->id n'a pas de responsable");
+		header("location: ../Lists/View/index.php?id=$task->idListe");
+		exit;
+	}
+} else {
+	if ($task->responsable != $user->id) {
+		error_log("L'utilisateur $user->pseudo n'est pas responsable de la tâche $task->id");
+		header("location: ../Lists/View/index.php?id=$task->idListe");
+		exit;
+	}
 }
 
 if (!$task->estFinie()) {

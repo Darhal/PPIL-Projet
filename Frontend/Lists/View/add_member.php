@@ -41,6 +41,7 @@ if ($liste == null) {
 if ($liste->proprietaire != $current_user->id) {
 	error_log("L'utilisateur $current_user->pseudo n'est pas propriétaire de la liste $lid");
 	header("location: ../");
+	exit;
 }
 
 $umail = Systeme::_POST('user');
