@@ -1,3 +1,14 @@
+<?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
+
+Systeme::start_session();
+
+if (Systeme::estConnecte()) {
+	header("location: ./Frontend/Profil");
+	exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
