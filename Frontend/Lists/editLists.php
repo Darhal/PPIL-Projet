@@ -87,6 +87,8 @@ include_once "Shared/navbar.php";
         <?php
 
             echo "
+            <div class='spacer'></div>
+            <hr>
             <form method='post' action='demande_transfert.php' onsubmit='return confirm(\"Confirmer le changement ?\")'>
                 <label for='user'></label><select name='user' id='user'>";
             $membres = Systeme::getMembresInvites($list) ;
