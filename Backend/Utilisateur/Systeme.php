@@ -335,6 +335,14 @@ class Systeme
     	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
 	}
 
+
+	public static function supprimerCompte(int $idUser) : bool {
+	    if (!isset($idUser)) return false;
+
+	    return self::$dao_user->supprimerDeBDDByID($idUser);
+
+    }
+
     //---------------------------- FIN Utilisateur ---------------------------------
 
 

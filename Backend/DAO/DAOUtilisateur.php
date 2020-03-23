@@ -50,6 +50,11 @@ class DAOUtilisateur extends DAO
         return $this->BDD->deleteRow(self::$tab_name, "idUtilisateur = ".$utilisateur->id);
     }
 
+    function supprimerDeBDDByID($idUser) : bool
+    {
+        return $this->BDD->deleteRow(self::$tab_name, "idUtilisateur = ".$idUser);
+    }
+
     function getUserByEmail($email) : array
     {
         $res = $this->getByRequete("email = '$email'");
