@@ -10,6 +10,7 @@ include_once "Backend/DAO/DAOMembre.php";
 include_once "Backend/DAO/DAOInvit.php";
 include_once "Backend/DAO/DAONotif.php";
 
+include_once "Backend/Invitation/InvitationTransfererPropriete.php";
 include_once "Backend/Invitation/InvitationListeTache.php";
 include_once "Backend/Taches/ListeTaches.php";
 include_once "Backend/Taches/Tache.php";
@@ -793,9 +794,6 @@ class Systeme
         }
 
         $invitation = new InvitationListeTache("Je t‘invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
-        echo "<pre>";
-        var_dump($invitation);
-        echo "</pre>";
         self::$dao_invit->ajouterDansBDD($invitation);
 
         return true;
