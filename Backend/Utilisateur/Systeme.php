@@ -336,6 +336,12 @@ class Systeme
 	}
 
 
+    /**
+     * Supprime un utilisateur
+     * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
+     * @param int $idUser
+     * @return bool
+     */
 	public static function supprimerCompte(int $idUser) : bool {
 	    if (!isset($idUser)) return false;
 
@@ -343,6 +349,13 @@ class Systeme
 
     }
 
+    /**
+     * Permet à un utilisatuer d'envoyer une invitation pour faire une demande de tranfert de propriété
+     * @param ListeTaches $liste
+     * @param Utilisateur $emetteur
+     * @param Utilisateur $destinataire
+     * @return bool
+     */
     public static function demandeTransfertPropriete(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
 
 		if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
