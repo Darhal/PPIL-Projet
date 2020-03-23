@@ -7,8 +7,8 @@ include_once "Backend/Utilisateur/Systeme.php";
 Systeme::start_session();
 
 if (!Systeme::estConnecte()) {
-	// TODO: - Afficher une erreur
-	header("location: ../Login");
+    // TODO: - Afficher une erreur
+    header("location: ../Login");
 }
 
 Systeme::Init();
@@ -18,22 +18,36 @@ $utilisateur = Systeme::getUserByID($uid);
 
 
 if (!isset($_GET['id'])) {
-	// TODO: - Afficher une erreur
-	header( "location: invitation.php");
+    // TODO: - Afficher une erreur
+    header( "location: invitation.php");
 }
 
 $invID = intval($_GET['id']);
 
-$invitations = Systeme::getInvitations($utilisateur);
+
+
+$invitations = Systeme::getInvitations($utilisateur);   //Les invitations de l'utilisateur connecté
 
 foreach ($invitations as $invitation) {
-	if ($invitation->id == $invID) {
-	    $liste = Systeme::getListeTachesByID($invitation->liste);
-        if(!Systeme::notifierListeTousMembresListe("$utilisateur->pseudo vient de rejoindre la liste $liste->nom", $liste->id)){
-            error_log("Une erreur est survenue lors de la acceptation de l invitation de la liste $liste->id");
+    if ($invitation->id == $invID) {
+        $liste = Systeme::getListeTachesByID($invitation->liste);   //La liste correspondant à l'invitation
+
+
+        if($invID < 0) {         //Demande de transfère de droit
+            if (!Systeme::notifierListeTousMembresListe("$utilisateur->pseudo est maintenant le propriétaire de la liste $liste->nom", $liste->id)) {
+                error_log("Une erreur est survenue lors de l'acceptation du transfere de propriété de la liste $liste->id");
+            }
+            //Systeme::accepterDemandeDeDroit($invitation);
         }
-		Systeme::accepterInvitation($invitation);
-	}
+        else {                  //Invitation à une liste
+            if (!Systeme::notifierListeTousMembresListe("$utilisateur->pseudo vient de rejoindre la liste $liste->nom", $liste->id)) {
+                error_log("Une erreur est survenue lors de l'acceptation à l'invitation de la liste $liste->id");
+            }
+            Systeme::accepterInvitation($invitation);
+        }
+    }
 }
+
+
 
 header( "location: invitation.php");
