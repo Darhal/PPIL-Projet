@@ -9,10 +9,10 @@
  * @version: 1.0
  *
  */
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
-include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
-include_once getenv('BASE')."Backend/DAO/DAO.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/DAO/DAO.php";
 
 class DAOUtilisateur extends DAO
 {
@@ -57,20 +57,17 @@ class DAOUtilisateur extends DAO
 
     function getUserByEmail($email) : array
     {
-        $res = $this->getByRequete("email = '$email'");
-        return $res;
+	    return $this->getByRequete("email = '$email'");
     }
 
     function getUserByID($id) : array
     {
-        $res = $this->getByRequete("idutilisateur = '$id'");
-        return $res;
+	    return $this->getByRequete("idutilisateur = '$id'");
     }
 
     function getByRequete($requete = "") : array
     {
-        $res = $this->BDD->fetchResults("Utilisateur", "*", $requete);
-        return $res;
+	    return $this->BDD->fetchResults("Utilisateur", "*", $requete);
     }
 
     public function updateBDD($utilisateur, $condition = "") : bool
@@ -87,9 +84,7 @@ class DAOUtilisateur extends DAO
     }
 
     function getUsersByPseudo($pseudo) : array {
-    	$res = $this->getByRequete("pseudo LIKE '%" . SQLite3::escapeString($pseudo) . "%'");
-    	return $res;
+	    return $this->getByRequete("pseudo LIKE '%" . SQLite3::escapeString($pseudo) . "%'");
     }
 }
 
-?>

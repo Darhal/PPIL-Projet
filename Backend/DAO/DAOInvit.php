@@ -1,6 +1,6 @@
 <?php
-
-include_once getenv('BASE')."Backend/DAO/DAO.php";
+set_include_path(getenv('BASE'));
+include_once "Backend/DAO/DAO.php";
 
 class DAOInvit extends DAO
 {
@@ -49,8 +49,7 @@ class DAOInvit extends DAO
     public function updateBDD($invite, $condition = "") : bool
     {
         $attribs = array(); //TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+	    return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 
     public function getInvitationsFor(Utilisateur $utilisateur) : array {

@@ -9,11 +9,11 @@
  * @version: 1.0
  *
  */
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
-include_once getenv('BASE')."Backend/Taches/Tache.php";
-include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
-include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
+include_once "Backend/Taches/Tache.php";
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Taches/ListeTaches.php";
 
 
 class DAOTache extends DAO
@@ -34,11 +34,10 @@ class DAOTache extends DAO
         );
     }
 
-    //TODO: il faut retourner un booléen en fonction de si ça s'est bien passé!
+    // TODO: il faut retourner un booléen en fonction de si ça s'est bien passé!
     public function ajouterDansBDD($tache) : bool {
 
         $attribs = array(
-//            "idTache" => $tache->id,   // l'id est généré par la BDD
             "nom" => $tache->nom,
             "statut" => $tache->finie,
             "idListe" => $tache->idListe
@@ -49,10 +48,6 @@ class DAOTache extends DAO
         }
 
         return $this->BDD->insertRow(self::$tab_name, $attribs);
-
-    }
-    public function ajouterIdResponsable($idUtilisateur, $tache)
-    {
 
     }
 
@@ -67,7 +62,6 @@ class DAOTache extends DAO
 
     public function updateBDD($tache, $condition = "") : bool
     {
-        $attribs = array();
         // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
         $attribs = array(
             "idTache" => $tache->id,
@@ -76,8 +70,7 @@ class DAOTache extends DAO
             "idListe" => $tache->idListe,
             "idResponsable" => $tache->responsable
         );
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+	    return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 
 	public function update(Tache $task) {

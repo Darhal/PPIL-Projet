@@ -9,10 +9,10 @@
  * @version: 1.0
  *
  */
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
-include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
-include_once getenv('BASE')."Backend/Membre.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
+include_once "Backend/Taches/ListeTaches.php";
+include_once "Backend/Membre.php";
 
 
 class DAOMembre extends DAO
@@ -45,7 +45,7 @@ class DAOMembre extends DAO
     }
 
     public function getByRequete($requete) : array{
-        return $this->BDD->fetchResults(self::$tab_name, "*", $requete);;
+        return $this->BDD->fetchResults(self::$tab_name, "*", $requete);
     }
 
 	/**
@@ -92,7 +92,6 @@ class DAOMembre extends DAO
     public function updateBDD($membre, $condition = "") : bool
     {
         $attribs = array(); // TODO: JUST FINISH THIS (Look at DAOUtilisateur and get some inspiration from there)
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+	    return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 }

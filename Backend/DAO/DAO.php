@@ -9,8 +9,8 @@
  * @version: 1.0
  *
  */
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
 
 abstract class DAO
 {
@@ -30,7 +30,8 @@ abstract class DAO
     // Singletons should not be cloneable.
     protected function __clone() { }
 
-    public static function getInstance() {
+	/** @noinspection PhpUnused */
+	public static function getInstance() {
         $class = get_called_class();
 
         if(!isset(self::$_instances[$class])){
@@ -51,5 +52,3 @@ abstract class DAO
     public abstract function getByRequete($requete);
     public abstract function updateBDD($objet, $condition = "");
 }
-
-?>

@@ -185,7 +185,6 @@ class Systeme
         $_SESSION["id"] = $req['idutilisateur'];
         $_SESSION["username"] = $req['pseudo'];
         $_SESSION["email"] = $req['email'];
-		var_dump($_SESSION);
         return true;
     }
 
