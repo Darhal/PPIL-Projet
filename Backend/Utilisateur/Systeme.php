@@ -349,7 +349,7 @@ class Systeme
 		    return false;
 	    }
 
-	    $invitation = new InvitationListeTache("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
+	    $invitation = new InvitationTransfererPropriete("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
 	    try {
 		    $invitation->id = random_int(PHP_INT_MIN, -1);
 	    } catch (Exception $e) {
