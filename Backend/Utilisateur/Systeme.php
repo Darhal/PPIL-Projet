@@ -335,6 +335,60 @@ class Systeme
     	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
 	}
 
+
+    /**
+     * Supprime un utilisateur
+     * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
+     * @param int $idUser
+     * @return bool
+     */
+	public static function supprimerCompte(int $idUser) : bool {
+	    if (!isset($idUser)) return false;
+
+	    return self::$dao_user->supprimerDeBDDByID($idUser);
+
+    }
+
+    /**
+     * Permet à un utilisatuer d'envoyer une invitation pour faire une demande de tranfert de propriété
+     * @param ListeTaches $liste
+     * @param Utilisateur $emetteur
+     * @param Utilisateur $destinataire
+     * @return bool
+     */
+    public static function demandeTransfertPropriete(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
+
+		if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
+		    return false;
+	    }
+
+	    $invitation = new InvitationTransfererPropriete("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
+	    try {
+		    $invitation->id = random_int(PHP_INT_MIN, -1);
+	    } catch (Exception $e) {
+	    	error_log("Une erreur est survenue lors de la génération d'un nombre secret");
+	    }
+	    self::$dao_invit->ajouterDansBDD($invitation);
+	    return true;
+    }
+
+    /**
+     * Permet à un utilisateur d'aceepter une demande de transfert de propriété
+     * @param InvitationTransfererPropriete $invitationTransfererPropriete
+     */
+    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+
+    }
+
+    /**
+     * Permet à un utilisateur de refuser une demande de transfert de propriété
+     * @param InvitationTransfererPropriete $invitationTransfererPropriete
+     */
+    public static function refuserDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+
+    }
+
+
     //---------------------------- FIN Utilisateur ---------------------------------
 
 
