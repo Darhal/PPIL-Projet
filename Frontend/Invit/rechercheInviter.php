@@ -76,7 +76,7 @@ $unwanted_array = array(
         var json = JSON.parse(data);
         var divElement = document.getElementById("personne");
         json.forEach(element => {
-            var personne = document.createElement("div");
+            var personne = document.createElement("li");
             var content = document.createTextNode(element.pseudo);
             personne.appendChild(content);
             document.body.insertBefore(personne, divElement);
