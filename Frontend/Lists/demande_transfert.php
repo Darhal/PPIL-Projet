@@ -100,7 +100,7 @@ foreach ($invitations as $invitation) {
 	}
 }
 
-//Systeme::demandeTransfertUtilisateur($liste, $current_user, $user);
+Systeme::demandeTransfertPropriete($liste, $current_user, $user);
 
 header("location: ./");
 exit;
