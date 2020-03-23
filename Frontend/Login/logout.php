@@ -1,12 +1,7 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
-
-$_SESSION["logged_in"] = false;
-unset($_SESSION["id"]);
-unset($_SESSION["username"]);
-
+Systeme::seDeconnecter();
 
 header("location: ../../index.php");

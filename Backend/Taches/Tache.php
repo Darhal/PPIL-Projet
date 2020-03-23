@@ -25,21 +25,8 @@ class Tache
         $this->finie = $f;
     }
 
-
     //Getters
-    public function getId() : int {
-        return $this->id;
-    }
-
-    public function getNom() : string {
-        return $this->nom;
-    }
-
-    public function getResponsable() {
-        return $this->responsable;
-    }
-
-    public function estFinie() : bool {
+	public function estFinie() : bool {
         return $this->finie;
     }
 
@@ -59,4 +46,3 @@ class Tache
 
 }
 
-?>
