@@ -803,7 +803,7 @@ class Systeme
      * @param InvitationListeTache $invitation
      * @return bool
      */
-    public static function refuserInvitation(InvitationListeTache $invitation){
+    public static function refuserInvitation(Invitation $invitation){
         //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
         // Réponse de Ugo: OUI!
         self::$dao_invit->supprimerDeBDD($invitation);
