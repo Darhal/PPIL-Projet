@@ -75,7 +75,7 @@ if ($liste->proprietaire != $user->id) {
 			</div>
 
 			<div class="d-flex justify-content-between">
-				<button onclick="window.location.href='../Profil'"> Retour </button>
+				<button type="button" onclick="window.location.href='../Lists/View/index.php?id=<?php echo $liste->id; ?>'"> Retour </button>
 				<input type="submit" value="Ajouter">
 			</div>
 			<label for="lid"></label><input hidden type="text" id="lid" name="lid" value="<?php echo $liste->id; ?>">

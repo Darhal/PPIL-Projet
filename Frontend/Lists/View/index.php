@@ -208,7 +208,7 @@ if (!in_array($user, $membres)) {
 			<div class=\"float-right\">
 	    <form action=\"../../Tasks/creer.php\" method=\"post\">
 		    <input type=\"submit\" value=\"Ajouter une tâche\">
-		    <label for=\"lid\"></label><input hidden type=\"text\" id=\"lid\" name=\"lid\" value=\"<?php echo $liste->id; ?>\">
+		    <label for=\"lid\"></label><input hidden type=\"text\" id=\"lid\" name=\"lid\" value=\"$liste->id\">
 	    </form>
     </div>
 			
