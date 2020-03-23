@@ -27,7 +27,12 @@ $invitations = Systeme::getInvitations($utilisateur);
 
 foreach ($invitations as $invitation) {
 	if ($invitation->id == $invID) {
-		Systeme::refuserInvitation($invitation);
+	    if($invID < 0){
+            //Systeme::refuserDemandeTransfere($invitation);
+        }else {
+            Systeme::refuserInvitation($invitation);
+        }
+
 	}
 }
 
