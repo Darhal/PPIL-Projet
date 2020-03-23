@@ -343,6 +343,22 @@ class Systeme
 
     }
 
+    public static function demandeTransfertPropriete(ListeTaches $liste, Utilisateur $emetteur, Utilisateur $destinataire): bool {
+
+		if (!isset($liste) || !isset($emetteur) || !isset($destinataire)) {
+		    return false;
+	    }
+
+	    $invitation = new InvitationTransfererPropriete("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
+	    try {
+		    $invitation->id = random_int(PHP_INT_MIN, -1);
+	    } catch (Exception $e) {
+	    	error_log("Une erreur est survenue lors de la génération d'un nombre secret");
+	    }
+	    self::$dao_invit->ajouterDansBDD($invitation);
+	    return true;
+    }
+
     //---------------------------- FIN Utilisateur ---------------------------------
 
 

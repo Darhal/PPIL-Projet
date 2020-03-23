@@ -58,7 +58,7 @@ $user = Systeme::getUserByEmail($umail);
 $invitations = Systeme::getInvitations($user);
 
 foreach ($invitations as $invitation) {
-	if ($invitation->liste == $liste->id) {
+	if ($invitation->liste == $liste->id && $invitation->id >= 0) {
 		Systeme::refuserInvitation($invitation);
 	}
 }
