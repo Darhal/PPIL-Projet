@@ -86,6 +86,19 @@ include_once "Shared/navbar.php";
 
         <?php
 
+            echo "
+            <form method='post' action='demande_transfert.php' onsubmit='return confirm(\"Confirmer le changement ?\")'>
+                <label for='user'></label><select name='user' id='user'>";
+            $membres = Systeme::getMembresInvites($list) ;
+            foreach ($membres as $m) {
+                echo "<option value='$m->email'> $m->pseudo </option>";
+            }
+
+            echo "</select>
+        <input type='hidden' value='$list->id' name='lid' id='lid'>
+        <input type='submit' value='Changer proprietaire !'>
+        </form>";
+
         $err = Systeme::_GET('erreur');
 
         if($err != false){
