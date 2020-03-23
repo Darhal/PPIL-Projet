@@ -343,6 +343,10 @@ class Systeme
 
     }
 
+    public static function demandeTransfertPropriete(int $idDemandeur, int $idDestinataire, int $idListe){
+
+    }
+
     //---------------------------- FIN Utilisateur ---------------------------------
 
 
