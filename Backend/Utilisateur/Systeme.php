@@ -91,10 +91,8 @@ class Systeme
 	    }
 
     	$rawValue = $_POST[$key];
-	    /** @noinspection PhpUnnecessaryLocalVariableInspection */
 	    $escapedValue = SQLite3::escapeString($rawValue);
-
-    	return $escapedValue;
+	    return htmlentities($escapedValue);
     }
 
 	/**
@@ -110,10 +108,9 @@ class Systeme
 		}
 
 		$rawValue = $_GET[$key];
-		/** @noinspection PhpUnnecessaryLocalVariableInspection */
 		$escapedValue = SQLite3::escapeString($rawValue);
 
-		return $escapedValue;
+		return htmlentities($escapedValue);
 	}
 
     //---------------------------- Utilisateur ---------------------------------

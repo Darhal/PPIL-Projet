@@ -16,14 +16,19 @@ Systeme::Init();
 $uid = $_SESSION['id'];
 $utilisateur = Systeme::getUserByID($uid);
 
+$invID = Systeme::_GET('id');
 
-if (!isset($_GET['id'])) {
-    // TODO: - Afficher une erreur
+if ($invID == false) {
+	error_log("ID d'invitation non défini");
     header( "location: invitation.php");
 }
 
-$invID = intval($_GET['id']);
+$invID = intval($invID);
 
+if ($invID == null) {
+	error_log("ID d'invitation au format invalide");
+	header( "location: invitation.php");
+}
 
 
 $invitations = Systeme::getInvitations($utilisateur);   //Les invitations de l'utilisateur connecté

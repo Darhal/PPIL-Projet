@@ -1,16 +1,11 @@
 <?php
-// Affichage des erreurs
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+include_once "Backend/Utilisateur/Utilisateur.php";
 
 // Démarrage de la session
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+Systeme::start_session();
 
 Systeme::Init();
 
@@ -25,30 +20,21 @@ $email = "";
 $password = "";
 $error = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { // Si la requête est de type POST
-
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-
-	if (($email != "") && ($password != "")) { // Si l'email et le mot de passe sont définis
-		if (Systeme::seConnecter($email, $password)) {
-			header("location: ../Profil"); // Redirection vers la page d'accueil
-		} else {
-		    //si on peut recuperer un utilisateur avec le mail alors le mdp est faux
-             if(Systeme::getUserByEmail($email)){
-               header("location: index.php?erreur=3");
-           }
-           else {
-               header("location: index.php?erreur=1");
-           }
-		}
-	} else {
-            header("location: index.php?erreur=2");
-	}
-} else {
-	//$error = "Méthode invalide, POST attendu";
-    header("location: index.php?erreur=2");
+if ($_SERVER['REQUEST_METHOD'] != 'POST') { // Si la requête est de type POST
+	header("location: index.php?erreur=2");
+	exit;
 }
 
-echo $error;
-//header("location: ../Login?erreur");
+$email = Systeme::_POST('email');
+$password = Systeme::_POST('password');
+
+if ($email == false or $password == false) {
+	header("location: index.php?erreur=2");
+	exit;
+}
+
+if (Systeme::seConnecter($email, $password)) {
+	header("location: ../Profil"); // Redirection vers la page d'accueil
+} else {
+	header("location: index.php?erreur=1");
+}

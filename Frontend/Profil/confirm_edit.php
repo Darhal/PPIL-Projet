@@ -45,7 +45,7 @@ if ($conf_password != $logged_user->mdp) {
 
 
 if ($pseudo != "" && $pseudo != $logged_user->pseudo) {
-	$logged_user->pseudo = SQLite3::escapeString($pseudo);
+	$logged_user->pseudo = htmlentities(SQLite3::escapeString($pseudo));
 }
 
 if ($prenom != "" && $prenom != $logged_user->prenom) {

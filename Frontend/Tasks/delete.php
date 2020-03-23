@@ -6,10 +6,8 @@ include_once "Backend/Taches/Tache.php";
 
 Systeme::start_session();
 
-// Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {
-	// Redirection vers la page d'accueil
-	//header("location: ../Login");
+	header("location: ../Login");
 	exit;
 }
 

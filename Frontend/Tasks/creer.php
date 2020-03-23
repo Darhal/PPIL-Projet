@@ -7,13 +7,13 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 
-if(Systeme::estConnecte()){
-	$uid = $_SESSION["id"];
-} else {
+if(!Systeme::estConnecte()){
 	// Redirection vers la page d'accueil
 	header("location: ../Login");
 	exit;
 }
+
+$uid = $_SESSION["id"];
 
 Systeme::Init();
 
@@ -21,26 +21,30 @@ $user = Systeme::getUserByID($uid);
 
 if ($user == null){
 	// TODO: - Afficher une erreur
-	die("ERROR: Unable to find user by ID");
+	error_log("ERROR: Unable to find user by ID");
+	header("location: ../Login/logout.php");
 }
 
-if (!isset($_POST['lid'])) {
-	// TODO: - Afficher une erreur
-	die("ID de liste non défini");
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
+	error_log("ID de liste non défini");
+	header("location: ../Lists");
 }
 
-$lid = intval($_POST['lid']);
+$lid = intval($lid);
 
 if (!is_int($lid)) {
 	// TODO: - Afficher une erreur
-	die("L'ID de liste n'est pas valide");
+	error_log("L'ID de liste n'est pas valide");
+	header("location: ../Lists");
 }
 
 $liste = Systeme::getListeTachesByID($lid);
 
 if ($liste == null) {
-	// TODO: - Afficher une erreur
-	die("Liste d'ID " . $lid . " inexistante");
+	error_log("Liste d'ID $lid inexistante");
+	header("location: ../Lists/index.php?erreur=1");
 }
 
 if ($liste->proprietaire != $user->id) {

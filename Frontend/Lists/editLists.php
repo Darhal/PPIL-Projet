@@ -82,8 +82,6 @@ include_once "Shared/navbar.php";
             </div>
         </form>
 
-        <!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
-
         <?php
 
             echo "
@@ -142,7 +140,7 @@ include_once "Shared/navbar.php";
             return false;
         }
 
-        return true;
+        return confirm("Confirmer les changements ?");
     }
 
 </script>

@@ -19,7 +19,7 @@ Systeme::Init();
 $user = Systeme::getUserByID($uid);
 
 if ($user == null){
-	echo "ERROR: Unable to find user by ID";
+	error_log("ERROR: Unable to find user by ID");
 	header("location: ../Login");
 	exit;
 }

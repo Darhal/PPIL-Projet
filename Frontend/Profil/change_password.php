@@ -13,7 +13,6 @@ if(!Systeme::estConnecte()){
 $uid = $_SESSION["id"];
 
 include_once "Backend/Utilisateur/Utilisateur.php";
-include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::Init();
 $user = Systeme::getUserByID($uid);
@@ -37,7 +36,7 @@ if ($user == null){
 	<div class="spacer"></div>
 	<h1 class="text-center"> Modifier son mot de passe </h1>
 	<div class="container align-center">
-		<form method="post" action="change_passwd.php">
+		<form method="post" action="change_passwd.php" onsubmit="return confirm('Confirmer les changements ?')">
 
 			<div class="form-group">
 				<h3> Mot de passe actuel </h3>
@@ -58,8 +57,6 @@ if ($user == null){
 				<input type="submit" value="Modifier son mot de passe">
 			</div>
 		</form>
-
-		<!-- TODO: Demander à l'utisateur de confirmer les changements, sous forme d'un POPUP peût être. -->
 
 		<?php
 		if(isset($_GET['erreur'])){
@@ -83,8 +80,6 @@ if ($user == null){
 			}
 		}
 		?>
-
-
 	</div>
 </div>
 <?php 

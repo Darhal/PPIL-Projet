@@ -5,45 +5,43 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 
+$pseudo = Systeme::_POST('pseudo');
+$prenom = Systeme::_POST('prenom');
+$nom = Systeme::_POST('nom');
+$email = Systeme::_POST('email');
+$password = Systeme::_POST('password');
+$conf_password = Systeme::_POST('conf-password');
 
+if ($pseudo == false or $prenom == false or $nom == false or $email == false or $password == false or $conf_password == false) {
+	//Si les informations ne sont pas remplies
+	header("location: ./index.php?erreur=2");
+	exit;
+}
 
-if ($_POST['pseudo'] != '' AND $_POST['prenom'] != '' AND $_POST['nom'] != '' AND $_POST['email'] != '' AND $_POST['password'] != '' AND $_POST['conf-password'] != '') { //Si les champs ne sont pas vides
-    Systeme::Init();
+Systeme::Init();
 
-    $pseudo = SQLite3::escapeString($_POST['pseudo']);
-    $prenom = SQLite3::escapeString($_POST['prenom']);
-    $nom = SQLite3::escapeString($_POST['nom']);
-    $email = SQLite3::escapeString($_POST['email']);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	header("location: ./index.php?erreur=4");
+	exit;
+}
 
-    $passwd = SQLite3::escapeString($_POST['password']);
-    $passwd_conf = SQLite3::escapeString($_POST['conf-password']);
+if($password != $conf_password){
+	header("location: ./index.php?erreur=3?");
+	exit;
+}
 
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		header("location: ./index.php?erreur=4");
-		exit;
-	}
+$user = new Utilisateur($pseudo, $prenom, $nom, $email, $password);
+$err_code = Systeme::ajouterUtilisateur($user);
 
-	if($passwd != $passwd_conf){
-		header("location: ./index.php?erreur=3?");
-		exit;
-	}
+if ($err_code) {
+	header("location: ./index.php?erreur=1");
+	exit;
+}
 
-    // TODO: - Protéger contre l'injection SQL
-    $user = new Utilisateur($pseudo, $prenom, $nom, $email, $passwd);
-    $err_code = Systeme::ajouterUtilisateur($user);
-
-    if ($err_code) {
-        header("location: ./index.php?erreur=1");
-        exit;
-    }
-
-    if (Systeme::seConnecter($user->email, $user->mdp)){
-        // Redirection vers la page d'accueil
-        header("location: ../Profil");   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
-        exit;
-    }
+if (Systeme::seConnecter($user->email, $user->mdp)){
+	// Redirection vers la page d'accueil
+	header("location: ../Profil");   // Revenir à la page principale avec le compte de l'utilisateur à présent connecté
+	exit;
 } else {
-    //Si les informations ne sont pas remplies
-    header("location: ./index.php?erreur=2");
-    exit;
+	header("location: ../Login");
 }

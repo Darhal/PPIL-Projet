@@ -1,12 +1,11 @@
 <?php
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::Init();
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-	session_start();
-}
+Systeme::start_session();
 
 if(Systeme::estConnecte()){
 	$uid = $_SESSION["id"];
@@ -16,7 +15,7 @@ if(Systeme::estConnecte()){
 	exit;
 }
 
-$user = Systeme::getUserByEmail($_SESSION['email']);
+$user = Systeme::getUserByID($_SESSION['id']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,7 +25,7 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<title> Invitations </title>
 </head>
 <body>
-<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Invitations </h1>
 <div class="spacer"></div>
@@ -54,8 +53,8 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 			<tr>
 				<th scope='row'> " . $invitation->message . "</th>
 				<th scope='row'> " . $emetteur->pseudo . "</th>
-				<th scope='row'><a href='accept.php?id=$invitation->id'><img src='/Assets/Images/add.png' width='2%' title='Accepter' style='box-sizing: border-box;width: 5%;'></th>
-				<th scope='row' class='container w-30'><a href='decline.php?id=$invitation->id'><img src='/Assets/Images/refus.png' title='Refuser' style='box-sizing: border-box;width: 5%;'></th>
+				<th scope='row'><a href='accept.php?id=$invitation->id'><img src='/Assets/Images/add.png' width='2%' title='Accepter' style='box-sizing: border-box;width: 5%;' alt='Accepter'></th>
+				<th scope='row' class='container w-30'><a href='decline.php?id=$invitation->id'><img src='/Assets/Images/refus.png' title='Refuser' style='box-sizing: border-box;width: 5%;' alt='Refuser'></th>
 			</tr>
 			";
 		}

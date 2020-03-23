@@ -1,9 +1,10 @@
 <?php
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
-if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
+Systeme::start_session();
+
+if(Systeme::estConnecte()){
     // Redirection vers la page d'accueil
     header("location: ../Profil");
     exit;
@@ -69,7 +70,7 @@ if(isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true){
 </form>
 
 <?php
-include_once getenv('BASE')."Shared/footer.php";
+include_once "Shared/footer.php";
 ?>
 </body>
 </html>
