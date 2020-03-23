@@ -396,9 +396,18 @@ class Systeme
 			}
 		}
 
+		// L'invitation est supprimée
 		self::$dao_invit->supprimerDeBDD($invitationTransfererPropriete);
+
+		// Le destinataire devient propriétaire de la liste
 		$liste->proprietaire = $invitationTransfererPropriete->destinataire;
 		self::$dao_listeTaches->update($liste);
+
+		// Le destinataire quitte la liste (en tant qu'invité)
+		self::quitterListe(self::getUserByID($invitationTransfererPropriete->destinataire), $liste);
+
+		// L'emetteur devient membre de la liste
+	    self::$dao_membre->add(Systeme::getUserByID($invitationTransfererPropriete->emetteur), $liste);
 
 		return true;
     }

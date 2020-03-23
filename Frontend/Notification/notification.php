@@ -34,7 +34,6 @@ if(Systeme::estConnecte()){
     <table class="table">
         <thead>
         <tr>
-            <th scope="col"> ID </th>
             <th scope="col"> Message </th>
             <th scope="col"> Supprimer </th>
         </tr>
@@ -48,7 +47,6 @@ if(Systeme::estConnecte()){
 
         foreach ($notifs as $notifT) {
             echo "<tr>
-                        <th scope='row'>" . $notifT->idNotif . "</th>
                         <td>" . $notifT->msg . "</td>
                         </td>
                         <td id='delete_'. $notifT->idNotif>

@@ -36,7 +36,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col"> ID </th>
 				<th scope="col"> Message </th>
 				<th scope="col"> De la part de </th>
 				<th scope="col"> Accepter </th>
@@ -53,7 +52,6 @@ $user = Systeme::getUserByEmail($_SESSION['email']);
 
 			echo "
 			<tr>
-				<th scope='row'> " . $invitation->id . "</th>
 				<th scope='row'> " . $invitation->message . "</th>
 				<th scope='row'> " . $emetteur->pseudo . "</th>
 				<th scope='row'><a href='accept.php?id=$invitation->id'><img src='/Assets/Images/add.png' width='2%' title='Accepter' style='box-sizing: border-box;width: 5%;'></th>
