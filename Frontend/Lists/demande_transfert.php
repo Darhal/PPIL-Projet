@@ -1,4 +1,5 @@
 <?php
+
 set_include_path(getenv('BASE'));
 include_once "Backend/Utilisateur/Systeme.php";
 
@@ -56,7 +57,7 @@ if ($liste == null) {
 }
 
 //récupération du membre à supprimer
-$new_prop = Systeme::_POST('new_prop');
+$new_prop = Systeme::_POST('user');
 
 if ($new_prop == false) {
     error_log("Aucun ID d'user");
@@ -64,15 +65,7 @@ if ($new_prop == false) {
     exit;
 }
 
-$new_prop = intval($new_prop);
-
-if ($new_prop == null) {
-    error_log("Format de l'ID d'user incorrect");
-    header("location: ./");
-    exit;
-}
-
-$membre = Systeme::getUserByID($new_prop);
+$membre = Systeme::getUserByEmail($new_prop);
 
 if ($membre == null) {
     error_log("Aucun user d'ID $new_prop");
@@ -100,7 +93,7 @@ foreach ($invitations as $invitation) {
 	}
 }
 
-Systeme::demandeTransfertPropriete($liste, $current_user, $user);
+Systeme::demandeTransfertPropriete($liste, $user, $membre);
 
 header("location: ./");
 exit;

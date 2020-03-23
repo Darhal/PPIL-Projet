@@ -12,4 +12,4 @@ if(Systeme::estConnecte()){
 	$text = "connected as ".$pseudo;
 }
 
-echo "<footer><small class='sticky-bottom'> " . $text . " </small></footer>";
+echo "<footer><small class='sticky-bottom'></small></footer>";

@@ -83,7 +83,6 @@ if (!in_array($user, $membres)) {
 		<table class='table'>
 			<thead>
 				<tr>
-					<th scope='col'> ID </th>
 					<th scope='col'> Pseudo </th>
 					<th scope='col'> Mail </th>
 		";
@@ -111,7 +110,6 @@ if (!in_array($user, $membres)) {
 	}
 
 	function Row(ListeTaches $listeTaches, Utilisateur $utilisateurConnecte, Utilisateur $utilisateur, Utilisateur $proprietaire) {
-		ID($utilisateur);
 		Pseudo($utilisateur);
 		EMail($utilisateur);
 

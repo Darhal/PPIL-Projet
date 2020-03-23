@@ -79,7 +79,6 @@ if (!in_array($user, $membres)) {
 			echo "<table class='table'><thead><tr>";
 
 			echo "
-				<th scope='col'> ID </th>
 				<th scope='col'> Item </th>
 				<th scope='col'> Responsable </th>
 				<th scope='col'> Complétée </th>
@@ -103,7 +102,6 @@ if (!in_array($user, $membres)) {
 
 		function Row(ListeTaches $listeTaches, Tache $tache, Utilisateur $utilisateur) {
 			echo "<tr>";
-			ID($tache);
 			Item($tache);
 			Responsable($listeTaches, $tache, $utilisateur);
 			Completee($listeTaches, $tache, $utilisateur);

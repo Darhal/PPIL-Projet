@@ -37,7 +37,6 @@ $user = Systeme::getUserByID($_SESSION['id']);
 	<table class="table">
 		<thead>
 		<tr>
-			<th scope="col"> ID </th>
 			<th scope="col"> Nom </th>
 			<th scope="col"> Propriétaire </th>
 			<th scope="col"> Date de début </th>
@@ -66,7 +65,6 @@ $user = Systeme::getUserByID($_SESSION['id']);
 			echo "
             
 				<tr>
-					<th scope='row'> $list->id </th>
 					<td><a href='../Lists/View/index.php?id=$list->id'> $list->nom </a></td>
 					<td> $np </td>
 					<td>" . $list->formattedDebut() . "</td>

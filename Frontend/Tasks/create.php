@@ -5,6 +5,7 @@ include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::start_session();
 
+Systeme::Init();
 
 // Vérification si un utilisateur est connecté
 if(!Systeme::estConnecte()) {

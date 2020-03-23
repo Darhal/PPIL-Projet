@@ -26,8 +26,12 @@ class DAOInvit extends DAO
 	        "emetteur" => $invitation->emetteur,
 	        "destinataire" => $invitation->destinataire,
             "message" => $invitation->message,
-            "idListe" => $invitation->liste,
+            "idListe" => $invitation->liste
         );
+
+        if (isset($invitation->id)) {
+        	$attribs["id"] = $invitation->id;
+        }
 
         return  $this->BDD->insertRow(self::$tab_name, $attribs);
     }

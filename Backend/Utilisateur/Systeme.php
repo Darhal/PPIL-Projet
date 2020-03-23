@@ -10,6 +10,7 @@ include_once "Backend/DAO/DAOMembre.php";
 include_once "Backend/DAO/DAOInvit.php";
 include_once "Backend/DAO/DAONotif.php";
 
+include_once "Backend/Invitation/InvitationTransfererPropriete.php";
 include_once "Backend/Invitation/InvitationListeTache.php";
 include_once "Backend/Taches/ListeTaches.php";
 include_once "Backend/Taches/Tache.php";
@@ -372,21 +373,46 @@ class Systeme
 	    return true;
     }
 
-    /**
-     * Permet à un utilisateur d'aceepter une demande de transfert de propriété
-     * @param InvitationTransfererPropriete $invitationTransfererPropriete
-     */
-    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
+	/**
+	 * Permet à un utilisateur d'aceepter une demande de transfert de propriété
+	 * @param InvitationTransfererPropriete $invitationTransfererPropriete
+	 * @return bool
+	 */
+    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete){
+		if (!isset($invitationTransfererPropriete)) {
+			return false;
+		}
 
+		$liste = self::getListeTachesByID($invitationTransfererPropriete->liste);
+		$membres = self::getMembresInvites($liste);
+
+		foreach ($membres as $membre) {
+			$invitations = self::getInvitations($membre);
+
+			foreach ($invitations as $invitation) {
+				if ($invitation->id < 0 && $invitation->liste == $invitationTransfererPropriete->liste) {
+					self::refuserInvitation($invitation);
+				}
+			}
+		}
+
+		// L'invitation est supprimée
+		self::$dao_invit->supprimerDeBDD($invitationTransfererPropriete);
+
+		// Le destinataire devient propriétaire de la liste
+		$liste->proprietaire = $invitationTransfererPropriete->destinataire;
+		self::$dao_listeTaches->update($liste);
+
+		// Le destinataire quitte la liste (en tant qu'invité)
+		self::quitterListe(self::getUserByID($invitationTransfererPropriete->destinataire), $liste);
+
+		// L'emetteur devient membre de la liste
+	    self::$dao_membre->add(Systeme::getUserByID($invitationTransfererPropriete->emetteur), $liste);
+
+		return true;
     }
 
-    /**
-     * Permet à un utilisateur de refuser une demande de transfert de propriété
-     * @param InvitationTransfererPropriete $invitationTransfererPropriete
-     */
-    public static function refuserDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete ){
 
-    }
 
 
     //---------------------------- FIN Utilisateur ---------------------------------
@@ -786,7 +812,7 @@ class Systeme
      * @param InvitationListeTache $invitation
      * @return bool
      */
-    public static function refuserInvitation(InvitationListeTache $invitation){
+    public static function refuserInvitation(Invitation $invitation){
         //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
         // Réponse de Ugo: OUI!
         self::$dao_invit->supprimerDeBDD($invitation);
@@ -823,9 +849,6 @@ class Systeme
         }
 
         $invitation = new InvitationListeTache("Je t‘invite à rejoindre la liste " . $liste->nom, $emetteur->id, $destinataire->id, $liste->id);
-        echo "<pre>";
-        var_dump($invitation);
-        echo "</pre>";
         self::$dao_invit->ajouterDansBDD($invitation);
 
         return true;
@@ -847,8 +870,14 @@ class Systeme
         $res_array = array();
 
         foreach ($resSQL as $item) {
-            $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
-            $invitation->id = $item['id'];
+        	$id = $item['id'];
+
+        	if ($id < 0) {
+                $invitation = new InvitationTransfererPropriete($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+	        } else {
+                $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+	        }
+        	$invitation->id = $item['id'];
 
             array_push($res_array, $invitation);
         }

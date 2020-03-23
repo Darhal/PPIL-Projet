@@ -37,7 +37,7 @@ foreach ($invitations as $invitation) {
             if (!Systeme::notifierListeTousMembresListe("$utilisateur->pseudo est maintenant le propriétaire de la liste $liste->nom", $liste->id)) {
                 error_log("Une erreur est survenue lors de l'acceptation du transfere de propriété de la liste $liste->id");
             }
-            //Systeme::accepterDemandeDeDroit($invitation);
+            Systeme::accepterDemandeTransfert($invitation);
         }
         else {                  //Invitation à une liste
             if (!Systeme::notifierListeTousMembresListe("$utilisateur->pseudo vient de rejoindre la liste $liste->nom", $liste->id)) {
