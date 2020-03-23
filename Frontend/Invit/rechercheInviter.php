@@ -57,6 +57,11 @@ $unwanted_array = array(
     </form>
 
 </div>
+<div id="personne">
+
+</div><div id="personne">
+
+</div>
 <script type="application/javascript">
     function f(p) {
         $.ajax({
@@ -69,15 +74,26 @@ $unwanted_array = array(
         });
     }
     function afficher(data) {
+        var divElement = document.getElementById("personne");
+        if (divElement.childElementCount!=0){
+            var child=divElement.lastChild;
+            while (child){
+                divElement.removeChild(child);
+                child=divElement.lastChild;
+            }
+        }
         var json = JSON.parse(data);
-        var divElement = document.createElement("personne");
         json.forEach(element => {
-            var personne = document.createElement("div");
+            var personne = document.createElement("li");
             var content = document.createTextNode(element.pseudo);
+           // content.onclick=f1();
             personne.appendChild(content);
-            document.body.insertBefore(personne, divElement);
+            divElement.appendChild(personne);
 
         })
 
+    }
+    function f1() {
+        alert("ajoute moi");
     }
 </script>
