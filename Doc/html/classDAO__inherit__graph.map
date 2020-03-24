@@ -1,0 +1,8 @@
+<map id="DAO" name="DAO">
+<area shape="rect" id="node2" href="$classDAOInvit.html" title="DAOInvit" alt="" coords="5,80,81,107"/>
+<area shape="rect" id="node3" href="$classDAOListeTaches.html" title="DAOListeTaches" alt="" coords="106,80,229,107"/>
+<area shape="rect" id="node4" href="$classDAOMembre.html" title="DAOMembre" alt="" coords="253,80,351,107"/>
+<area shape="rect" id="node5" href="$classDAONotif.html" title="DAONotif" alt="" coords="376,80,455,107"/>
+<area shape="rect" id="node6" href="$classDAOTache.html" title="DAOTache" alt="" coords="479,80,565,107"/>
+<area shape="rect" id="node7" href="$classDAOUtilisateur.html" title="DAOUtilisateur" alt="" coords="589,80,700,107"/>
+</map>
