@@ -104,8 +104,8 @@ static&#160;</td><td class="memItemRight" valign="bottom"><b>start_session</b> (
 <tr class="separator:a33375ebc9bb1857f9316f535d18e144a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad44075c5787fae85882525b72e6fea99"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSysteme.html#ad44075c5787fae85882525b72e6fea99">changePassword</a> (<a class="el" href="classUtilisateur.html">Utilisateur</a> $user, string $old_password, string $new_password)</td></tr>
 <tr class="separator:ad44075c5787fae85882525b72e6fea99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ee5bae63c0244f80a168dfaf21e6a5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSysteme.html#ab3ee5bae63c0244f80a168dfaf21e6a5">supprimerCompte</a> (int $idUser)</td></tr>
-<tr class="separator:ab3ee5bae63c0244f80a168dfaf21e6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5dd06661a37262f342e8c2b3eaf0e3"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSysteme.html#a7f5dd06661a37262f342e8c2b3eaf0e3">supprimerCompte</a> (<a class="el" href="classUtilisateur.html">Utilisateur</a> $utilisateur)</td></tr>
+<tr class="separator:a7f5dd06661a37262f342e8c2b3eaf0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a7710782b670957115920dbdab535f1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSysteme.html#a8a7710782b670957115920dbdab535f1">demandeTransfertPropriete</a> (<a class="el" href="classListeTaches.html">ListeTaches</a> $liste, <a class="el" href="classUtilisateur.html">Utilisateur</a> $emetteur, <a class="el" href="classUtilisateur.html">Utilisateur</a> $destinataire)</td></tr>
 <tr class="separator:a8a7710782b670957115920dbdab535f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97e3cf5328e3c2a9585a412414e96e06"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSysteme.html#a97e3cf5328e3c2a9585a412414e96e06">accepterDemandeTransfert</a> (<a class="el" href="classInvitationTransferePropriete.html">InvitationTransferePropriete</a> $invitationTransfererPropriete)</td></tr>
@@ -1697,8 +1697,8 @@ static&#160;</td><td class="memItemRight" valign="bottom"><b>updateTask</b> (<a 
 
 </div>
 </div>
-<a id="ab3ee5bae63c0244f80a168dfaf21e6a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3ee5bae63c0244f80a168dfaf21e6a5">&#9670;&nbsp;</a></span>supprimerCompte()</h2>
+<a id="a7f5dd06661a37262f342e8c2b3eaf0e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5dd06661a37262f342e8c2b3eaf0e3">&#9670;&nbsp;</a></span>supprimerCompte()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1709,8 +1709,8 @@ static&#160;</td><td class="memItemRight" valign="bottom"><b>updateTask</b> (<a 
         <tr>
           <td class="memname">static Systeme::supprimerCompte </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>$idUser</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classUtilisateur.html">Utilisateur</a>&#160;</td>
+          <td class="paramname"><em>$utilisateur</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1722,7 +1722,7 @@ static&#160;</td><td class="memItemRight" valign="bottom"><b>updateTask</b> (<a 
 </div><div class="memdoc">
 <p>Supprime un utilisateur Attention, la <a class="el" href="classBDD.html">BDD</a> est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">int</td><td class="paramname">$idUser</td><td></td></tr>
+    <tr><td class="paramtype"><a class="el" href="classUtilisateur.html">Utilisateur</a></td><td class="paramname">$utilisateur</td><td></td></tr>
   </table>
   </dd>
 </dl>
