@@ -129,9 +129,6 @@ class Systeme
         return 0;
     }
 
-    public static function supprimerUtilisateur(int $utilisateurID) {
-	    // Attention, un fonction identique est disponible plus bas
-    }
 
     /**
      * Permet qu'un Utilisateur se connecte
