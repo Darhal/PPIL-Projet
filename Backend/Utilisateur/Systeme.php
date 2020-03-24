@@ -86,7 +86,7 @@ class Systeme
     public static function _POST(string $key) {
 
     	if (!isset($_POST[$key])) {
-    		error_log("La clé '$key'' n'est pas définie dans le POST");
+    		error_log("La clé '$key' n'est pas définie dans le POST");
     	    return false;
 	    }
 
@@ -303,17 +303,17 @@ class Systeme
 	}
 
 
-    /**
-     * Supprime un utilisateur
-     * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
-     * @param int $idUser
-     * @return bool
-     */
-	public static function supprimerCompte(int $idUser) : bool {
+	/**
+	 * Supprime un utilisateur
+	 * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
+	 * @param Utilisateur $utilisateur
+	 * @return bool
+	 */
+	public static function supprimerCompte(Utilisateur $utilisateur) : bool {
 		// Attention, une fonction identique est présente plus haut
-	    if (!isset($idUser)) return false;
+	    if (!isset($utilisateur)) return false;
 
-	    return self::$dao_user->supprimerDeBDDByID($idUser);
+	    return self::$dao_user->supprimerDeBDD($utilisateur);
 
     }
 

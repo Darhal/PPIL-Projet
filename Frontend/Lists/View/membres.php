@@ -58,11 +58,20 @@ if (!in_array($user, $membres)) {
 
 ?>
 <!DOCTYPE html>
-<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../../CSS/style.css">
+	<meta charset="UTF-8">
+	<script   src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="../../CSS/style.css">
 	<title>Procrast - <?php echo $liste->nom; ?></title>
+	<style>
+		.form-control{
+			border-style: solid;   /* Style de la bordure  */
+			border-width: 1px;   /* Epaisseur de la bordure  */
+			border-color: #dddddd;   /* Couleur de la bordure  */
+			background-color: #eeeeee;   /* Couleur de fond */
+			padding: 10px 10px 10px 10px;   /* Espace entre les bords et le contenu : haut droite bas gauche  */
+		}
+	</style>
 </head>
 <body>
 <?php include_once "Shared/navbar.php"; ?>
@@ -151,56 +160,85 @@ if (!in_array($user, $membres)) {
 	Liste($liste, $user, $owner);
 
 	if ($user->id == $liste->proprietaire) {
-		//echo "
-		//	<form method='post' action='add_member.php' onsubmit='return confirm(\"Confirmer l‘invitation ?\")'>
-		//		<label for='user'></label>";
-		//$users = Systeme::getUsersNonMembresByPseudo("", $liste);
-
-
-
 		echo "
-<div id=\"recherche\">
-
-    <h5>Ajouter un membre ? C'est par là</h5>
-    <form action=\"\" class=\"formulaire\">
-        <input style=\"width: 300px\" class=\"form-control\" onchange=\"f(this.value)\" type=\"text\" placeholder=\"Pseudo\"/>
-    </form>
-
-</div>
-<div id=\"personne\">
-
-</div><div id=\"personne\">
-
-</div>
-<script type=\"application/javascript\">
-    function f(p) {
-        $.ajax({
-            type:\"GET\",
-            url:\"pseudoR.php\",
-            data:\"pseudo=\"+p,
-            success: function (data) {
-                afficher(data)
-            }
-        });
-    }
-    function afficher(data) {
-        var json = JSON.parse(data);
-        var divElement = document.getElementById(\"personne\");
-        json.forEach(element => {
-            var personne = document.createElement(\"div\");
-            var content = document.createTextNode(element.pseudo);
-            personne.appendChild(content);
-            document.body.insertBefore(personne, divElement);
-
-        })
-
-    }
-</script>
-	";
+			<div id='recherche'>
+				<h5>Tapez le nom de la personne que vous souhaitez rechercher </h5>
+				<form class='formulaire'>
+                    <input style='width: 300px' class='form-control' onchange='f(this.value)' type='text' placeholder='Pseudo'/>
+                    <input type='submit' value='Ajouter!'>
+                </form>
+			</div>
+			<div id='personne'>
+			</div>
+		";
 	}
 	?>
 </div>
-
-<?php include_once "Shared/footer.php"; ?>
+	<?php include_once "Shared/footer.php"; ?>
 </body>
-</html>
+<script type='application/javascript'>
+    function f(p) {
+        $.ajax({
+            type:'GET',
+            url:'pseudoR.php',
+            data:'pseudo=' + p,
+            success: function (data) {
+                //afficher(data)
+	            succes(data);
+            }
+        });
+    }
+
+    function succes(v) {
+        var list = document.getElementById('personne');
+        list.innerHTML = '';
+
+        var json = JSON.parse(v);
+        json.forEach(element => {
+            var item = document.createElement("div");
+            item.innerText = element.pseudo;
+            item.className = "list-group-item list-group-item-action";
+            item.onclick = function () {
+                if (confirm("vous souhaitez ajouter " + element.pseudo)){
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'add_member.php',
+                        dataType: 'json',
+                        data: {
+                            user: element.email,
+                            lid: <?php echo $liste->id ?>
+                        }
+                    })
+                }
+            };
+
+            list.appendChild(item);
+
+        });
+    }
+
+
+    function afficher(data) {
+        const divElement = document.getElementById('personne');
+        if (divElement.childElementCount !== 0){
+            var child = divElement.lastChild;
+            while (child) {
+                divElement.removeChild(child);
+                child = divElement.lastChild;
+            }
+        }
+        const json = JSON.parse(data);
+        json.forEach(element => {
+            const personne = document.createElement('button');
+            const content = document.createTextNode(element.pseudo);
+            personne.appendChild(content);
+            personne.click(alert(element.pseudo));
+            divElement.appendChild(personne);
+        })
+
+    }
+    function ajout(pseudo) {
+        confirm('vous souhaitez ajouter' + pseudo);
+    }
+</script>
