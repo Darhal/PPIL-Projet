@@ -16,23 +16,25 @@ Systeme::Init();
 $uid = $_SESSION['id'];
 $utilisateur = Systeme::getUserByID($uid);
 
-if (!isset($_GET['id'])) {
-    // TODO: - Afficher une erreur
-    header( "location: invitation.php");
+$invID = Systeme::_GET('id');
+
+if ($invID == false) {
+	error_log("ID d'invitation non défini");
+	header( "location: invitation.php");
 }
 
-$invID = intval($_GET['id']);
+$invID = intval($invID);
+
+if ($invID == null) {
+	error_log("ID d'invitation au format invalide");
+	header( "location: invitation.php");
+}
 
 $invitations = Systeme::getInvitations($utilisateur);
 
 foreach ($invitations as $invitation) {
     if ($invitation->id == $invID) {
-        if($invID < 0){
-            //Systeme::refuserDemandeTransfere($invitation);
-        }else {
-            Systeme::refuserInvitation($invitation);
-        }
-
+    	Systeme::refuserInvitation($invitation);
     }
 }
 

@@ -19,7 +19,7 @@ Systeme::Init();
 $user = Systeme::getUserByID($uid);
 
 if ($user == null){
-	echo "ERROR: Unable to find user by ID";
+	error_log("ERROR: Unable to find user by ID");
 	header("location: ../Login");
 	exit;
 }
@@ -46,8 +46,8 @@ if ($user == null){
 				<input type="submit" value="Modifier mon profil">
 			</form>
 
-			<form method="post" action="delete.php">
-				<input disabled type="submit" value="Supprimer mon compte" style="color: red">
+			<form method="post" action="delete.php" onsubmit="return confirm('Êtes vous sur de vouloir supprimer votre compte ? Cela entraînera la suppression de toutes vos listes. Cette action est irréversible')">
+				<input type="submit" value="Supprimer mon compte" style="color: red">
 			</form>
 		</div>
 	</div>

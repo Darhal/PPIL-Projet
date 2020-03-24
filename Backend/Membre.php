@@ -18,5 +18,3 @@ class Membre
     	$this->idUtilisateur = $idUtilisateur;
     }
 }
-
-?>

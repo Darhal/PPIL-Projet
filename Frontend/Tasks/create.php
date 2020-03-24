@@ -17,31 +17,30 @@ if(!Systeme::estConnecte()) {
 $user = Systeme::getUserByID($_SESSION['id']);
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	// TODO: - Afficher une erreur
-	header( "location: ../Lists" );
+	error_log("Invalid request");
+	header( "location: ../Lists/creer.php?erreur=0" );
 }
 
-if (!isset($_POST['lid'])) {
-	// TODO: - Afficher une erreur
-	die("ID de liste non défini");
+$lid = Systeme::_POST('lid');
+
+if ($lid == false) {
+	error_log("ID de liste non défini");
+	header( "location: ../Lists/creer.php?erreur=1" );
 }
 
-$lid = intval(SQLite3::escapeString($_POST['lid']));
+$lid = intval($lid);
 
 if (!is_int($lid)) {
-	// TODO: - Afficher une erreur
-	die("L'ID de liste n'est pas valide");
+	error_log("L'ID de liste n'est pas valide");
+	header( "location: ../Lists/creer.php?erreur=2" );
 }
 
-Systeme::Init();
 $liste = Systeme::getListeTachesByID($lid);
 include_once "Backend/Utilisateur/Utilisateur.php";
 
-$uid = $_SESSION["id"];
-$user = Systeme::getUserByID($uid) ;
 if ($liste == null) {
-	// TODO: - Afficher une erreur
-	die("Liste d'ID " . $lid . " inexistante");
+	error_log("Liste d'ID " . $lid . " inexistante");
+	header( "location: ../Lists/creer.php?erreur=3" );
 }
 
 if ($liste->proprietaire != $user->id) {
@@ -50,34 +49,30 @@ if ($liste->proprietaire != $user->id) {
 	exit;
 }
 
-if (!isset($_POST['tname'])) {
-	// TODO: - Afficher une erreur
-	die("Nom de tâche non défini");
-}
+$tname = Systeme::_POST('tname');
 
-$tname = SQLite3::escapeString(strval($_POST['tname']));
+if ($tname == false) {
+	error_log("Nom de tâche non défini");
+	header("location: ../Lists/creer.php?erreur=4");
 
-if (trim($tname) == "") {
-	header("location: ../Lists/View/index.php?id=" . $liste->id);
 }
 
 if (!is_string($tname)) {
-	// TODO: - Afficher une erreur
-	die("Le nom de tâche n'est pas valide");
+	error_log("Nom de tâche invalide");
+	header("location: ../Lists/creer.php?erreur=5");
 }
 
 include_once "Backend/Taches/Tache.php";
 
 $res = Systeme::createTask($tname, $liste);
 
-
-
 if(!Systeme::notifierListeTousMembresListe("La tache $tname vient d'etre ajoutée à $liste->nom", $liste->id)){
-    error_log("Une erreur est survenue lors de la creation de la tache $tname");
+    error_log("Une erreur est survenue lors de la notification des membres de la liste, mais la tâche à bien été créée");
+	header("location: ../Lists/creer.php?erreur=6");
 }
 if ($res == true) {
 	header("location: ../Lists/View/index.php?id=" . $liste->id);
 } else {
-	// TODO: - Afficher une erreur
-	echo "failure";
+	error_log("Une erreur est survenue lors de la creation de la tache $tname");
+	header("location: ../Lists/creer.php?erreur=6");
 }

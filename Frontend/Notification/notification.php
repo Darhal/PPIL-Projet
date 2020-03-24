@@ -1,20 +1,20 @@
 <?php
-include_once (getenv('BASE')."Backend/Utilisateur/Utilisateur.php");
-include_once (getenv('BASE')."Backend/Utilisateur/Systeme.php");
+set_include_path(getenv('BASE'));
+include_once "Backend/Utilisateur/Systeme.php";
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/Utilisateur/Systeme.php";
 
 Systeme::Init();
 
-if (session_status() != PHP_SESSION_ACTIVE) {
-    session_start();
-}
+Systeme::start_session();
 
-if(Systeme::estConnecte()){
-    $uid = $_SESSION["id"];
-} else {
+if(!Systeme::estConnecte()){
     // Redirection vers la page d'accueil
     header("location: ../Login");
     exit;
 }
+
+$uid = $_SESSION["id"];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,7 +24,7 @@ if(Systeme::estConnecte()){
     <title> Notifications </title>
 </head>
 <body>
-<?php include_once getenv('BASE') . "Shared/navbar.php"; ?>
+<?php include_once "Shared/navbar.php"; ?>
 <div class="spacer"></div>
 <h1 class="text-center"> Notifications </h1>
 <div class="spacer"></div>
@@ -42,25 +42,26 @@ if(Systeme::estConnecte()){
         <tbody>
 
         <?php
-        $user = Systeme::getUserByEmail($_SESSION['email']);
+        $user = Systeme::getUserByID($_SESSION['id']);
         $notifs = Systeme::getNotifications($user->id) ;
 
         foreach ($notifs as $notifT) {
-            echo "<tr>
-                        <td>" . $notifT->msg . "</td>
-                        </td>
-                        <td id='delete_'. $notifT->idNotif>
-                        <form action='./supprimer.php' method='post'>
-                            <input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;'>
-                            <label for='lid'></label>
-                            <input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
-                        </form>
-                        </td>
-                    </tr>" ;
+            echo "
+			<tr>
+				<td>" . $notifT->msg . "</td>
+                <td>
+                    <form action='./supprimer.php' method='post'>
+                        <input type='image' name='delete' src='../../Assets/Images/SVG/trash.svg' style='width:2rem;' alt='Supprimer'>
+                        <label for='lid'></label><input hidden type='text' id='lid' name='lid' value='$notifT->idNotif'>
+					</form>
+				</td>
+			</tr>
+			";
         }
         ?>
         </tbody>
     </table>
 </div>
+<?php include_once "Shared/footer.php"; ?>
 </body>
 </html>

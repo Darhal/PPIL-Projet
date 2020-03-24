@@ -30,4 +30,3 @@ class NotificationListeTaches extends Notification
 
 }
 
-?>

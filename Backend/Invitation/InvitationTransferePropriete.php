@@ -11,7 +11,7 @@
  */
 include_once "Invitation.php";
 
-class InvitationTransfererPropriete extends Invitation {
+class InvitationTransferePropriete extends Invitation {
 
     function __construct(string $message, int $emetteur, int $destinataire, int $liste)
     {
@@ -20,4 +20,3 @@ class InvitationTransfererPropriete extends Invitation {
 
 }
 
-?>

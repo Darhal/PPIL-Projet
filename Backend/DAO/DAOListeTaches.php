@@ -9,9 +9,9 @@
  * @version: 1.0
  *
  */
-
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
-include_once getenv('BASE')."Backend/Taches/ListeTaches.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
+include_once "Backend/Taches/ListeTaches.php";
 
 
 class DAOListeTaches extends DAO
@@ -81,8 +81,7 @@ class DAOListeTaches extends DAO
             "idUtilisateur" => $liste_tache->proprietaire
 
         );
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+	    return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 
     public function update(ListeTaches $liste):bool

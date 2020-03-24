@@ -19,4 +19,3 @@ class InvitationListeTache extends Invitation {
 
 }
 
-?>

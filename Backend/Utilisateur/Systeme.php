@@ -10,7 +10,7 @@ include_once "Backend/DAO/DAOMembre.php";
 include_once "Backend/DAO/DAOInvit.php";
 include_once "Backend/DAO/DAONotif.php";
 
-include_once "Backend/Invitation/InvitationTransfererPropriete.php";
+include_once "Backend/Invitation/InvitationTransferePropriete.php";
 include_once "Backend/Invitation/InvitationListeTache.php";
 include_once "Backend/Taches/ListeTaches.php";
 include_once "Backend/Taches/Tache.php";
@@ -30,11 +30,6 @@ include_once "Shared/Libraries/BDD.php";
  */
 class Systeme
 {
-	/**
-	 * @var BDD
-	 */
-    private static $bdd = null;
-
 	/**
 	 * @var DAOUtilisateur
 	 */
@@ -91,15 +86,13 @@ class Systeme
     public static function _POST(string $key) {
 
     	if (!isset($_POST[$key])) {
-    		error_log("La clé '$key'' n'est pas définie dans le POST");
+    		error_log("La clé '$key' n'est pas définie dans le POST");
     	    return false;
 	    }
 
     	$rawValue = $_POST[$key];
-	    /** @noinspection PhpUnnecessaryLocalVariableInspection */
 	    $escapedValue = SQLite3::escapeString($rawValue);
-
-    	return $escapedValue;
+	    return htmlentities($escapedValue);
     }
 
 	/**
@@ -115,23 +108,12 @@ class Systeme
 		}
 
 		$rawValue = $_GET[$key];
-		/** @noinspection PhpUnnecessaryLocalVariableInspection */
 		$escapedValue = SQLite3::escapeString($rawValue);
 
-		return $escapedValue;
+		return htmlentities($escapedValue);
 	}
 
     //---------------------------- Utilisateur ---------------------------------
-
-
-    /**
-     * Permet d'ajouter une instance d'un Utilisateur
-     * @param Utilisateur $utilisateur
-     */
-    public static function ajouterUtilisateurInstance(Utilisateur $utilisateur) {
-        Systeme::ajouterUtilisateur($utilisateur);
-    }
-
 	/**
 	 * @param Utilisateur $utilisateur Un utilisateur
 	 * @return int 1 si un utilisateur possède déjà le mail passé, 0 si tout va bien
@@ -147,10 +129,6 @@ class Systeme
         return 0;
     }
 
-    public static function supprimerUtilisateur(int $utilisateurID) {
-        //TODO
-
-    }
 
     /**
      * Permet qu'un Utilisateur se connecte
@@ -185,7 +163,6 @@ class Systeme
         $_SESSION["id"] = $req['idutilisateur'];
         $_SESSION["username"] = $req['pseudo'];
         $_SESSION["email"] = $req['email'];
-		var_dump($_SESSION);
         return true;
     }
 
@@ -202,12 +179,11 @@ class Systeme
      * Permet de deconnecter un Utilisateur
      */
     public static function seDeconnecter(){
-        if (session_status() == PHP_SESSION_ACTIVE) {
-            $_SESSION["logged_in"] = false;
-            unset($_SESSION["id"]);
-            unset($_SESSION["username"]);
-            unset($_SESSION["email"]);
-        }
+    	self::start_session();
+    	$_SESSION["logged_in"] = false;
+    	unset($_SESSION["id"]);
+    	unset($_SESSION["username"]);
+    	unset($_SESSION["email"]);
     }
 
     /**
@@ -225,14 +201,7 @@ class Systeme
     
         $req = self::$dao_user->getUserByEmail($email);
 
-        if (sizeof($req) != 1){
-            return null;
-        }
-
-        $req = $req[0];
-        $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
-        $user->id = $req['idutilisateur'];
-        return $user;
+        return self::userFromRequest($req);
     }
 
     /**
@@ -248,14 +217,18 @@ class Systeme
     
         $req = self::$dao_user->getUserByID($id);
 
-        if (sizeof($req) != 1){
-            return null;
-        }
+        return self::userFromRequest($req);
+    }
 
-        $req = $req[0];
-        $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
-        $user->id = $req['idutilisateur'];
-        return $user;
+    private static function userFromRequest(array $req) {
+	    if (sizeof($req) != 1){
+		    return null;
+	    }
+
+	    $req = $req[0];
+	    $user = new Utilisateur($req['pseudo'], $req['prenom'], $req['nom'], $req['email'], $req['mdp']);
+	    $user->id = $req['idutilisateur'];
+	    return $user;
     }
 
 
@@ -274,7 +247,6 @@ class Systeme
     	$res_array = array();
 
 	    foreach ($req as $user) {
-	        //TODO: pourquoi il remplit pas prenom et non ? -> par sécurité
 		    $u = new Utilisateur($user["pseudo"], "", "", $user["email"], "");
 		    $u->setId($user["idutilisateur"]);
 
@@ -325,28 +297,23 @@ class Systeme
     		return false;
 	    }
 
-    	// si l'utilisateur n'a pas donné le bon mdp avant le changement
-        // BUG : pb ici
-//    	if ($user->mdp != $old_password) {
-//    		return false;
-//	    }
-
         $user->mdp = $new_password;
 
     	return self::$dao_user->updateBDD($user, "idUtilisateur = $user->id");
 	}
 
 
-    /**
-     * Supprime un utilisateur
-     * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
-     * @param int $idUser
-     * @return bool
-     */
-	public static function supprimerCompte(int $idUser) : bool {
-	    if (!isset($idUser)) return false;
+	/**
+	 * Supprime un utilisateur
+	 * Attention, la BDD est censée supprimer toutes les listes pour lesquelles cet utilisateur est propriétaire
+	 * @param Utilisateur $utilisateur
+	 * @return bool
+	 */
+	public static function supprimerCompte(Utilisateur $utilisateur) : bool {
+		// Attention, une fonction identique est présente plus haut
+	    if (!isset($utilisateur)) return false;
 
-	    return self::$dao_user->supprimerDeBDDByID($idUser);
+	    return self::$dao_user->supprimerDeBDD($utilisateur);
 
     }
 
@@ -363,7 +330,7 @@ class Systeme
 		    return false;
 	    }
 
-	    $invitation = new InvitationTransfererPropriete("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
+	    $invitation = new InvitationTransferePropriete("Je souhaite te transférer les droits de propriété de ma liste '$liste->nom'", $emetteur->id, $destinataire->id, $liste->id);
 	    try {
 		    $invitation->id = random_int(PHP_INT_MIN, -1);
 	    } catch (Exception $e) {
@@ -375,10 +342,10 @@ class Systeme
 
 	/**
 	 * Permet à un utilisateur d'aceepter une demande de transfert de propriété
-	 * @param InvitationTransfererPropriete $invitationTransfererPropriete
+	 * @param InvitationTransferePropriete $invitationTransfererPropriete
 	 * @return bool
 	 */
-    public static function accepterDemandeTransfert(InvitationTransfererPropriete $invitationTransfererPropriete){
+    public static function accepterDemandeTransfert(InvitationTransferePropriete $invitationTransfererPropriete){
 		if (!isset($invitationTransfererPropriete)) {
 			return false;
 		}
@@ -460,7 +427,6 @@ class Systeme
      */
     public static function getOwnedLists(Utilisateur $user)
     {
-	    //TODO: testing
 	    if (!isset($user->id)) return null;
 
 	    $resSQL = self::$dao_listeTaches->getListesTachesByUserID($user->id);
@@ -539,7 +505,6 @@ class Systeme
      * @return bool
      */
     public static function createTask(string $nom, ListeTaches $listeTaches) : bool {
-        //  TODO: en fait ici il faudrait déclencher une erreur plutôt qu'un return false;
         if(!isset($listeTaches) || !isset($nom)) return false;
 
 	    $nom = SQLite3::escapeString($nom);
@@ -776,14 +741,17 @@ class Systeme
     /**
      * Retourne la tache associée à l'ID en paramètre
      * @param int $idTache
-     * @return Tache
+     * @return null|Tache
      */
-    public static function getTaskById(int $idTache) : Tache {
+    public static function getTaskById(int $idTache) {
         if(!isset($idTache)) return null;
 
         $resSQL = self::$dao_tache->getByRequete("idTache = $idTache");
 
-        // TODO: - Verifier que la requete retourne un resultat
+        if (sizeof($resSQL) != 1) {
+        	return null;
+        }
+
         $req = $resSQL[0];
 
         $tache = new Tache($req['nom'], $req['idListe']);
@@ -807,16 +775,18 @@ class Systeme
 
     //---------------------------- Invitations ------------------------------------
 
-    /**
-     * Supprime une invitation
-     * @param InvitationListeTache $invitation
-     * @return bool
-     */
+	/**
+	 * Supprime une invitation
+	 * @param Invitation $invitation
+	 * @return bool
+	 */
     public static function refuserInvitation(Invitation $invitation){
-        //TODO: est-ce qu'on doit notifier celui qui a envoyé l'invitation que cette invitation a été refusée ?
-        // Réponse de Ugo: OUI!
         self::$dao_invit->supprimerDeBDD($invitation);
 
+        $destinataire = Systeme::getUserByID($invitation->destinataire);
+        $liste = Systeme::getListeTachesByID($invitation->liste);
+
+        self::createNotificationListeTaches("$destinataire->pseudo a refusé votre invitation pour rejoindre la liste $liste->nom", $invitation->liste, $invitation->emetteur);
         return true;
     }
 
@@ -873,7 +843,7 @@ class Systeme
         	$id = $item['id'];
 
         	if ($id < 0) {
-                $invitation = new InvitationTransfererPropriete($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
+                $invitation = new InvitationTransferePropriete($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
 	        } else {
                 $invitation = new InvitationListeTache($item['message'], $item['emetteur'], $item['destinataire'], $item['idListe']);
 	        }
@@ -938,20 +908,7 @@ class Systeme
 
     }
 
-    /**
-     * Supprime une notification
-     * @param Notification $notif
-     * @return bool
-     */
-    public static function supprimerNotification(Notification $notif) : bool {
-        if (!isset($notif)) {
-            return false;
-        }
-
-        return self::$dao_notif->supprimerDeBDD($notif);
-    }
-
-    /**
+	/**
      * Supprime une Notification
      * @param int $idNotification
      * @return bool
@@ -989,11 +946,11 @@ class Systeme
         return self::$dao_notif->getNotificationsListeTache($idUtilisateur);
     }
 
-    /**
-     * Récupère de la BDD toutes les Notifications de l'user
-     * @param int $idUtilisateur
-     * @return array
-    */
+	/**
+	 * Récupère de la BDD toutes les Notifications de l'user
+	 * @param int $idUser
+	 * @return array
+	 */
     public static function getNotifications(int $idUser) : array {
         if (!isset($idUser)) {
             return null;
@@ -1001,8 +958,8 @@ class Systeme
 
         $notifTache = Systeme::getNotificationsTache($idUser) ;
         $notifList = Systeme::getNotificationsListe($idUser);
-        $notifications = array_merge($notifTache, $notifList); //fusion des notifs
-        return $notifications;
+	    //fusion des notifs
+        return array_merge($notifTache, $notifList);
     }
 
     /**

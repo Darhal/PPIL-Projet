@@ -33,5 +33,3 @@ class Utilisateur
 		$this->id = $id;
 	}
 }
-
-?>

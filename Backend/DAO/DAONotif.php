@@ -9,12 +9,13 @@
  * @version: 1.0
  *
  */
-include_once getenv('BASE')."Shared/Libraries/BDD.php";
-include_once getenv('BASE')."Backend/Utilisateur/Utilisateur.php";
-include_once getenv('BASE')."Backend/DAO/DAO.php";
-include_once getenv('BASE')."Backend/Notifications/Notification.php";
-include_once getenv('BASE')."Backend/Notifications/NotificationListeTaches.php";
-include_once getenv('BASE')."Backend/Notifications/NotificationTache.php";
+set_include_path(getenv('BASE'));
+include_once "Shared/Libraries/BDD.php";
+include_once "Backend/Utilisateur/Utilisateur.php";
+include_once "Backend/DAO/DAO.php";
+include_once "Backend/Notifications/Notification.php";
+include_once "Backend/Notifications/NotificationListeTaches.php";
+include_once "Backend/Notifications/NotificationTache.php";
 
 
 class DAONotif extends DAO
@@ -40,10 +41,12 @@ class DAONotif extends DAO
 
     public function ajouterDansBDD($notif) : bool
     {
-        if($notif instanceof NotificationListeTaches){
+        if ($notif instanceof NotificationListeTaches) {
             $nature = "liste";
-        }elseif ($notif instanceof NotificationTache){
+        } elseif ($notif instanceof NotificationTache) {
             $nature = "tache";
+        } else {
+        	$nature = "inconnue";
         }
         $attribs = array(
             "msg" => $notif->msg,
@@ -54,20 +57,12 @@ class DAONotif extends DAO
             "destinataire" => $notif->destinataire
         );
 
-       /* if($notif->liste != null){
-            $attribs["idListe"] = $notif->liste->id;
-        }
-
-        if($notif->tache != null){
-            $attribs["idTache"] = $notif->tache->id;
-        }*/
-
         return $this->BDD->insertRow(self::$tab_name, $attribs);
     }
 
     public function supprimerDeBDD($notif) : bool
     {
-        return $this->BDD->deleteRow($this->tab_name, "idNotif = ".$notif->id);
+        return $this->BDD->deleteRow(self::$tab_name, "idNotif = ".$notif->id);
     }
 
     public function supprimerDeBDDByID($idNotif) : bool
@@ -116,11 +111,13 @@ class DAONotif extends DAO
 
     public function updateBDD($notif, $condition = "") : bool
     {
-        if($notif instanceof NotificationListeTaches){
-            $nature = "liste";
-        }elseif ($notif instanceof NotificationTache){
-            $nature = "tache";
-        }
+	    if ($notif instanceof NotificationListeTaches) {
+		    $nature = "liste";
+	    } elseif ($notif instanceof NotificationTache) {
+		    $nature = "tache";
+	    } else {
+		    $nature = "inconnue";
+	    }
         $attribs = array(
             "idNotif" => $notif->idNotif,
             "msg" => $notif->msg,
@@ -130,12 +127,7 @@ class DAONotif extends DAO
             "idTache" =>($notif instanceof NotificationTache)? $notif->tache : "null",
             "destinataire" => $notif->destinataire
         );
-        $res = $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
-        return $res;
+	    return $this->BDD->updateRow(self::$tab_name, $attribs, $condition);
     }
 
-    public function update(Notification $notification): bool
-    {
-        return $this->updateBDD($notification, "idNotif == $notification->idNotif");
-    }
 }
