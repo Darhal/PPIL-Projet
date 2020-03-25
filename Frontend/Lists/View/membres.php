@@ -189,11 +189,15 @@ if (!in_array($user, $membres)) {
 
     function f(p) {
         $.ajax({
-            type:'GET',
+            type:'post',
             url:'pseudoR.php',
-            data:'pseudo=' + p,
+            dataType: 'json',
+            data: {
+                pseudo: p,
+                lid: <?php echo $liste->id ?>
+            },
             success: function (data) {
-                //afficher(data)
+                console.log(data);
 	            succes(data);
             }
         });
@@ -202,8 +206,7 @@ if (!in_array($user, $membres)) {
     function succes(v) {
         var list = document.getElementById('personne');
         list.innerHTML = '';
-
-        var json = JSON.parse(v);
+        var json = JSON.parse(JSON.stringify(v));
         json.forEach(element => {
             var item = document.createElement("button");
             item.innerText = element.pseudo;
@@ -226,29 +229,5 @@ if (!in_array($user, $membres)) {
             list.appendChild(item);
 
         });
-    }
-
-
-    function afficher(data) {
-        const divElement = document.getElementById('personne');
-        if (divElement.childElementCount !== 0){
-            var child = divElement.lastChild;
-            while (child) {
-                divElement.removeChild(child);
-                child = divElement.lastChild;
-            }
-        }
-        const json = JSON.parse(data);
-        json.forEach(element => {
-            const personne = document.createElement('button');
-            const content = document.createTextNode(element.pseudo);
-            personne.appendChild(content);
-            personne.click(alert(element.pseudo));
-            divElement.appendChild(personne);
-        })
-
-    }
-    function ajout(pseudo) {
-        confirm('vous souhaitez ajouter' + pseudo);
     }
 </script>
