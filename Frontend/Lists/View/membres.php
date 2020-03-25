@@ -161,15 +161,20 @@ if (!in_array($user, $membres)) {
 
 	if ($user->id == $liste->proprietaire) {
 		echo "
-			<div id='recherche'>
-				<h5>Tapez le nom de la personne que vous souhaitez rechercher </h5>
-				<form class='formulaire'>
-                    <input style='width: 300px' class='form-control' onchange='f(this.value)' type='text' placeholder='Pseudo'/>
-                    <input type='submit' value='Ajouter!'>
-                </form>
+			<div class='container align-center text-center'>
+				<hr>
+				<h2> Inviter des membres </h2>
+				<div id='recherche'>
+					<h5>Tapez le nom de la personne que vous souhaitez rechercher, plus cliquer sur le nom en dessous pour l'ajouter à votre liste</h5>
+					<form class='formulaire'>
+                        <input class='form-control' id='input_name' type='text' placeholder='Pseudo'/>
+                        <!--<input type='submit' value='Ajouter!'>-->
+                    </form>
+				</div>
+				<div id='personne'>
+				</div>
 			</div>
-			<div id='personne'>
-			</div>
+			
 		";
 	}
 	?>
@@ -177,6 +182,11 @@ if (!in_array($user, $membres)) {
 	<?php include_once "Shared/footer.php"; ?>
 </body>
 <script type='application/javascript'>
+
+    input_name.oninput = function () {
+		f(input_name.value);
+    };
+
     function f(p) {
         $.ajax({
             type:'GET',
@@ -195,7 +205,7 @@ if (!in_array($user, $membres)) {
 
         var json = JSON.parse(v);
         json.forEach(element => {
-            var item = document.createElement("div");
+            var item = document.createElement("button");
             item.innerText = element.pseudo;
             item.className = "list-group-item list-group-item-action";
             item.onclick = function () {
